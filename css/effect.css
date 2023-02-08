@@ -1,0 +1,144 @@
+/* Title Glow */
+.title-glow
+{
+    font-size: 24px;
+    margin-bottom: 15px;
+    font-weight: 700;
+    color: var(--text-black-900) !important;
+    transition: 0.3s;
+    text-transform: uppercase;
+}
+
+.title-glow:hover 
+{
+    color: var(--skin-color);
+    text-shadow:    0 0 10px var(--skin-color),
+                    0 0 20px var(--skin-color), 
+                    0 0 40px var(--skin-color), 
+                    0 0 80px var(--skin-color);
+}
+
+.title-glow:hover span
+{
+    transition: 0.5s;
+}
+
+.title-glow:hover span
+{
+    margin-left: 10px;
+}
+
+/* Light Button Animation */
+.btn-light-animation
+{
+    position: relative;
+    display: inline-block;
+    padding: 12px 35px;
+    border: var(--bg-black-50);
+    background: var(--bg-black-50);
+    color: var(--text-black-900);
+    letter-spacing: 1px;
+    font-size: 18px;
+    overflow: hidden;
+    transition: 0.4s;
+    cursor: pointer;
+    border-radius: 50px;
+}
+
+.btn-light-animation:hover
+{
+    color: var(--bg-black-100);
+    background: var(--skin-color);
+    border: 1px solid var(--bg-black-50);
+    transition-delay: 0.5s;
+}
+
+.btn-light-animation span
+{
+    position: absolute;
+    display: block;
+}
+
+.btn-light-animation span:nth-child(1)
+{
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 2px;
+    border-radius: 20px 20px 0 0;
+    background: linear-gradient(90deg,transparent,var(--skin-color));
+}
+
+.btn-light-animation:hover span:nth-child(1)
+{
+   left: 100%;
+   transition: 1s;
+}
+
+.btn-light-animation span:nth-child(2)
+{
+    bottom: 0;
+    right: -100%;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(270deg,transparent,var(--skin-color));
+}
+
+.btn-light-animation:hover span:nth-child(2)
+{
+   right: 100%;
+   transition: 1s;
+   transition-delay: 0.25s;
+}
+
+/* Light portfolio-item-inner Animation */
+.portfolio-item-inner{
+    position: relative;
+    cursor: pointer;
+    transition: 0.8s;
+} 
+
+.portfolio-item-inner:hover
+{
+    border: 6px solid var(--skin-color);
+    transition-delay: 0.4s;
+}
+
+.portfolio-item-inner span
+{
+    position: absolute;
+    display: block;
+    z-index: 10;
+}
+
+.portfolio-item-inner span:nth-child(1)
+{
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 4px;
+    border-radius: 20px 20px 0 0;
+    background: linear-gradient(90deg,transparent,var(--skin-color));
+}
+
+.portfolio-item-inner:hover span:nth-child(1)
+{
+   left: 100%;
+   transition: 1.2s;
+   
+}
+
+.portfolio-item-inner span:nth-child(2)
+{
+    bottom: 0;
+    right: -100%;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(270deg,transparent,var(--skin-color));
+}
+
+.portfolio-item-inner:hover span:nth-child(2)
+{
+   right: 100%;
+   transition: 1.2s;
+}
