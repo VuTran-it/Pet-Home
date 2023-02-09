@@ -48,3 +48,13 @@ window.addEventListener("load" ,() => {
     }
 
 })
+
+/*  */
+const fullscreenButton = document.getElementById("fullscreenButton");
+fullscreenButton.addEventListener("click", () => {
+  if (document.fullscreenElement) {
+    document.exitFullscreen();
+  } else {
+    document.documentElement.requestFullscreen();
+  }
+});
