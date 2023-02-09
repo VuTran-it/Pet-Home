@@ -49,12 +49,43 @@ window.addEventListener("load" ,() => {
 
 })
 
-/*  */
-const fullscreenButton = document.getElementById("fullscreenButton");
-fullscreenButton.addEventListener("click", () => {
-  if (document.fullscreenElement) {
-    document.exitFullscreen();
-  } else {
-    document.documentElement.requestFullscreen();
+/* Open Fullscreen  and close Fullscreen*/
+var elem = document.documentElement;
+function openFullscreen() {
+  if (elem.requestFullscreen) {
+    elem.requestFullscreen();
+  } else if (elem.webkitRequestFullscreen) { /* Safari */
+    elem.webkitRequestFullscreen();
+  } else if (elem.msRequestFullscreen) { /* IE11 */
+    elem.msRequestFullscreen();
   }
-});
+}
+
+function closeFullscreen() {
+  if (document.exitFullscreen) {
+    document.exitFullscreen();
+  } else if (document.webkitExitFullscreen) { /* Safari */
+    document.webkitExitFullscreen();
+  } else if (document.msExitFullscreen) { /* IE11 */
+    document.msExitFullscreen();
+  }
+}
+
+/* Xử lí nhấn nút fullscreen */
+const btn_fullscreen = document.getElementById('btn_fullscreen')
+const icon_fullscreen = document.querySelector('#btn_fullscreen .fa-solid')
+let defaul_fullscreen = "Open";
+
+btn_fullscreen.addEventListener("click", () => {
+    if (defaul_fullscreen == "Open") {
+        defaul_fullscreen = "Close"; 
+        openFullscreen();
+        icon_fullscreen.classList.remove('fa-expand');
+        icon_fullscreen.classList.add('fa-compress');
+    } else {
+        defaul_fullscreen = "Open"; 
+        closeFullscreen();
+        icon_fullscreen.classList.remove('fa-compress');
+        icon_fullscreen.classList.add('fa-expand');
+    }
+})
