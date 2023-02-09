@@ -31,7 +31,9 @@
     .section-title h3 {
         font-size: 110px;
     }
-
+    .Manager .swiper-wrapper {
+        max-width: 800px;
+    }
 }
 
 /* May Tinh Bang nhỏ */
@@ -101,7 +103,7 @@
     }
 
     .Manager .Manager-item-inner {
-        width: 80%;
+        width: 90%;
     }
 }
 
@@ -243,15 +245,23 @@
         max-width: 50%;
     }
 
-    .portfolio .portfolio-item-inner .portfolio-content h2 {
+    .Manager .swiper
+    {
+        min-height: auto;
+    }
+    .Manager .Manager-item-inner .Manager-content
+    {
+        padding: 10px;
+    }
+    .Manager .Manager-item-inner .Manager-content h2 {
         font-size: 18px;
         margin-bottom: 0px;
     }
-
-    .portfolio .portfolio-item-inner .portfolio-content p{
-        font-size: 14px;
+    .Manager .Manager-item-inner .Manager-content .detail
+    {
+        padding: 0;
+        font-size: 16px;
     }
-
     .contact .contact-icon {
         margin-bottom: 40px;
         justify-content: left;

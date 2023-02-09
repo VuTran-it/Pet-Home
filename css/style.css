@@ -521,10 +521,6 @@ h3.hello .text
     min-height: 400px;
     margin-bottom: 40px;
 }
-.Manager .swiper-wrapper
-{
-    max-width: 800px;
-}
 .Manager .Manager-heading {
     flex: 0 0 100%;
     max-width: 100%;
@@ -552,6 +548,10 @@ h3.hello .text
     justify-content: center;
     z-index: 20;
 }
+.Manager .Manager-item-inner .Manager-img img
+{
+    width: 100%;
+}
 
 .Manager .Manager-item-inner .Manager-content {
     position: absolute;
@@ -565,6 +565,7 @@ h3.hello .text
     border: 1px solid var(--skin-color);
     border-radius: 4px;
     display: none;
+    overflow-y:scroll;
 }
 
 .Manager .Manager-item-inner .Manager-content h2 {
@@ -575,7 +576,7 @@ h3.hello .text
 .Manager .Manager-item-inner .Manager-content .detail
 {
     display: flex;
-    margin-left: 30px;
+    padding: 0 15px;
     flex-direction: column;
 }
 .Manager .Manager-item .btn-box.active,
