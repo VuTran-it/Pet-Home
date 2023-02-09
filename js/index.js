@@ -48,23 +48,15 @@ function updateNav(element) {
     }
 }
 
-document.querySelector(".hire-me").addEventListener("click", function () {
-    const sectionIndex = this.getAttribute("data-section-index");
 
-    showSection(this)
-    updateNav(this)
-    removeBackSection()
-    addBackSection(sectionIndex)
-})
+/* Manager */
+const ManagerItem = document.querySelectorAll(".Manager-item")
+const ManagerContent = document.querySelectorAll('.Manager-content')
+const ManagerBTN = document.querySelectorAll('.Manager-item .btn-box')
 
-
-/* PORTFOLIO */
-const portfolioItemInner = document.querySelectorAll(".portfolio-item-inner")
-const portfolioContent = document.querySelectorAll('.portfolio-content')
-
-for (let i = 0; i < portfolioItemInner.length; i++) {
-    portfolioItemInner[i].addEventListener('click', function () {
-        portfolioContent[i].classList.toggle("active")
+for (let i = 0; i < ManagerItem.length; i++) {
+    ManagerItem[i].addEventListener('click', function () {
+        ManagerContent[i].classList.toggle("active")
+        ManagerBTN[i].classList.toggle("active")
     })
 }
-

@@ -1,4 +1,4 @@
-let valLoader = document.querySelector('.value-loader');
+let valLoader = document.querySelector('#loader-background .value-loader');
 
 let progressValue = 0;
 let progressEndValue = 100;
