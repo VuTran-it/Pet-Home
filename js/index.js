@@ -60,3 +60,16 @@ for (let i = 0; i < ManagerItem.length; i++) {
         ManagerBTN[i].classList.toggle("active")
     })
 }
+
+const box_form = document.querySelector(".Manager .box-form");
+const close_box = document.querySelector(".Manager .close-box");
+const upload_pet = document.querySelector(".Manager .upload-pet");
+const add_pet = document.querySelector(".Manager .box--pen .button--pen");
+
+add_pet.addEventListener('click',()=>{
+    box_form.classList.toggle("active")
+})
+
+close_box.addEventListener('click',()=>{
+    box_form.classList.remove("active")
+})

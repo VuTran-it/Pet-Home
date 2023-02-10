@@ -622,6 +622,216 @@ h3.hello .text
     display: flex;
     justify-content: center;
 }
+/* Form add pet */
+.Manager .box-form
+{
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 300;
+    background: linear-gradient(120deg,var(--bg-black-100),var(--bg-black-50),var(--skin-color));
+    color: var(--bg-black-900);
+    font-size: 14px;
+    font-weight: 400;
+    align-items: center;
+    justify-items: center;
+    display: none;
+    transition: .45s;
+}
+.Manager .box-form.active
+{
+    display: grid;
+}
+
+.signup-container {
+    display: grid;
+    grid-template-areas: "left right";
+    max-width: 900px;
+}
+.left-container {
+    background: var(--bg-black-50);
+    overflow: hidden;
+    padding: 40px 0 0 0;
+    position: relative;
+    text-align: center;
+    width: 300px;
+}
+.left-container h1 {
+    color: var(--skin-color);
+    display: inline-block;
+    font-size: 24px;
+}
+.left-container h1 i {
+    background: var(--skin-color);
+    border-radius: 50%;
+    color: var(--bg-black-50);
+    font-size: 24px;
+    margin-right: 5px;
+    padding: 10px;
+    transform: rotate(-45deg);
+}
+.left-container .puppy {
+    bottom: -5px;
+    position: absolute;
+    text-align: center;
+}
+.left-container img {
+    width: 90%;
+}
+.right-container {
+    background: var(--skin-color);
+    display: grid;
+    grid-template-areas: "." ".";
+    width: 500px;
+    position: relative;
+}
+.right-container .close-box
+{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+.right-container .close-box i
+{
+    color: var(--text-black-900);
+    background: var(--bg-black-100);
+    padding: 12px;
+    border-radius: 50%;
+    opacity: 0.8;
+}
+.right-container .close-box i:hover
+{
+    opacity: 1;
+}
+.right-container h1:nth-of-type(1) {
+    color: rgba(0, 0, 0, 0.8);
+    font-size: 28px;
+    font-weight: 600;
+}
+.right-container .set {
+    display: flex;
+    justify-content: space-between;
+    margin: 10px 0;
+}
+.right-container input {
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+    height: 38px;
+    line-height: 38px;
+    padding-left: 5px;
+}
+.right-container input, .right-container label {
+    color: rgba(0, 0, 0, 0.8);
+}
+.right-container header {
+    padding: 40px;
+}
+.right-container label, .right-container input, .right-container .pets-photo {
+    width: 176px;
+}
+.right-container .pets-photo {
+    align-items: center;
+    display: grid;
+    grid-template-areas: ". .";
+}
+.right-container .pets-photo input[type="file"]
+{
+    display: none;
+}
+.right-container .pets-photo .pets-upload-text
+{
+    display: flex;
+    align-items: center;
+}
+
+.right-container .pets-photo i {
+    color: black;
+    background: #fff;
+    font-size: 16px;
+    border-radius: 50%;
+    height: 38px;
+    margin-right: 10px;
+    width: 38px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.right-container .pets-weight .radio-container {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+.pets-name label, .pets-breed label, .pets-birthday label, .pets-gender label, .pets-spayed-neutered label, .pets-weight label {
+    display: block;
+    margin-bottom: 5px;
+}
+.radio-container {
+    background: #fff;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+    display: inline-block;
+    padding: 5px;
+}
+.radio-container label {
+    background: transparent;
+    border: 1px solid transparent;
+    border-radius: 2px;
+    display: inline-block;
+    height: 26px;
+    line-height: 26px;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    transition: .2s all ease-in-out;
+    width: 80px;
+}
+.radio-container input[type="radio"] {
+    display: none;
+}
+.radio-container input[type="radio"]:checked + label {
+    background: var(--skin-color);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}
+.box-form footer
+{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+.box-form .upload-pet
+{
+    margin-bottom: 30px;
+    padding: 10px 40px;
+    border: none;
+    background: var(--bg-black-100);
+    color: var(--text-black-900);
+    border-radius: 20px;
+    opacity: 0.7;
+    transition: .45s;
+}
+.box-form .upload-pet i
+{
+    margin-right: 5px;
+}
+.box-form .upload-pet:hover
+{
+    opacity: 1;
+}
+
+.Manager .simple-keyboard {
+    max-width: 850px;
+    display: none;
+    position: fixed;
+    bottom: 0;
+}
+.Manager .simple-keyboard.active
+{
+    display: block;
+}
+
 /* Account */
 .Account-content-right,
 .Account-content-left {
