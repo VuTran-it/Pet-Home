@@ -196,18 +196,18 @@
     }
 
     .nav.active li {
-        transform: rotate(calc((360deg / 5)*var(--i)));
+        transform: rotate(calc((360deg / 6)*var(--i)));
     }
-
+    .nav li button,
     .nav li a {
         color: var(--text-black-900);
         text-decoration: none;
         border-radius: 50%;
-        transform: rotate(calc((360deg / -5)*var(--i)));
+        transform: rotate(calc((360deg / -6)*var(--i)));
         transition: 0.3s;
         opacity: 0.6;
     }
-
+    .nav li button i,
     .nav li a i
     {
         width: 45px;
@@ -216,7 +216,7 @@
     
     .nav li.active a {
         opacity: 1;
-        transform: rotate(calc((360deg / -5)*var(--i)));
+        transform: rotate(calc((360deg / -6)*var(--i)));
     }
 
     .toggle {
