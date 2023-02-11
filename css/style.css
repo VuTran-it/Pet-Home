@@ -466,60 +466,7 @@ h3.hello .text
     border-radius: 20px;
 }
 
-#info-detail-pet
-{
-    width: 100vw;
-    height: 100vh;
-    z-index: 100;
-    position: fixed;
-    top: 0;
-    right: 0;
-    left: 0;
-    overflow-x: hidden;
-    overflow-y: scroll;
-    display: none;
-    padding: 0 60px;
-}
-#info-detail-pet.active
-{
-    display: block;
-}
-#info-detail-pet .content
-{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    margin-bottom: 30px;
-}
-.exit-detail-pet 
-{
-    position: absolute;
-    top: 20px;
-    right: 30px;
-    z-index: 300;
-    transition: all .45s;
-}
-.exit-detail-pet:hover i
-{
-    background-color: var(--skin-color);
-    opacity: 1;
-    color: var(--text-black-900);
-    border: 1px solid var(--text-black-900);
-}
-.exit-detail-pet i
-{
-    color: var(--text-black-900);
-    background: var(--bg-black-100);
-    width: 50px;
-    height: 50px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 16px;
-    border-radius: 50%;
-    border: 1px solid var(--bg-black-50);
-    opacity: 0.5;
-}
+
 /* System */
 .System .container {
     padding-bottom: 40px;
@@ -1013,4 +960,62 @@ h3.hello .text
 .Account .content-right
 {
     padding-left: 50px;
+}
+
+
+/* Details pet */
+#info-detail-pet
+{
+    width: 100vw;
+    height: 100vh;
+    z-index: 100;
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    display: none;
+    padding: 0 60px;
+    background: var(--bg-black-900);
+}
+#info-detail-pet.active
+{
+    display: block;
+}
+#info-detail-pet .content
+{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-bottom: 30px;
+}
+.exit-detail-pet 
+{
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    z-index: 300;
+    transition: all .45s;
+}
+.exit-detail-pet:hover i
+{
+    background-color: var(--skin-color);
+    opacity: 1;
+    color: var(--text-black-900);
+    border: 1px solid var(--text-black-900);
+}
+.exit-detail-pet i
+{
+    color: var(--text-black-900);
+    background: var(--bg-black-100);
+    width: 50px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 16px;
+    border-radius: 50%;
+    border: 1px solid var(--bg-black-50);
+    opacity: 0.5;
 }

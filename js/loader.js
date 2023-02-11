@@ -2,7 +2,7 @@ let valLoader = document.querySelector('#loader-background .value-loader');
 
 let progressValue = 0;
 let progressEndValue = 100;
-let speed = 20;
+let speed = 10;
 
 let progress = setInterval(() =>{
     progressValue++;
@@ -26,7 +26,7 @@ function loading()
 
         mainContainer.style.display = 'block';
         mainContainer.style.opacity = 1
-    },0)
+    },1600)
 }
 
 loading();
