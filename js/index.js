@@ -66,10 +66,14 @@ const close_box = document.querySelector(".Manager .close-box");
 const upload_pet = document.querySelector(".Manager .upload-pet");
 const add_pet = document.querySelector(".Manager .box--pen .button--pen");
 
-add_pet.addEventListener('click',()=>{
-    box_form.classList.toggle("active")
-})
-
-close_box.addEventListener('click',()=>{
-    box_form.classList.remove("active")
-})
+if(add_pet && close_box)
+{
+    add_pet.addEventListener('click',()=>{
+        box_form.classList.toggle("active")
+    })
+    
+    close_box.addEventListener('click',()=>{
+        box_form.classList.remove("active")
+    })
+    
+}

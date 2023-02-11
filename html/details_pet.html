@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pet Home</title>
+
+    <link rel="icon" href="../img/logo.png" type="image/x-icon">
+
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/effect.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+    <link rel="stylesheet" href="../css/loader.css">
+
+    <!-- Style-Switcher -->
+    <link rel="stylesheet" href="../css/style-switcher.css">
+    <link rel="stylesheet" href="../css/Color/color-1.css" class="alternate-style" title="color-1">
+    <link rel="stylesheet" href="../css/Color/color-2.css" class="alternate-style" title="color-2" disabled>
+    <link rel="stylesheet" href="../css/Color/color-3.css" class="alternate-style" title="color-3" disabled>
+    <link rel="stylesheet" href="../css/Color/color-4.css" class="alternate-style" title="color-4" disabled>
+    <link rel="stylesheet" href="../css/Color/color-5.css" class="alternate-style" title="color-5" disabled>
+
+    <!-- font-awesomez -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+        integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <!-- Swiper -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css" />
+
+</head>
+
+<body>
+    <!-- Main Container Start -->
+    <div class="main-container">
+        <div class="exit-detail-pet">
+            <a href="./index.html?#Pet"><i class="fa-solid fa-right-from-bracket"></i></a>
+        </div>
+        <!-- Main Content Start -->
+        <div class="main-content">
+            <!-- Pet Section Start -->
+            <section class="Pet section " id="Pet">
+                <div id="info-detail-pet">
+                    <div class="section-title padd-15">
+                        <h2>Details <span>Pet</span></h2>
+                        <h3>Love Pet</h3>
+                    </div>
+
+                    <div class="content">
+                        <div class="row mb-30">
+                            <div class="avatar">
+                                <img src="../img/avatar.jpg" alt="">
+                            </div>
+                            <div class="name">
+                                <h2>Bạch Tuyết</h2>
+                                <div class="detail">
+                                    <span>Weight : 10KG</span>
+                                    <span>Age : 2</span>
+                                    <span>Gender : Male</span>
+                                    <span>Breed : British Shorthair</span>
+                                    <span>Spayed</span>
+                                </div>
+                            </div>
+                        </div>
+    
+                        <div class="row mb-30">
+                            <div class="content-left">
+                                <div class="title">
+                                    <span></span>
+                                    <h2 class="text">Synthetic</h2>
+                                </div>
+                                <div class="detail">
+                                    <span>Weight of food for the week : 30KG</span>
+                                    <span>The weight of the cat at the beginning of the week : 13.5</span>
+                                    <span>The weight of the cat at the weekend : 16KG</span>
+                                    <span>Health status : Gaining weight too fast</span>
+                                    <span>Suggestion: Reduce the amount of food </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="content-left">
+                                <div class="title">
+                                    <span></span>
+                                    <h2 class="text">Chart</h2>
+                                </div>
+                                <div class="Chart">
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- Pet Section End -->
+        </div>
+        <!-- Main Content End -->
+        <!-- Style Switcher Start -->
+        <div class="style-switcher">
+            <div class="style-switcher-toggler s-icon main-icon">
+                <i class="fa-solid fa-gear"></i>
+            </div>
+            <h4>Theme Colors</h4>
+            <div class="colors">
+                <span class="color-1" onclick="setActiveStyle('color-1')"></span>
+                <span class="color-2" onclick="setActiveStyle('color-2')"></span>
+                <span class="color-3" onclick="setActiveStyle('color-3')"></span>
+                <span class="color-4" onclick="setActiveStyle('color-4')"></span>
+                <span class="color-5" onclick="setActiveStyle('color-5')"></span>
+            </div>
+            <h4>Remote Control</h4>
+            <div class="remote-control">
+                <div class="s-icon remote-control-item dark-light">
+                    <i class="fa-solid"></i>
+                </div>
+
+                <div class="s-icon remote-control-item language">
+                    <span></span>
+                </div>
+
+                <div class="s-icon remote-control-item" id="btn_fullscreen">
+                    <i class="fa-solid fa-expand"></i>
+                </div>
+            </div>
+
+        </div>
+        <!-- Style Switcher End -->
+    </div>
+    <!-- Main Container End -->
+
+     <!-- Script -->
+    <script src="../js/details_pet.js"></script>
+    <!-- <script type="module" src="../js/switchLanguage.js"></script> -->
+    <!-- <script src="../js/loader.js"></script> -->
+    <script src="../js/style-switcher.js"></script>
+
+</body>
+
+</html>

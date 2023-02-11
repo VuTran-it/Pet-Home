@@ -466,6 +466,60 @@ h3.hello .text
     border-radius: 20px;
 }
 
+#info-detail-pet
+{
+    width: 100vw;
+    height: 100vh;
+    z-index: 100;
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    display: none;
+    padding: 0 60px;
+}
+#info-detail-pet.active
+{
+    display: block;
+}
+#info-detail-pet .content
+{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-bottom: 30px;
+}
+.exit-detail-pet 
+{
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    z-index: 300;
+    transition: all .45s;
+}
+.exit-detail-pet:hover i
+{
+    background-color: var(--skin-color);
+    opacity: 1;
+    color: var(--text-black-900);
+    border: 1px solid var(--text-black-900);
+}
+.exit-detail-pet i
+{
+    color: var(--text-black-900);
+    background: var(--bg-black-100);
+    width: 50px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 16px;
+    border-radius: 50%;
+    border: 1px solid var(--bg-black-50);
+    opacity: 0.5;
+}
 /* System */
 .System .container {
     padding-bottom: 40px;
@@ -849,39 +903,61 @@ h3.hello .text
 }
 
 /* Account */
-.Account
+.Account,
+#info-detail-pet 
 {
     color: var(--text-black-900);
 }
 .Account .avatar,
+#info-detail-pet .avatar,
 .Account .name,
+#info-detail-pet .name,
+#info-detail-pet .content-right,
 .Account .content-left,
 .Account .content-right
 {
     flex: 0 0 50%;
     max-width: 50%;
 }
+#info-detail-pet .content-left
+{
+    flex: 0 0 100%;
+    max-width: 100%;
+}
+.Account .name,
+#info-detail-pet .name
+{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0 50px;
+}
+
+#info-detail-pet .avatar,
 .Account .avatar
 {
     display: flex;
     justify-content: center;
-    
 }
+#info-detail-pet .avatar img,
 .Account .avatar img
 {
-    border-radius: 50% ;
-    width: 40%;
+    border-radius: 50% 50% 49% 51% / 28% 29% 71% 72% ;
+    width: 50%;
+    float: right;
     border: 5px solid var(--skin-color);
     padding: 5px;
    
 }
 
+#info-detail-pet .name h2,
 .Account .name h2
 {
     color: var(--text-black-900);
     font-size: 28px;
 }
 
+#info-detail-pet .name .detail,
 .Account .name .detail
 {
     display: flex;
@@ -889,11 +965,15 @@ h3.hello .text
     color: var(--text-black-100);
     opacity: 0.7;
 }
+
+#info-detail-pet .title,
 .Account .title 
 {
     display: flex;
     margin-bottom: 30px;
 }
+
+#info-detail-pet .title span,
 .Account .title span
 {
     height:auto;
@@ -902,24 +982,33 @@ h3.hello .text
     background-color: var(--skin-color);
 }
 
+#info-detail-pet .title .text,
 .Account .title .text
 {
     background: var(--skin-color);
     padding: 5px 30px 5px 10px;
-    border-radius: 0 30px 30px 0  ;
+    border-radius: 0 30px 30px 0;
 }
-
+#info-detail-pet .title .text
+{
+    width: 200px;
+}
+#info-detail-pet .detail,
 .Account .detail
 {
     color: var(--text-black-100);
     display: flex;
     flex-direction: column;
 }
+
+#info-detail-pet .detail .span,
 .Account .detail span
 {
     margin-bottom: 3px;
 }
 
+#info-detail-pet .content-left,
+#info-detail-pet .content-right,
 .Account .content-left,
 .Account .content-right
 {

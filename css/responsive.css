@@ -293,6 +293,11 @@
     {
         width: 70px;
     }
+
+    #info-detail-pet .avatar,
+    #info-detail-pet .name,
+    #info-detail-pet .content-left,
+    #info-detail-pet .content-right,
     .Account .avatar,
     .Account .name,
     .Account .content-left,
@@ -301,14 +306,32 @@
         flex: 0 0 100%;
         max-width: 100%;
     }
+
+    #info-detail-pet .avatar,
+    .Account .avatar
+    {
+        margin-bottom: 10px;
+    }
+
+    #info-detail-pet .avatar img,
     .Account .avatar img
     {
-        width: 40%;
+        width: 50%;
     }
+    #info-detail-pet .name
+    {
+        padding: 0;
+    }
+
+    #info-detail-pet .name h2,
     .Account .name h2
     {
         text-align: center;
     }
+
+    #info-detail-pet .name .detail,
+    #info-detail-pet .content-left,
+    #info-detail-pet .content-right,
     .Account .name .detail,
     .Account .content-left,
     .Account .content-right
@@ -316,11 +339,16 @@
         margin-left: 20px;
         padding: 0;
     }
+
+    #info-detail-pet .content-left,
+    #info-detail-pet .content-right,
     .Account .content-left,
     .Account .content-right
     {
         margin-bottom: 30px;
     }
+    
+    #info-detail-pet .title h2,
     .Account .title h2
     {
         font-size: 18px;
