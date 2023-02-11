@@ -855,46 +855,40 @@ h3.hello .text
 {
     color: var(--text-black-900);
 }
-.Account .avatar,
-#info-detail-pet .avatar,
-.Account .name,
-#info-detail-pet .name,
 #info-detail-pet .content-right,
+#info-detail-pet .content-left,
 .Account .content-left,
 .Account .content-right
 {
     flex: 0 0 50%;
     max-width: 50%;
 }
-#info-detail-pet .content-left
-{
-    flex: 0 0 100%;
-    max-width: 100%;
-}
-.Account .name,
-#info-detail-pet .name
-{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding: 0 50px;
-}
 
-#info-detail-pet .avatar,
 .Account .avatar
 {
     display: flex;
     justify-content: center;
+    margin-bottom: 30px;
 }
+#info-detail-pet .avatar
+{
+    margin-bottom: 30px;
+}
+
 #info-detail-pet .avatar img,
 .Account .avatar img
 {
     border-radius: 50% 50% 49% 51% / 28% 29% 71% 72% ;
     width: 50%;
-    float: right;
     border: 5px solid var(--skin-color);
     padding: 5px;
-   
+}
+.Account .name
+{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 #info-detail-pet .name h2,
@@ -902,6 +896,10 @@ h3.hello .text
 {
     color: var(--text-black-900);
     font-size: 28px;
+}
+#info-detail-pet .name .detail
+{
+    transform: translateX(0) !important;
 }
 
 #info-detail-pet .name .detail,
@@ -911,6 +909,7 @@ h3.hello .text
     flex-direction: column;
     color: var(--text-black-100);
     opacity: 0.7;
+    transform: translateX(-23px);
 }
 
 #info-detail-pet .title,
@@ -936,26 +935,31 @@ h3.hello .text
     padding: 5px 30px 5px 10px;
     border-radius: 0 30px 30px 0;
 }
+
 #info-detail-pet .title .text
 {
     width: 200px;
 }
-#info-detail-pet .detail,
-.Account .detail
+#info-detail-pet .content-right-item,
+.Account .content-right-item
+{
+    margin-bottom: 30px;
+}
+
+#info-detail-pet .content-right-item .detail,
+.Account .content-right-item .detail
 {
     color: var(--text-black-100);
     display: flex;
     flex-direction: column;
 }
 
-#info-detail-pet .detail .span,
-.Account .detail span
+#info-detail-pet .content-right-item .detail .span,
+.Account .content-right-item .detail span
 {
     margin-bottom: 3px;
 }
 
-#info-detail-pet .content-left,
-#info-detail-pet .content-right,
 .Account .content-left,
 .Account .content-right
 {
@@ -976,20 +980,24 @@ h3.hello .text
     overflow-x: hidden;
     overflow-y: scroll;
     display: none;
-    padding: 0 60px;
+    padding: 0 120px;
     background: var(--bg-black-900);
 }
 #info-detail-pet.active
 {
     display: block;
 }
-#info-detail-pet .content
+
+#info-detail-pet .content-left
 {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    margin-bottom: 30px;
+    padding-left: 50px;
 }
+
+#info-detail-pet .box-chart
+{
+    padding-left: 50px;
+}
+
 .exit-detail-pet 
 {
     position: absolute;
@@ -998,6 +1006,7 @@ h3.hello .text
     z-index: 300;
     transition: all .45s;
 }
+
 .exit-detail-pet:hover i
 {
     background-color: var(--skin-color);

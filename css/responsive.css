@@ -294,12 +294,8 @@
         width: 70px;
     }
 
-    #info-detail-pet .avatar,
-    #info-detail-pet .name,
     #info-detail-pet .content-left,
     #info-detail-pet .content-right,
-    .Account .avatar,
-    .Account .name,
     .Account .content-left,
     .Account .content-right
     {
@@ -318,9 +314,14 @@
     {
         width: 50%;
     }
-    #info-detail-pet .name
+    #info-detail-pet .name, .Account .name {
+        align-items:start;
+        margin-left: 20px;
+    }
+
+    #info-detail-pet .name .detail, .Account .name .detail
     {
-        padding: 0;
+        transform: none;
     }
 
     #info-detail-pet .name h2,
@@ -329,11 +330,7 @@
         text-align: center;
     }
 
-    #info-detail-pet .name .detail,
-    #info-detail-pet .content-left,
     #info-detail-pet .content-right,
-    .Account .name .detail,
-    .Account .content-left,
     .Account .content-right
     {
         margin-left: 20px;
@@ -346,6 +343,7 @@
     .Account .content-right
     {
         margin-bottom: 30px;
+        padding: 0;
     }
     
     #info-detail-pet .title h2,
