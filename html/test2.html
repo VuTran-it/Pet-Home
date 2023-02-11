@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/simple-keyboard@latest/build/css/index.css">
+    <style>
+      input {
+        width: 100%;
+        height: 100px;
+        padding: 20px;
+        font-size: 20px;
+        border: none;
+        box-sizing: border-box;
+      }
+
+      .simple-keyboard {
+        max-width: 850px;
+        display: none;
+      }
+      .simple-keyboard.active
+      {
+        display: block;
+      }
+    </style>
+</head>
+<body>
+    <input class="input" id="btn" placeholder="Tap on the virtual keyboard to start" />
+    <div class="simple-keyboard"></div>
+    <script src="https://cdn.jsdelivr.net/npm/simple-keyboard@latest/build/index.js"></script>
+
+    <script>
+        let Keyboard = window.SimpleKeyboard.default;
+
+        let keyboard = new Keyboard({
+          onChange: input => onChange(input),
+          onKeyPress: button => onKeyPress(button)
+        });
+
+        /**
+         * Update simple-keyboard when input is changed directly
+         */
+        const key = document.querySelector(".simple-keyboard")
+         document.querySelector(".input").addEventListener("focus", event => {
+          key.classList.add('active')
+        });
+
+        document.querySelector(".input").addEventListener("input", event => {
+          keyboard.setInput(event.target.value);
+        });
+
+        function onChange(input) {
+          document.querySelector(".input").value = input;
+        }
+
+        function onKeyPress(button) {
+          /**
+           * If you want to handle the shift and caps lock buttons
+           */
+          if (button === "{shift}" || button === "{lock}") handleShift();
+        }
+
+        function handleShift() {
+          let currentLayout = keyboard.options.layoutName;
+          let shiftToggle = currentLayout === "default" ? "shift" : "default";
+
+          keyboard.setOptions({
+            layoutName: shiftToggle
+          });
+        }
+
+        
+      </script>
+</body>
+</html>

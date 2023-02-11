@@ -269,7 +269,10 @@ body {
 }
 
 .nav li.active a i,
-.nav li:hover a i {
+.nav li.active button i,
+.nav li:hover a i,
+.nav li:hover button i
+ {
     background: var(--skin-color);
 }
 
@@ -305,25 +308,34 @@ body {
     display: block;
     min-width: 150px;
 }
-
+.nav li button,
 .nav li a {
     z-index: 10;
     font-weight: 600;
     display: block;
     color: var(--text-black-900);
 }
-
+.nav li button:hover,
 .nav li a:hover {
     color: var(--text-black-900);
     border-bottom-left-radius: 50%;
     border-top-left-radius: 50%;
 }
 
-.nav li.active a {
+.nav li.active a,
+.nav li.active button
+{
     color: var(--text-black-900);
 }
+.nav li button
+{
+    background-color: transparent;
+    border: none;
+}
 
-.nav li a i {
+.nav li a i,
+.nav li button i
+{
     display: flex;
     justify-content: center;
     align-items: center;
@@ -331,6 +343,10 @@ body {
     height: 50px;
     border-radius: 50%;
     background: var(--bg-black-100);
+}
+.nav li button i
+{
+    font-size: 16px;
 }
 
 /* HOME */
@@ -833,183 +849,79 @@ h3.hello .text
 }
 
 /* Account */
-.Account-content-right,
-.Account-content-left {
+.Account
+{
+    color: var(--text-black-900);
+}
+.Account .avatar,
+.Account .name,
+.Account .content-left,
+.Account .content-right
+{
     flex: 0 0 50%;
     max-width: 50%;
 }
-
-.Account-title {
-    color: var(--skin-color);
-    text-align: center;
-    font-size: 25px;
-    margin-bottom: 20px;
-}
-
-.Account-sub-title {
-    color: var(--text-black-900);
-    text-align: left;
-    font-size: 15px;
-    margin-bottom: 60px;
-}
-
-.Account .Account-info-item {
-    flex: 0 0 100%;
-    max-width: 100%;
-    margin-bottom: 30px;
+.Account .avatar
+{
     display: flex;
-    justify-content: left;
-    margin-left: 60px;
+    justify-content: center;
+    
+}
+.Account .avatar img
+{
+    border-radius: 50% ;
+    width: 40%;
+    border: 5px solid var(--skin-color);
+    padding: 5px;
+   
 }
 
-.Account .Account-info-item .icon {
-    margin-right: 20px;
+.Account .name h2
+{
+    color: var(--text-black-900);
+    font-size: 28px;
 }
 
-.Account .Account-info-item .icon .fa-brands,
-.Account .Account-info-item .icon .fa-solid {
-    font-size: 25px;
-    color: var(--skin-color);
+.Account .name .detail
+{
+    display: flex;
+    flex-direction: column;
+    color: var(--text-black-100);
+    opacity: 0.7;
+}
+.Account .title 
+{
+    display: flex;
+    margin-bottom: 30px;
+}
+.Account .title span
+{
+    height:auto;
+    width: 5px;
+    margin-right: 5px;
+    background-color: var(--skin-color);
 }
 
-.Account .Account-info-item .text {
+.Account .title .text
+{
+    background: var(--skin-color);
+    padding: 5px 30px 5px 10px;
+    border-radius: 0 30px 30px 0  ;
+}
+
+.Account .detail
+{
+    color: var(--text-black-100);
     display: flex;
     flex-direction: column;
 }
-
-.Account .Account-info-item .text h4 {
-    font-size: 18px;
-    font-weight: 700;
-    color: var(--text-black-900);
-    text-transform: capitalize;
-    display: inline-block;
+.Account .detail span
+{
+    margin-bottom: 3px;
 }
 
-.Account .Account-info-item .text p {
-    font-size: 16px;
-    line-height: 25px;
-    color: var(--text-black-100);
-    font-weight: 400;
-    display: inline-block;
-}
-
-.Account .Account-icon {
-    flex: 0 0 100%;
-    max-width: 100%;
-    margin-left: 65px;
-    display: flex;
-}
-
-.Account .Account-icon .Account-icon-item {
-    margin-right: 15px;
-}
-
-.Account .Account-icon .Account-icon-item i {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    font-size: 18px;
-    background: var(--bg-black-100);
-    color: var(--text-black-900);
-    cursor: pointer;
-    transition: 0.5s;
-}
-
-.Account .Account-icon .Account-icon-item:hover i {
-    color: var(--text-black-100);
-    background: var(--skin-color);
-}
-
-
-.Account .Account-form {
-    flex: 0 0 100%;
-    max-width: 100%;
-}
-
-.Account .Account-form .col-6 {
-    flex: 0 0 50%;
-    max-width: 50%;
-}
-
-.Account .Account-form .col-12 {
-    flex: 0 0 100%;
-    max-width: 100%;
-}
-
-.Account .Account-form .form-item {
-    margin-bottom: 30px;
-    width: 100%;
-}
-
-.Account .Account-form .form-item .inputBox {
-    position: relative;
-    width: 100%;
-}
-
-.Account .Account-form .form-item .inputBox textarea,
-.Account .Account-form .form-item .inputBox input {
-    width: 100%;
-    height: 50px;
-    border-radius: 25px;
-    background: var(--bg-black-100);
-    border: 1px solid var(--bg-black-50);
-    padding: 20px 25px;
-    font-size: 16px;
-    color: var(--text-black-100);
-    transition: all .3s ease;
-}
-
-.Account .Account-form .form-item .inputBox textarea {
-    height: 140px;
-}
-
-.Account .Account-form .form-item .inputBox span {
-    position: absolute;
-    top: -8px;
-    left: 30px;
-    padding: 20px 100px;
-    pointer-events: none;
-    font-size: 16px;
-    color: var(--bg-black-100);
-    text-transform: uppercase;
-    transition: 0.5s;
-    letter-spacing: 0.2em;
-}
-
-.Account .Account-form .form-item .inputBox input:valid~span,
-.Account .Account-form .form-item .inputBox input:focus~span {
-    background: var(--skin-color);
-    color: var(--bg-black-100);
-    font-size: 10px;
-    border-radius: 5px;
-    padding: 2px 10px;
-    font-weight: bold;
-    border: 1px solid var(--skin-color);
-}
-
-.Account .Account-form .form-item .form-control {
-    width: 100%;
-    height: 50px;
-    border-radius: 25px;
-    background: var(--bg-black-100);
-    border: 1px solid var(--bg-black-50);
-    padding: 10px 25px;
-    font-size: 16px;
-    color: var(--text-black-100);
-    transition: all .3s ease;
-}
-
-.Account .Account-form .form-item textarea.form-control {
-    height: 50px;
-    padding: 5px 50px;
-}
-
-.Account .Account-form .form-item .error 
-{   
-    color: red;
-    font-weight: bold;
-    display: none;
+.Account .content-left,
+.Account .content-right
+{
+    padding-left: 50px;
 }

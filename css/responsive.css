@@ -293,10 +293,37 @@
     {
         width: 70px;
     }
-    .contact .contact-icon {
-        margin-bottom: 40px;
-        justify-content: left;
-        margin-left: 10px;
+    .Account .avatar,
+    .Account .name,
+    .Account .content-left,
+    .Account .content-right
+    {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+    .Account .avatar img
+    {
+        width: 40%;
+    }
+    .Account .name h2
+    {
+        text-align: center;
+    }
+    .Account .name .detail,
+    .Account .content-left,
+    .Account .content-right
+    {
+        margin-left: 20px;
+        padding: 0;
+    }
+    .Account .content-left,
+    .Account .content-right
+    {
+        margin-bottom: 30px;
+    }
+    .Account .title h2
+    {
+        font-size: 18px;
     }
 }
 
