@@ -1,362 +1,349 @@
 /* PC */
-@media (min-width:1200px) {
-    .nav {
-        height: 100%;
-        right: 25px;
-        bottom: 0;
-    }
-
+@media (min-width: 1200px) {
+  .nav {
+    height: 100%;
+    right: 25px;
+    bottom: 0;
+  }
 }
 
 /* May Tinh Bang Lon */
-@media (max-width:1199px) {
-    .nav {
-        height: 100%;
-        right: 25px;
-        bottom: 0;
-    }
+@media (max-width: 1199px) {
+  .nav {
+    height: 100%;
+    right: 25px;
+    bottom: 0;
+  }
 
-    .section {
-        left: 0;
-    }
+  .section {
+    left: 0;
+  }
 
-    .section.open {
-        left: 270px;
-    }
-    
-    .section-title h2 {
-        font-size: 70px;
-    }
+  .section.open {
+    left: 270px;
+  }
 
-    .section-title h3 {
-        font-size: 110px;
-    }
-    .Manager .swiper-wrapper {
-        max-width: 800px;
-    }
+  .section-title h2 {
+    font-size: 60px;
+  }
+
+  .section-title h3 {
+    font-size: 110px;
+  }
+  .Manager .swiper-wrapper {
+    max-width: 800px;
+  }
 }
 
 /* May Tinh Bang nhỏ */
-@media (max-width:991px) {
+@media (max-width: 991px) {
+  .section .container {
+    margin-top: 0;
+    padding: 20px 0 0 0;
+  }
 
-    .section .container {
-        margin-top: 0;
-        padding: 20px 0 0 0;
-    }
+  .section {
+    padding: 0 80px 0 60px;
+  }
 
-    .section {
-        padding: 0 80px 0 60px;
-    }
+  .nav {
+    height: 100%;
+    right: 25px;
+    bottom: 0;
+  }
 
-    .nav {
-        height: 100%;
-        right: 25px;
-        bottom: 0;
-    }
+  .contact.contact-info-item,
+  .service .service-item {
+    flex: 0 0 50%;
+    max-width: 50%;
+  }
 
-    .contact.contact-info-item,
-    .service .service-item {
-        flex: 0 0 50%;
-        max-width: 50%;
-    }
+  .home .home-info {
+    flex: 0 0 100%;
+    max-width: 100%;
+    padding: 0 30px;
+  }
 
-    .home .home-info {
-        flex: 0 0 100%;
-        max-width: 100%;
-        padding: 0 30px;
-    }
+  .home .home-img {
+    flex: 0 0 100%;
+    max-width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+  .home .home-img img {
+    width: 300px;
+  }
+  .Pet .Pet-item .Pet-item-inner {
+    width: 300px;
+    height: 300px;
+    background: linear-gradient(120deg, #e66465, #fff);
+    border-radius: 73% 27% 73% 27% / 24% 72% 28% 76%;
+    position: relative;
+  }
+  .Pet .Pet-item .img img {
+    width: 130px;
+  }
+  .Pet .Pet-item a img {
+    width: 50px;
+    height: 50px;
+    left: 150px;
+  }
+  .Manager .Manager-item {
+    flex: 0 0 100%;
+    max-width: 100%;
+    margin-bottom: 30px;
+    display: flex;
+    justify-content: center;
+  }
 
-    .home .home-img {
-        flex: 0 0 100%;
-        max-width: 100%;
-        display: flex;
-        justify-content: center;
-    }
-    .home .home-img img
-    {
-        width: 300px;
-    }
-    .Pet .Pet-item .Pet-item-inner
-    {
-        width: 300px;
-        height: 300px;
-        background: linear-gradient(120deg,#e66465, #fff);
-        border-radius:73% 27% 73% 27% / 24% 72% 28% 76% ;
-        position: relative;
-    }
-    .Pet .Pet-item .img img
-    {
-        width: 130px;
-    }
-    .Pet .Pet-item a img
-    {
-        width: 50px;
-        height: 50px;
-        left: 150px;
-    }
-    .Manager .Manager-item {
-        flex: 0 0 100%;
-        max-width: 100%;
-        margin-bottom: 30px;
-        display: flex;
-        justify-content: center;
-    }
+  .Manager .Manager-item-inner {
+    width: 90%;
+  }
 
-    .Manager .Manager-item-inner {
-        width: 90%;
-    }
+  .System .System-item h2 {
+    text-align: center;
+  }
 }
 
 /* Dien Thoai */
-@media (max-width:767px) {
+@media (max-width: 767px) {
+  .service .service-item,
+  .Pet .Pet-item {
+    flex: 0 0 100%;
+    max-width: 100%;
+    margin-bottom: 100px;
+  }
+  .mb-120 {
+    margin-bottom: 0px;
+  }
+  .section .container {
+    margin-top: 0px;
+  }
 
-    .service .service-item,
-    .Pet .Pet-item
-    {
-        flex: 0 0 100%;
-        max-width: 100%;
-        margin-bottom: 100px;
-    }
-    .mb-120
-    {
-        margin-bottom: 0px;
-    }
-    .section .container {
-        margin-top: 0px;
-    }
+  .section {
+    padding: 0 30px;
+  }
 
-    .section {
-        padding: 0 30px;
-    }
+  .section .section-title {
+    display: flex;
+    justify-content: left;
+  }
 
-    .section .section-title {
-        display: flex;
-        justify-content: left;
-    }
+  .section .section-title h2 {
+    font-size: 30px;
+    margin-left: 30px;
+  }
 
-    .section .section-title h2 {
-        font-size: 30px;
-        margin-left: 30px;
-    }
+  .section .section-title h3 {
+    font-size: 50px;
+  }
 
-    .section .section-title h3 {
-        font-size: 50px;
-    }
+  .nav li:hover span {
+    display: none;
+  }
 
-    .nav li:hover span {
-        display: none;
-    }
+  .box-nav {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+  }
 
-    .box-nav {
-        position: relative;
-        width: 100%;
-        height: 100vh;
-    }
+  .box-nav.open {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 500;
+    background: rgba(0, 0, 0, 0.5);
+  }
 
-    .box-nav.open {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        z-index: 500;
-        background: rgba(0, 0, 0, 0.5);
-    }
+  .box-nav.open .nav {
+    top: 50%;
+    left: 50%;
+    width: 200px;
+    height: 200px;
+    transform: translate(-50%, -50%);
+  }
 
-    .box-nav.open .nav {
-        top: 50%;
-        left: 50%;
-        width: 200px;
-        height: 200px;
-        transform: translate(-50%, -50%);
-    }
+  .nav {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 100px;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: 0.9s;
+  }
 
-    .nav {
-        position: absolute;
-        bottom: 0;
-        right: 0;
-        width: 100px;
-        height: 100px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        transition: 0.9s;
-    }
+  .nav li {
+    position: absolute;
+    list-style: none;
+    left: 0;
+    margin-bottom: 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transform-origin: 100px;
+    transition: 0.3s;
+    transition-delay: calc(0.05s * var(--i));
+    transform: rotate(0deg) translateX(23px);
+  }
 
-    .nav li {
-        position: absolute;
-        list-style: none;
-        left: 0;
-        margin-bottom: 0px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        transform-origin: 100px;
-        transition: 0.3s;
-        transition-delay: calc(0.05s * var(--i));
-        transform: rotate(0deg) translateX(23px);
-    }
+  .nav.active li {
+    transform: rotate(calc((360deg / 6) * var(--i)));
+  }
+  .nav li button,
+  .nav li a {
+    color: var(--text-black-900);
+    text-decoration: none;
+    border-radius: 50%;
+    transform: rotate(calc((360deg / -6) * var(--i)));
+    transition: 0.3s;
+    opacity: 0.6;
+  }
+  .nav li button i,
+  .nav li a i {
+    width: 45px;
+    height: 45px;
+  }
 
-    .nav.active li {
-        transform: rotate(calc((360deg / 6)*var(--i)));
-    }
-    .nav li button,
-    .nav li a {
-        color: var(--text-black-900);
-        text-decoration: none;
-        border-radius: 50%;
-        transform: rotate(calc((360deg / -6)*var(--i)));
-        transition: 0.3s;
-        opacity: 0.6;
-    }
-    .nav li button i,
-    .nav li a i
-    {
-        width: 45px;
-        height: 45px;
-    }
-    
-    .nav li.active a {
-        opacity: 1;
-        transform: rotate(calc((360deg / -6)*var(--i)));
-    }
+  .nav li.active a {
+    opacity: 1;
+    transform: rotate(calc((360deg / -6) * var(--i)));
+  }
 
-    .toggle {
-        position: absolute;
-        width: 55px;
-        height: 55px;
-        background: #fff;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        z-index: 100000;
-        border-radius: 50%;
-        cursor: pointer;
-        box-shadow: 0 3px 4px rgba(0, 0, 0, 0.15);
-        font-size: 2em;
-        transition: transform 1.25s;
-        transform: rotate(0deg);
-    }
+  .toggle {
+    position: absolute;
+    width: 55px;
+    height: 55px;
+    background: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100000;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 3px 4px rgba(0, 0, 0, 0.15);
+    font-size: 2em;
+    transition: transform 1.25s;
+    transform: rotate(0deg);
+  }
 
-    .nav.active .toggle {
-        transform: rotate(315deg);
-    }
+  .nav.active .toggle {
+    transform: rotate(315deg);
+  }
 
-    .about .about-content .skill-item {
-        flex: 0 0 50%;
-        max-width: 50%;
-    }
+  .about .about-content .skill-item {
+    flex: 0 0 50%;
+    max-width: 50%;
+  }
 
-    .Manager .swiper
-    {
-        min-height: auto;
-    }
-    .Manager .Manager-item-inner .Manager-content
-    {
-        padding: 10px;
-    }
-    .Manager .Manager-item-inner .Manager-content h2 {
-        font-size: 18px;
-        margin-bottom: 0px;
-    }
-    .Manager .Manager-item-inner .Manager-content .detail
-    {
-        padding: 0;
-        font-size: 16px;
-    }
-    .Manager .box-form
-    {
-        padding: 0 15px;
-    }
-    .Manager .box-form .left-container 
-    {
-        display: none;
-    }
-    .Manager .box-form .right-container header
-    {
-        width: 100%;
-        padding: 20px;
-    } 
-    .Manager .box-form .right-container header h1
-    {
-        font-size: 20px;
-        margin-top: 30px;
-    }
-    .Manager .box-form .right-container
-    {
-        width: 100%;
-    } 
-    .Manager .box-form .right-container input,
-    .Manager .box-form .right-container .radio-container
-    {
-        width: 90%;
-    } 
-    .Manager .box-form .right-container .radio-container label
-    {
-        width: 70px;
-    }
+  .Manager .swiper {
+    min-height: auto;
+  }
+  .Manager .Manager-item-inner .Manager-content {
+    padding: 10px;
+  }
+  .Manager .Manager-item-inner .Manager-content h2 {
+    font-size: 18px;
+    margin-bottom: 0px;
+  }
+  .Manager .Manager-item-inner .Manager-content .detail {
+    padding: 0;
+    font-size: 16px;
+  }
+  .Manager .box-form {
+    padding: 0 15px;
+  }
+  .Manager .box-form .left-container {
+    display: none;
+  }
+  .Manager .box-form .right-container header {
+    width: 100%;
+    padding: 20px;
+  }
+  .Manager .box-form .right-container header h1 {
+    font-size: 20px;
+    margin-top: 30px;
+  }
+  .Manager .box-form .right-container {
+    width: 100%;
+  }
+  .Manager .box-form .right-container input,
+  .Manager .box-form .right-container .radio-container {
+    width: 90%;
+  }
+  .Manager .box-form .right-container .radio-container label {
+    width: 70px;
+  }
 
-    #info-detail-pet .content-left,
-    #info-detail-pet .content-right,
-    .Account .content-left,
-    .Account .content-right
-    {
-        flex: 0 0 100%;
-        max-width: 100%;
-    }
+  #info-detail-pet .content-left,
+  #info-detail-pet .content-right,
+  .Account .content-left,
+  .Account .content-right {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
 
-    #info-detail-pet .avatar,
-    .Account .avatar
-    {
-        margin-bottom: 10px;
-    }
+  #info-detail-pet .avatar,
+  .Account .avatar {
+    margin-bottom: 10px;
+  }
 
-    #info-detail-pet .avatar img,
-    .Account .avatar img
-    {
-        width: 50%;
-    }
-    #info-detail-pet .name, .Account .name {
-        align-items:start;
-        margin-left: 20px;
-    }
+  #info-detail-pet .avatar img,
+  .Account .avatar img {
+    width: 50%;
+  }
+  #info-detail-pet .name,
+  .Account .name {
+    align-items: start;
+    margin-left: 20px;
+  }
 
-    #info-detail-pet .name .detail, .Account .name .detail
-    {
-        transform: none;
-    }
+  #info-detail-pet .name .detail,
+  .Account .name .detail {
+    transform: none;
+  }
 
-    #info-detail-pet .name h2,
-    .Account .name h2
-    {
-        text-align: center;
-    }
+  #info-detail-pet .name h2,
+  .Account .name h2 {
+    text-align: center;
+  }
 
-    #info-detail-pet .content-right,
-    .Account .content-right
-    {
-        margin-left: 20px;
-        padding: 0;
-    }
+  #info-detail-pet .content-right,
+  .Account .content-right {
+    margin-left: 20px;
+    padding: 0;
+  }
 
-    #info-detail-pet .content-left,
-    #info-detail-pet .content-right,
-    .Account .content-left,
-    .Account .content-right
-    {
-        margin-bottom: 30px;
-        padding: 0;
-    }
-    
-    #info-detail-pet .title h2,
-    .Account .title h2
-    {
-        font-size: 18px;
-    }
+  #info-detail-pet .content-left,
+  #info-detail-pet .content-right,
+  .Account .content-left,
+  .Account .content-right {
+    margin-bottom: 30px;
+    padding: 0;
+  }
+
+  #info-detail-pet .title h2,
+  .Account .title h2 {
+    font-size: 18px;
+  }
+  /* .System .System-item .System-item-inner {
+    width: max-content;
+  } */
+
+  .System .System-item {
+    margin-bottom: 30px;
+    flex: 0 0 80%;
+    max-width: 80%;
+  }
 }
 
 /* Dien Thoai nho*/
-@media (max-width:485px) {
-    .about .about-content .personal-info .info-item {
-        flex: 0 0 100%;
-        max-width: 100%;
-    }
+@media (max-width: 485px) {
+  .about .about-content .personal-info .info-item {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
 }
