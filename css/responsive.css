@@ -276,9 +276,6 @@
     padding: 0;
     font-size: 16px;
   }
-  .Manager .box-form {
-    padding: 0 15px;
-  }
   .Manager .box-form .left-container {
     display: none;
   }
@@ -291,7 +288,7 @@
     margin-top: 30px;
   }
   .Manager .box-form .right-container {
-    width: 100%;
+    width: 95%;
   }
   .Manager .box-form .right-container input,
   .Manager .box-form .right-container .radio-container {
