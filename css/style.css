@@ -855,14 +855,11 @@ h3.hello .text {
   justify-content: center;
   margin-bottom: 30px;
 }
-#info-detail-pet .avatar {
-  margin-bottom: 30px;
-}
 
 #info-detail-pet .avatar img,
 .Account .avatar img {
   border-radius: 50% 50% 49% 51% / 28% 29% 71% 72%;
-  width: 50%;
+  width: 200px;
   border: 5px solid var(--skin-color);
   padding: 5px;
 }
@@ -956,13 +953,7 @@ h3.hello .text {
   display: block;
 }
 
-#info-detail-pet .content-left {
-  padding-left: 50px;
-}
-
-#info-detail-pet .box-chart {
-  padding-left: 50px;
-}
+#info-detail-pet .info
 
 .exit-detail-pet {
   position: absolute;
@@ -990,4 +981,23 @@ h3.hello .text {
   border-radius: 50%;
   border: 1px solid var(--bg-black-50);
   opacity: 0.5;
+}
+#info-detail-pet .avatar_box
+{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#info-detail-pet .content .content-left 
+{
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+#info-detail-pet .content .content-left .info .detail
+{
+  display: flex;
+  flex-direction: column;
 }

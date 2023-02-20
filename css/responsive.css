@@ -103,6 +103,29 @@
   .System .System-item h2 {
     text-align: center;
   }
+  #info-detail-pet .content
+  {
+    gap: 20px;
+  }
+  #info-detail-pet .content .content-left,
+  #info-detail-pet .content .content-right
+  {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+  #info-detail-pet .content .content-left 
+  {
+    display: flex;
+    flex-direction: column;
+  }
+  #info-detail-pet .content .content-left .avatar_box
+  {
+    align-items: center;
+  }
+  #info-detail-pet
+  {
+    padding: 0 50px;
+  }
 }
 
 /* Dien Thoai */
@@ -290,8 +313,6 @@
   .Account .avatar {
     margin-bottom: 10px;
   }
-
-  #info-detail-pet .avatar img,
   .Account .avatar img {
     width: 50%;
   }
@@ -311,14 +332,6 @@
     text-align: center;
   }
 
-  #info-detail-pet .content-right,
-  .Account .content-right {
-    margin-left: 20px;
-    padding: 0;
-  }
-
-  #info-detail-pet .content-left,
-  #info-detail-pet .content-right,
   .Account .content-left,
   .Account .content-right {
     margin-bottom: 30px;
