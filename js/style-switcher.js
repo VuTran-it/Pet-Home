@@ -31,10 +31,10 @@ function setActiveStyle(color)
 
 /* Theme light and dark mode */
 const remoteControl = document.querySelector('.remote-control .dark-light');
-remoteControl.addEventListener("click", () => {
-    remoteControl.querySelector("i").classList.toggle("fa-moon")
-    remoteControl.querySelector("i").classList.toggle("fa-sun")
-    document.body.classList.toggle("light")
+  remoteControl.addEventListener("click", () => {
+  remoteControl.querySelector("i").classList.toggle("fa-moon")
+  remoteControl.querySelector("i").classList.toggle("fa-sun")
+  document.body.classList.toggle("light")
 })
 
 window.addEventListener("load" ,() => {
@@ -71,25 +71,26 @@ function closeFullscreen() {
   }
 }
 
-window.addEventListener('load', () =>{
-  openFullscreen()
-});
+function eventFullScreen()
+{
+  if (document.fullscreenElement) {
+    closeFullscreen();
+    icon_fullscreen.classList.remove('fa-compress');
+    icon_fullscreen.classList.add('fa-expand');
+  } else {
+    openFullscreen();
+    icon_fullscreen.classList.remove('fa-expand');
+    icon_fullscreen.classList.add('fa-compress');
+  }
+}
 
 /* Xử lí nhấn nút fullscreen */
 const btn_fullscreen = document.getElementById('btn_fullscreen')
 const icon_fullscreen = document.querySelector('#btn_fullscreen .fa-solid')
-let defaul_fullscreen = "Open";
 
-btn_fullscreen.addEventListener("click", () => {
-    if (defaul_fullscreen == "Open") {
-        defaul_fullscreen = "Close"; 
-        openFullscreen();
-        icon_fullscreen.classList.remove('fa-expand');
-        icon_fullscreen.classList.add('fa-compress');
-    } else {
-        defaul_fullscreen = "Open"; 
-        closeFullscreen();
-        icon_fullscreen.classList.remove('fa-compress');
-        icon_fullscreen.classList.add('fa-expand');
-    }
-})
+if(btn_fullscreen)
+{
+  btn_fullscreen.addEventListener("click", () => {
+    eventFullScreen()
+  })
+}

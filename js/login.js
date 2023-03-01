@@ -24,27 +24,30 @@ const auth = getAuth(app);
 
 /* LOGIN */
 const btn_singin = document.getElementById('btn_login')
-btn_singin.addEventListener("click",() => {
-  var email = document.getElementById('value_email').value
-  var password = document.getElementById('value_password').value
-  console.log("email",email)
-  console.log("password",password)
-  signInWithEmailAndPassword(auth, email, password)
-  .then((userCredential) => {
-    // Signed in 
-    const user = userCredential.user;
-    sessionStorage.setItem("idUser", user.uid)
-    if(user.uid != 'JfPgQnku8zemR0jQcNUxfYfdtsa2')
-    {
-      window.location.href="https://vutran-it.github.io/Pet-Home/html/index.html"
-    }
-    else
-    {
-      window.location.href="https://vutran-it.github.io/Pet-Home/html/admin.html"
-    }
+if(btn_singin)
+{
+  btn_singin.addEventListener("click",() => {
+    var email = document.getElementById('value_email').value
+    var password = document.getElementById('value_password').value
+    console.log("email",email)
+    console.log("password",password)
+    signInWithEmailAndPassword(auth, email, password)
+    .then((userCredential) => {
+      // Signed in 
+      const user = userCredential.user;
+      sessionStorage.setItem("idUser", user.uid)
+      if(user.uid != 'JfPgQnku8zemR0jQcNUxfYfdtsa2')
+      {
+        window.location.href="https://vutran-it.github.io/Pet-Home/html/index.html"
+      }
+      else
+      {
+        window.location.href="https://vutran-it.github.io/Pet-Home/html/admin.html"
+      }
+    })
+    .catch((error) => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+    });
   })
-  .catch((error) => {
-    const errorCode = error.code;
-    const errorMessage = error.message;
-  });
-})
+}

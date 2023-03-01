@@ -79,9 +79,11 @@ if(add_pet && close_box)
 }
 /* LOGOUT*/
 const logout = document.getElementById('logout');
-console.log(logout)
-logout.addEventListener("click", () => {
-    sessionStorage.removeItem("idUser")
-    window.location.href = "http://127.0.0.1:5500/html/login.html"
-})
+if(logout)
+{
+    logout.addEventListener("click", () => {
+        sessionStorage.removeItem("idUser")
+        window.location.href = "http://127.0.0.1:5500/html/login.html"
+    })
+}
 /* END LOGOUT*/
