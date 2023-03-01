@@ -38,11 +38,11 @@ if(btn_singin)
       sessionStorage.setItem("idUser", user.uid)
       if(user.uid != 'JfPgQnku8zemR0jQcNUxfYfdtsa2')
       {
-        window.location.href="https://vutran-it.github.io/Pet-Home/html/index.html"
+        window.location.href="http://127.0.0.1:5500/html/index.html"
       }
       else
       {
-        window.location.href="https://vutran-it.github.io/Pet-Home/html/admin.html"
+        window.location.href="http://127.0.0.1:5500/html/admin.html"
       }
     })
     .catch((error) => {
