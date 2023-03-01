@@ -63,35 +63,16 @@
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css"
     />
+
+    <script>
+      if(!sessionStorage.getItem("idUser"))
+      {
+        window.location.href='http://127.0.0.1:5500/html/login.html'
+      }
+    </script>
   </head>
 
   <body>
-    <div id="loader-background">
-      <div class="load" style="--clr: #ffd4d4">
-        <span style="--i: 1"></span>
-        <span style="--i: 2"></span>
-        <span style="--i: 3"></span>
-        <span style="--i: 4"></span>
-        <span style="--i: 5"></span>
-        <span style="--i: 6"></span>
-        <span style="--i: 7"></span>
-        <span style="--i: 8"></span>
-        <span style="--i: 9"></span>
-        <span style="--i: 10"></span>
-        <span style="--i: 11"></span>
-        <span style="--i: 12"></span>
-        <span style="--i: 13"></span>
-        <span style="--i: 14"></span>
-        <span style="--i: 15"></span>
-        <span style="--i: 16"></span>
-        <span style="--i: 17"></span>
-        <span style="--i: 18"></span>
-        <span style="--i: 19"></span>
-        <span style="--i: 20"></span>
-        <div class="rocket"></div>
-        <div class="value-loader">0%</div>
-      </div>
-    </div>
     <!-- Main Container Start -->
     <div class="main-container">
       <!-- Nav Start -->
@@ -119,8 +100,8 @@
             <a href="#Account"><i class="fa-solid fa-user"></i></a
             ><span> Account</span>
           </li>
-          <li style="--i: 5" class="list">
-            <button>
+          <li style="--i: 5" class="logout" id="logout">
+            <button >
               <i class="fa-solid fa-person-walking-arrow-right"></i></button
             ><span> Log Out</span>
           </li>
@@ -448,6 +429,7 @@
               </button>
             </div>
           </div>
+          <!-- Add pet start  -->
           <div class="box-form scale-up-tl">
             <div class="signup-container">
               <div class="left-container">
@@ -557,6 +539,7 @@
             </div>
 
           </div>
+          <!-- Add pet end  -->
         </section>
         <!-- Manager Section End -->
 
@@ -634,10 +617,6 @@
             <i class="fa-solid"></i>
           </div>
 
-          <div class="s-icon remote-control-item language">
-            <span></span>
-          </div>
-
           <div class="s-icon remote-control-item" id="btn_fullscreen">
             <i class="fa-solid fa-expand"></i>
           </div>
@@ -649,10 +628,9 @@
 
     <!-- Script -->
     <script src="../js/index.js"></script>
-    <!-- <script type="module" src="../js/switchLanguage.js"></script> -->
-    <script src="../js/loader.js"></script>
     <script src="../js/navMobile.js"></script>
     <script src="../js/style-switcher.js"></script>
+    <script src="../js/firebase.js" type="module"></script>
 
     <!-- Swiper -->
     <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
