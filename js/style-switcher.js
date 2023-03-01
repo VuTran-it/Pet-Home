@@ -71,6 +71,10 @@ function closeFullscreen() {
   }
 }
 
+window.addEventListener('load', () =>{
+  openFullscreen()
+});
+
 /* Xử lí nhấn nút fullscreen */
 const btn_fullscreen = document.getElementById('btn_fullscreen')
 const icon_fullscreen = document.querySelector('#btn_fullscreen .fa-solid')
