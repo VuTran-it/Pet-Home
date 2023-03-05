@@ -86,8 +86,9 @@
     border-radius: 73% 27% 73% 27% / 24% 72% 28% 76%;
     position: relative;
   }
-  .Pet .Pet-item .img img {
+  .Pet .Pet-item .img {
     width: 130px;
+    height: 130px;
   }
   .Pet .Pet-item a img {
     width: 50px;

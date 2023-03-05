@@ -37,6 +37,15 @@ ul {
   text-align: center !important;
 }
 
+.defaul
+{
+  color: var(--skin-color);
+  font-size: 20px;
+  text-align: center;
+  font-weight: bold;
+  width: 100%;
+}
+
 :root {
   --bg-black-900: #151515;
   --bg-black-100: #222222;
@@ -414,10 +423,14 @@ h3.hello .text {
   position: absolute;
   top: -60px;
   left: 60px;
+  width: 170px;
+  height: 170px;
 }
 .Pet .Pet-item .img img {
-  width: 170px;
-  padding: 10px;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  padding: 5px;
   border: 5px solid var(--skin-color);
   border-radius: 50%;
   background-color: var(--bg-black-50);
@@ -457,6 +470,10 @@ h3.hello .text {
   background-color: rgba(255, 255, 255, 0.3);
   padding: 0 5px;
   border-radius: 20px;
+}
+.box-list-pet .Pet-item 
+{
+  margin-bottom: 100px;
 }
 
 /* System */
@@ -1196,15 +1213,6 @@ h3.hello .text {
 {
   background-color: transparent !important;
 }
-.box-add-user form .item:nth-child(9) input
-{
-  flex: 1;
-  margin-left: 10px;
-  text-align: center;
-  color: var(--skin-color);
-  font-weight: bold;
-  background-color: transparent;
-}
 .box-add-user form input[type='number']::-webkit-outer-spin-button,
 .box-add-user form input[type='number']::-webkit-inner-spin-button
 {
@@ -1233,6 +1241,7 @@ h3.hello .text {
   opacity: .6;
   transition: all .45s;
   cursor: pointer;
+  margin-top: 20px;
 }
 
 .box-add-user form .item input[type='button']:hover

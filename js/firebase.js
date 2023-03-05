@@ -2,8 +2,8 @@
  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-app.js";
  import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-analytics.js";
  import { getStorage,ref as Sref,getDownloadURL,uploadBytesResumable } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-storage.js";
- import { getAuth,createUserWithEmailAndPassword,signInWithEmailAndPassword  } from 'https://www.gstatic.com/firebasejs/9.17.1/firebase-auth.js'
- import { getDatabase, ref, onValue, query, limitToLast,set} from "https://www.gstatic.com/firebasejs/9.17.1/firebase-database.js"
+ import { getAuth,createUserWithEmailAndPassword  } from 'https://www.gstatic.com/firebasejs/9.17.1/firebase-auth.js'
+ import { getDatabase, ref, onValue, query,get, limitToLast,set,update,child} from "https://www.gstatic.com/firebasejs/9.17.1/firebase-database.js"
 
  const firebaseConfig = {
     apiKey: "AIzaSyCZ92xMiEl2xzANh1hJzWioCEZv_POjbAQ",
@@ -23,6 +23,7 @@ const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics();
 const auth = getAuth();
 const database = getDatabase();
+const dbRef = ref(getDatabase());
 const storage = getStorage();
 const dataRef = query(ref(database, 'account'), limitToLast(100));
 
@@ -43,7 +44,7 @@ const inputAddUser = document.querySelectorAll('.main-admin .box-add-user .input
 const btnAddUser = document.querySelector('.main-admin .box-add-user .btn-add')
 const errorUser = document.querySelector('.main-admin .box-add-user .item.error')
 
-function writeUserData(userId,avatar,name,age,gender,phone,address,quantityPet) {
+function writeUserData(userId,avatar,name,age,gender,phone,address,countPet) {
   set(ref(database, 'account/' + userId + '/info'), {
     avatar: avatar,
     name: name,
@@ -51,14 +52,15 @@ function writeUserData(userId,avatar,name,age,gender,phone,address,quantityPet) 
     gender : gender,
     phone : phone,
     address : address,
-    countPet : quantityPet,
+    countPet:countPet
   });
 }
 
 if(btnAddUser)
 {
   btnAddUser.addEventListener("click",() => {
-    let email,password,name,avatar,age,gender,phone,address,quantityPet,fileAvatar
+    let email,password,name,avatar,age,gender,phone,address,fileAvatar
+    let countPet = "0"
     //get info value
     for(let i = 0; i < inputAddUser.length; i++ )
     {
@@ -69,7 +71,6 @@ if(btnAddUser)
       age = inputAddUser[4].value ? inputAddUser[4].value : ''
       phone = inputAddUser[5].value ? inputAddUser[5].value : ''
       address = inputAddUser[6].value ? inputAddUser[6].value : ''
-      quantityPet = inputAddUser[7].value ? inputAddUser[7].value : ''
     }
     // get gender value
     for(let i = 0; i < document.getElementsByName('gender').length; i++ )
@@ -96,13 +97,12 @@ if(btnAddUser)
           }
         });
 
-        await writeUserData(user.uid,avatar,name,age,gender,phone,address,quantityPet);
+        await writeUserData(user.uid,avatar,name,age,gender,phone,address,countPet);
       })  
 
       for(let i = 0; i < inputAddUser.length; i++ )
       {
         inputAddUser[i].value = ''
-        inputAddUser[7].value = 0
       }
       
       errorUser.style.display = 'none'
@@ -209,9 +209,10 @@ if(userID && userID != '')
 /* END SHOW INFO USER */
 
 
-/* UPLOAD PET */
+/* ADD PET */
 const inputInfoPet = document.querySelectorAll('.box-form.box-info-pet .input')
 const btnUploadPet = document.querySelector('.box-form.box-info-pet .upload-pet')
+
 function writePetData(petId,name,image,breed,age,gender,neutered) {
   set(ref(database, 'account/' + userID + '/listPet/' + petId), {
     name: name,
@@ -225,6 +226,7 @@ function writePetData(petId,name,image,breed,age,gender,neutered) {
 
 if(btnUploadPet)
 {
+  const notification = document.querySelector('footer .notification')
   btnUploadPet.addEventListener("click",() => {
     let idPet,name,image,breed,age,gender,neutered,fileImage
     const date = new Date().getTime();
@@ -267,27 +269,48 @@ if(btnUploadPet)
             }
           });
           await writePetData(idPet,name,image,breed,age,gender,neutered);
-          document.querySelector('footer .notification').innerHTML = '<p style="color:green">Successfully added pets</p>'
+          
+
+          //update the number of pet of the user 
+          get(child(dbRef, `account/`+userID+`/info/countPet`)).then((snapshot) => {
+            if (snapshot.exists()) {
+              console.log("countPet",snapshot.val())
+              let countPet = Number(snapshot.val()) + 1
+              console.log("update",countPet)
+              const updates = {};
+              updates['/account/' + userID + '/info/countPet'] = countPet;
+              update(ref(database), updates)
+            } else {
+              console.log("No data available");
+            }
+          })
+          // delete value and notification
+          for(let i = 0; i < inputInfoPet.length; i++ )
+          {
+            inputInfoPet[i].value = ''
+          }
+          notification.innerHTML = '<p style="color:green">Successfully added pets</p>'
         }
         else
         {
-          document.querySelector('footer .notification').innerHTML = '<p style="color:red">Necessary information has not been receiveds</p>'
+          notification.innerHTML = '<p style="color:red">Necessary information has not been receiveds</p>'
         }
       })  
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
-        document.querySelector('footer .notification').innerHTML = '<p style="color:red">Looks like something went wrong</p>'
+        console.log(errorCode,errorMessage)
+        notification.innerHTML = '<p style="color:red">Looks like something went wrong</p>'
       });
     }
     else
     {
-      document.querySelector('footer .notification').innerHTML = '<p style="color:red">No pet pictures yet</p>'
+      notification.innerHTML = '<p style="color:red">No pet pictures yet</p>'
     }
   })
 }
 
-/* END UPLOAD PET */
+/* END ADD PET */
 
 /* SHOW LIST PET FOR USER */
 const managerListPet = document.querySelector('.box-manager-list-pet')
