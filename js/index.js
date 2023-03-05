@@ -2,10 +2,13 @@
 /* NAV */
 const nav = document.querySelector('.nav'),
     navList = document.querySelectorAll('.nav .list'),
+    navAdmin = document.querySelector('.navAdmin'),
+    navAdminList = document.querySelectorAll('.navAdmin .list'),
     totalNavList = navList.length,
+    totalNavAdminList = navAdminList.length,
     allSection = document.querySelectorAll('.section'),
+    allSectionAdmin = document.querySelectorAll('.main-admin .section'),
     totalSection = allSection.length;
-
 for (let i = 0; i < totalNavList; i++) {
     navList[i].addEventListener("click", function () {
         removeBackSection()
@@ -19,9 +22,26 @@ for (let i = 0; i < totalNavList; i++) {
         showSection(navList[i].querySelector('a'));
     })
 }
+for (let i = 0; i < totalNavAdminList; i++) {
+    navAdminList[i].addEventListener("click", function () {
+        removeBackSection()
+        for (let j = 0; j < totalNavAdminList; j++) {
+            if (navAdminList[j].classList.contains("active")) {
+                addBackSection(j);
+            }
+            navAdminList[j].classList.remove("active");
+        }
+        this.classList.add("active")
+        showSection(navAdminList[i].querySelector('a'));
+    })
+}
+
 
 function removeBackSection() {
     for (let i = 0; i < totalSection; i++) {
+        allSection[i].classList.remove("back-section")
+    }
+    for (let i = 0; i < totalNavAdminList; i++) {
         allSection[i].classList.remove("back-section")
     }
 }
@@ -32,6 +52,9 @@ function addBackSection(num) {
 
 function showSection(element) {
     for (let i = 0; i < totalSection; i++) {
+        allSection[i].classList.remove("active")
+    }
+    for (let i = 0; i < totalNavAdminList; i++) {
         allSection[i].classList.remove("active")
     }
     const target = element.getAttribute("href").split("#")[1];
@@ -46,21 +69,17 @@ function updateNav(element) {
             navList[i].classList.add("active")
         }
     }
+    for (let i = 0; i < totalNavAdminList; i++) {
+        navAdminList[i].classList.remove("active")
+        const target = element.getAttribute("href").split("#")[1];
+        if (target === navAdminList[i].querySelector("a").getAttribute("href").split('#')[1]) {
+            navAdminList[i].classList.add("active")
+        }
+    }
 }
 
 
 /* Manager */
-const ManagerItem = document.querySelectorAll(".Manager-item")
-const ManagerContent = document.querySelectorAll('.Manager-content')
-const ManagerBTN = document.querySelectorAll('.Manager-item .btn-box')
-
-for (let i = 0; i < ManagerItem.length; i++) {
-    ManagerItem[i].addEventListener('click', function () {
-        ManagerContent[i].classList.toggle("active")
-        ManagerBTN[i].classList.toggle("active")
-    })
-}
-
 const box_form = document.querySelector(".Manager .box-form");
 const close_box = document.querySelector(".Manager .close-box");
 const upload_pet = document.querySelector(".Manager .upload-pet");

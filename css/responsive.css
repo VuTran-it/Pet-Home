@@ -9,6 +9,7 @@
 
 /* May Tinh Bang Lon */
 @media (max-width: 1199px) {
+  
   .nav {
     height: 100%;
     right: 25px;
@@ -32,6 +33,11 @@
   }
   .Manager .swiper-wrapper {
     max-width: 800px;
+  }
+  .box-user .item
+  {
+    flex: 0 0 45%;
+    max-width: 45%;
   }
 }
 
@@ -313,8 +319,7 @@
   .Account .avatar img {
     width: 50%;
   }
-  #info-detail-pet .name,
-  .Account .name {
+  #info-detail-pet .name {
     align-items: start;
     margin-left: 20px;
   }
@@ -348,6 +353,49 @@
     flex: 0 0 80%;
     max-width: 80%;
   }
+
+  .box-user
+  {
+    margin: auto;
+  }
+  
+  .box-user .item
+  {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+
+  .box-add-user form .item label
+  {
+    width: 40%;
+    font-size: 16px;
+  }
+
+  .navAdmin
+  {
+    flex-direction: row;
+    gap: 20px;
+    bottom:2%;
+    left: 50%;
+    top: auto;
+    right: auto;
+    transform: translateX(-50%);
+  }
+
+  .navAdmin li
+  {
+    margin-bottom: 0;
+  }
+
+  .navAdmin li span
+  {
+    display: none !important;
+  }
+
+  .main-admin .Manager .title
+  {
+    margin-bottom: 0px;
+  }
 }
 
 /* Dien Thoai nho*/
@@ -355,5 +403,10 @@
   .about .about-content .personal-info .info-item {
     flex: 0 0 100%;
     max-width: 100%;
+  }
+  
+  .box-add-user form
+  {
+    transform: translateX(-50%) translateY(-57%);
   }
 }

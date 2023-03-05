@@ -20,20 +20,20 @@
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
-const auth = getAuth(app);
-
+const auth = getAuth();
 /* LOGIN */
 const btn_singin = document.getElementById('btn_login')
+var errorLogin = document.querySelector('.login-box .error')
+
 if(btn_singin)
 {
   btn_singin.addEventListener("click",() => {
     var email = document.getElementById('value_email').value
     var password = document.getElementById('value_password').value
-    console.log("email",email)
-    console.log("password",password)
     signInWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
       // Signed in 
+      errorLogin.style.display = "none"
       const user = userCredential.user;
       sessionStorage.setItem("idUser", user.uid)
       if(user.uid != 'JfPgQnku8zemR0jQcNUxfYfdtsa2')
@@ -48,6 +48,7 @@ if(btn_singin)
     .catch((error) => {
       const errorCode = error.code;
       const errorMessage = error.message;
+      errorLogin.style.display = "block"
     });
   })
 }
