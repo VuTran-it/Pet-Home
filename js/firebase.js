@@ -1,9 +1,9 @@
  // Import the functions you need from the SDKs you need
  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-app.js";
  import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-analytics.js";
- import { getStorage,ref as Sref,getDownloadURL,uploadBytesResumable } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-storage.js";
- import { getAuth,createUserWithEmailAndPassword  } from 'https://www.gstatic.com/firebasejs/9.17.1/firebase-auth.js'
- import { getDatabase, ref, onValue, query,get, limitToLast,set,update,child} from "https://www.gstatic.com/firebasejs/9.17.1/firebase-database.js"
+ import { getStorage,ref as Sref,getDownloadURL,uploadBytesResumable,deleteObject } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-storage.js";
+ import { getAuth,createUserWithEmailAndPassword,deleteUser} from 'https://www.gstatic.com/firebasejs/9.17.1/firebase-auth.js'
+ import { getDatabase, ref, onValue, query,get, limitToLast,set,update,remove,child} from "https://www.gstatic.com/firebasejs/9.17.1/firebase-database.js"
 
  const firebaseConfig = {
     apiKey: "AIzaSyCZ92xMiEl2xzANh1hJzWioCEZv_POjbAQ",
@@ -13,7 +13,7 @@
     storageBucket: "raspberry-test-0207.appspot.com",
     messagingSenderId: "333665348767",
     appId: "1:333665348767:web:9335583220b1c7ce02c6aa",
-    measurementId: "G-5XMV3BVGQP"
+    measurementId: "G-5XMV3BVGQP",
   };
 
 // var userID = 1
@@ -21,7 +21,7 @@
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics();
-const auth = getAuth();
+const auth = getAuth(app);
 const database = getDatabase();
 const dbRef = ref(getDatabase());
 const storage = getStorage();
@@ -123,9 +123,10 @@ const boxUser = document.querySelector('.main-admin .box-user')
 
 if(boxUser)
 {
-  onValue(dataRef, (snapshot) => {
+  onValue(dataRef, async (snapshot) => {
     let html = ''
-    snapshot.forEach((childSnapshot) => {
+    await snapshot.forEach((childSnapshot) => {
+      var childKey = childSnapshot.key;
       var childData = childSnapshot.val();
       let content = `
         <div class="item">
@@ -140,11 +141,62 @@ if(boxUser)
             <p>Address :  `+childData.info.address+`</p>
             <p>Quantity pet : `+childData.info.countPet+`</p>
           </div>
+          <div class="control">
+            <button id="removeUser" iduser="`+childKey+`"><i class="fa-solid fa-trash"></i></button>
+          </div>
         </div>
       `
       html += content
       boxUser.innerHTML = html
     });
+
+    const btnRemoveUser = document.querySelectorAll("#removeUser")
+    if(btnRemoveUser)
+    {
+      btnRemoveUser.forEach((item) => {
+        item.addEventListener("click",() => {
+          let idUser = item.getAttribute('iduser');
+          console.log(idUser)
+          //remove all infomation for user
+          // get(child(dbRef, `account/`+idUser)).then((snapshot) => {
+          //   if (snapshot.exists()) {
+          //     let avatarUser =snapshot.val().avatar
+          //     const desertRef = Sref(storage, avatarUser);
+          //     // Delete the file
+          //     deleteObject(desertRef).then(() => {
+          //       // File deleted successfully
+          //       // remove database for pet in realtime database
+          //       remove(ref(database,`account/`+ idUser)).then(() => {
+          //         //reload page
+          //         location.reload()
+          //       }).catch((error) => {
+          //         const errorCode = error.code;
+          //         const errorMessage = error.message;
+          //         console.error(errorCode,errorMessage)
+          //       });
+          //     }).catch((error) => {
+          //       const errorCode = error.code;
+          //       const errorMessage = error.message;
+          //       console.error(errorCode,errorMessage)
+          //     });
+    
+          //   } else {
+          //     console.log("No data available");
+          //   }
+          // })
+
+          //remove account for user
+          const user = auth.currentUser;
+          auth().deleteUser(idUser).then(() => {
+            console.log('Successfully deleted user');
+          })
+          .catch((error) => {
+            console.log('Error deleting user:', error);
+          });
+
+        })
+      })
+    }
   });
 }
 /* ADD SHOW LIST USER */
@@ -269,17 +321,14 @@ if(btnUploadPet)
             }
           });
           await writePetData(idPet,name,image,breed,age,gender,neutered);
-          
 
           //update the number of pet of the user 
           get(child(dbRef, `account/`+userID+`/info/countPet`)).then((snapshot) => {
             if (snapshot.exists()) {
-              console.log("countPet",snapshot.val())
               let countPet = Number(snapshot.val()) + 1
-              console.log("update",countPet)
-              const updates = {};
-              updates['/account/' + userID + '/info/countPet'] = countPet;
-              update(ref(database), updates)
+              update(ref(database,'/account/' + userID + '/info'),{
+                countPet : countPet,
+              })
             } else {
               console.log("No data available");
             }
@@ -290,10 +339,16 @@ if(btnUploadPet)
             inputInfoPet[i].value = ''
           }
           notification.innerHTML = '<p style="color:green">Successfully added pets</p>'
+          setTimeout(() => {
+            notification.innerHTML = ""
+          }, 2000)
         }
         else
         {
           notification.innerHTML = '<p style="color:red">Necessary information has not been receiveds</p>'
+          setTimeout(() => {
+            notification.innerHTML = ""
+          }, 2000)
         }
       })  
       .catch((error) => {
@@ -301,11 +356,17 @@ if(btnUploadPet)
         const errorMessage = error.message;
         console.log(errorCode,errorMessage)
         notification.innerHTML = '<p style="color:red">Looks like something went wrong</p>'
+        setTimeout(() => {
+          notification.innerHTML = ""
+        }, 2000)
       });
     }
     else
     {
       notification.innerHTML = '<p style="color:red">No pet pictures yet</p>'
+      setTimeout(() => {
+        notification.innerHTML = ""
+      }, 2000)
     }
   })
 }
@@ -343,11 +404,9 @@ onValue(infoPetRef,async (snapshot) => {
                         </div>
                       </div>
                       <div class="btn-box">
-                        <button>
-                          <i class="fa-solid fa-magnifying-glass"></i>
-                        </button>
+                        <button id="showInfo" idpet="`+childKey+`"><i class="fa-solid fa-magnifying-glass"></i></button>
                         <button><i class="fa-solid fa-pen-to-square"></i></button>
-                        <button><i class="fa-solid fa-trash"></i></button>
+                        <button id="removePet" idpet="`+childKey+`"><i class="fa-solid fa-trash"></i></button>
                       </div>
                     </div>
                     <!-- Manager item end -->`;
@@ -374,7 +433,7 @@ onValue(infoPetRef,async (snapshot) => {
                                 <span>Neutered : `+childData.neutered+`</span>
                               </div>
                               </div>
-                              <a href="details_pet.html?id_pet=`+childKey+`">
+                              <a href="details_pet.html?idPet=`+childKey+`">
                                 <img src="../img/chanmeo.png" alt=""/>
                               </a>
                             </div>
@@ -388,6 +447,65 @@ onValue(infoPetRef,async (snapshot) => {
     /* END LIST PET */
   });
 
+   /* SHOW,EDIT,REMOVE PET */
+   const btnShowPets = document.querySelectorAll("#showInfo")
+   const btnRemovePets =document.querySelectorAll("#removePet")
+   if(btnShowPets)
+   {
+    btnShowPets.forEach((item) => {
+      item.addEventListener("click",() => {
+        let url = 'http://127.0.0.1:5500/html/details_pet.html?idPet=' + item.getAttribute('idpet')
+        
+        window.location.href = url
+      })
+    })
+   }
+   if(btnRemovePets)
+   {
+    btnRemovePets.forEach((item) => {
+      item.addEventListener("click",() => {
+        let idPet = item.getAttribute('idpet')
+        get(child(dbRef, `account/`+userID+`/listPet/`+idPet)).then((snapshot) => {
+          if (snapshot.exists()) {
+            let imagePet =snapshot.val().image
+            const desertRef = Sref(storage, imagePet);
+            // Delete the file
+            deleteObject(desertRef).then(() => {
+              // File deleted successfully
+              // remove database for pet in realtime database
+              remove(ref(database,`account/`+ userID +`/listPet/`+ idPet)).then(() => {
+                // update countpet for user
+                get(child(dbRef, `account/`+userID+`/info/countPet`)).then((snapshot) => {
+                  if (snapshot.exists()) {
+                    let countPet = Number(snapshot.val()) - 1
+                    update(ref(database,'/account/' + userID + '/info'),{
+                      countPet : countPet,
+                    })
+                  } else {
+                    console.log("No data available");
+                  }
+                })
+  
+                //reload page
+                location.reload()
+              }).catch((error) => {
+                // Uh-oh, an error occurred!
+              });
+            }).catch((error) => {
+              // Uh-oh, an error occurred!
+            });
+  
+          } else {
+            console.log("No data available");
+          }
+        })
+  
+      })
+    })
+   }
+    
+   /* END SHOW,EDIT,REMOVE PET */
+
   const ManagerItem = document.querySelectorAll(".Manager-item")
   const ManagerContent = document.querySelectorAll('.Manager-content')
   const ManagerBTN = document.querySelectorAll('.Manager-item .btn-box')
@@ -399,3 +517,80 @@ onValue(infoPetRef,async (snapshot) => {
   }
 });
 /* END SHOW LIST PET FOR USER */
+
+/* SHOW DETAIL INFO PET */
+const queryString = window.location.search
+const urlParams = new URLSearchParams(queryString);
+
+const IDPET = urlParams.get('idPet')
+
+onValue(infoPetRef,async (snapshot) => {
+  let detailPetHTML =''
+  const boxDetailInfoPet = document.querySelector('#info-detail-pet .content')
+  await snapshot.forEach((childSnapshot) => {
+    var childData = childSnapshot.val();
+    var childKey = childSnapshot.key;
+    if(childKey == IDPET)
+    {
+      console.log(boxDetailInfoPet)
+      let content = `<div class="content-left">
+                        <div class="avatar_box">
+                            <div class="avatar">
+                                <img src=`+childData.image+` alt="">
+                            </div>
+                            <div class="name">
+                                <h2>`+childData.name+`</h2>
+                            </div>
+                        </div>
+
+                        <div class="info">
+                            <div class="title">
+                                <span></span>
+                                <h2 class="text">Information</h2>
+                            </div>
+
+                            <div class="detail">
+                                <span>Age : `+childData.age+`</span>
+                                <span>Gender : `+childData.gender+`</span>
+                                <span>Breed : `+childData.breed+`</span>
+                                <span>Neutered : `+childData.neutered+`</span>
+                                <span>Weight : 10KG</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="content-right">
+                        <div class="content-right-item">
+                            <div class="title">
+                                <span></span>
+                                <h2 class="text">Synthetic</h2>
+                            </div>
+                            <div class="detail">
+                                <span>Weight of food for the week : 30KG</span>
+                                <span>The weight of the cat at the beginning of the week : 13.5</span>
+                                <span>The weight of the cat at the weekend : 16KG</span>
+                                <span>Health status : Gaining weight too fast</span>
+                                <span>Suggestion: Reduce the amount of food </span>
+                            </div>
+                        </div>
+                        
+                        <div class="content-right-item">
+                            <div class="title">
+                                <span></span>
+                                <h2 class="text">Chart</h2>
+                            </div>
+                            <div class="Chart">
+                                
+                            </div>
+                        </div>
+                    </div>`;
+      detailPetHTML = content
+      if(boxDetailInfoPet)
+      {
+        boxDetailInfoPet.innerHTML = detailPetHTML
+      }
+    }
+  });
+});
+
+/* END SHOW DETAIL INFO PET */

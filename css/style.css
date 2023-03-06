@@ -595,11 +595,13 @@ h3.hello .text {
 .Manager .Manager-item-inner .Manager-img
 {
   width: 100%;
+  height: 340px;
   display: flex;
   align-items: center;
 }
 .Manager .Manager-item-inner .Manager-img img {
   width: 100%;
+  height: 100%;
   object-fit: cover;
 }
 
@@ -842,6 +844,7 @@ h3.hello .text {
 {
   margin-top: 10px;
   font-weight: bold;
+  min-height: 30px;
 }
 
 .box-form .upload-pet {
@@ -970,18 +973,11 @@ h3.hello .text {
 
 /* Details pet */
 #info-detail-pet {
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
   z-index: 100;
-  position: fixed;
-  top: 0;
-  right: 0;
-  left: 0;
-  overflow-x: hidden;
-  overflow-y: scroll;
-  display: none;
-  padding: 0 120px;
   background: var(--bg-black-900);
+  padding-left: 30px;
+  padding-right: 20px;
 }
 #info-detail-pet.active {
   display: block;
@@ -1126,15 +1122,19 @@ h3.hello .text {
   max-width: 30%;
   display: flex;
   gap: 15px;
-  padding: 20px;
+  padding: 20px 20px 40px 20px;
   border: 5px solid var(--bg-black-50);
   border-radius: 5px;
   transition: .45s;
+  position: relative;
 }
 
 .box-user .item .img
 {
   width: 40%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .box-user .item .img img
 {
@@ -1156,6 +1156,33 @@ h3.hello .text {
 .box-user .item:hover
 {
   border: 5px solid var(--skin-color);
+}
+
+.box-user .item .control
+{
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateY(-40%) translateX(-50%);
+  width: max-content;
+}
+
+.box-user .item .control button
+{
+  width: 50px;
+  height: 50px;
+  background-color: var(--bg-black-100);
+  border: 3px solid var(--skin-color);
+  transition: all .45s;
+  border-radius: 50%;
+  color: var(--text-black-900);
+  cursor: pointer;
+}
+
+.box-user .item .control button:hover
+{
+  background-color: var(--skin-color);
+  color: var(--bg-black-100);
 }
 
 .box-add-user
