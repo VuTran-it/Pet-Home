@@ -1,7 +1,7 @@
  // Import the functions you need from the SDKs you need
  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-app.js";
  import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-analytics.js";
- import { getAuth,createUserWithEmailAndPassword,signInWithEmailAndPassword  } from 'https://www.gstatic.com/firebasejs/9.17.1/firebase-auth.js'
+ import { getAuth,signInWithEmailAndPassword  } from 'https://www.gstatic.com/firebasejs/9.17.1/firebase-auth.js'
  import { getDatabase, ref, onValue, query, limitToLast  } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-database.js"
 
  const firebaseConfig = {
@@ -36,7 +36,7 @@ if(btn_singin)
       errorLogin.style.display = "none"
       const user = userCredential.user;
       sessionStorage.setItem("idUser", user.uid)
-      if(user.uid != 'JfPgQnku8zemR0jQcNUxfYfdtsa2')
+      if(user.uid != 'uVfRX0jsV3dl3HgZ9dAciEoCssT2')
       {
         window.location.href="http://127.0.0.1:5500/html/index.html"
       }

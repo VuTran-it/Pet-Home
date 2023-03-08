@@ -1,8 +1,8 @@
  // Import the functions you need from the SDKs you need
  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-app.js";
  import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-analytics.js";
- import { getStorage,ref as Sref,getDownloadURL,uploadBytesResumable,deleteObject } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-storage.js";
- import { getAuth,createUserWithEmailAndPassword,deleteUser} from 'https://www.gstatic.com/firebasejs/9.17.1/firebase-auth.js'
+ import { getStorage,ref as Sref,getDownloadURL,uploadBytesResumable,deleteObject,listAll } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-storage.js";
+ import { getAuth,createUserWithEmailAndPassword,signInWithEmailAndPassword} from 'https://www.gstatic.com/firebasejs/9.17.1/firebase-auth.js'
  import { getDatabase, ref, onValue, query,get, limitToLast,set,update,remove,child} from "https://www.gstatic.com/firebasejs/9.17.1/firebase-database.js"
 
  const firebaseConfig = {
@@ -16,7 +16,6 @@
     measurementId: "G-5XMV3BVGQP",
   };
 
-// var userID = 1
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
@@ -39,13 +38,45 @@ const dataRef = query(ref(database, 'account'), limitToLast(100));
 
 /* ==============================================  ADMIN  ============================================== */
 
+async function removePet(userID, petID)
+{
+  get(child(dbRef, `account/`+userID+`/listPet/`+petID)).then(async (snapshot) => {
+    if (snapshot.exists()) {
+      let imagePet =snapshot.val().image
+      const desertRef = Sref(storage, imagePet);
+      // Delete the file
+      await deleteObject(desertRef).then(() => {
+        // File deleted successfully
+        // remove database of pet in realtime database
+        remove(ref(database,`account/`+ userID +`/listPet/`+ petID)).then(() => {
+          // update countpet of user
+          get(child(dbRef, `account/`+userID+`/info/countPet`)).then((snapshot) => {
+            if (snapshot.exists()) {
+              let countPet = Number(snapshot.val()) - 1
+              update(ref(database,'/account/' + userID + '/info'),{
+                countPet : countPet,
+              })
+            }
+          })
+        })
+      })
+    } else {
+      console.log("err");
+    }
+  })
+}
+
+/* ============================================== FUNCTION ============================================= */
+
 /* ADD USER */
 const inputAddUser = document.querySelectorAll('.main-admin .box-add-user .input')
 const btnAddUser = document.querySelector('.main-admin .box-add-user .btn-add')
-const errorUser = document.querySelector('.main-admin .box-add-user .item.error')
+const errorUser = document.querySelector('.main-admin .box-add-user .error-add-user')
 
-function writeUserData(userId,avatar,name,age,gender,phone,address,countPet) {
+function writeUserData(email,password,userId,avatar,name,age,gender,phone,address,countPet) {
   set(ref(database, 'account/' + userId + '/info'), {
+    email:email,
+    password:password,
     avatar: avatar,
     name: name,
     age : age,
@@ -59,6 +90,7 @@ function writeUserData(userId,avatar,name,age,gender,phone,address,countPet) {
 if(btnAddUser)
 {
   btnAddUser.addEventListener("click",() => {
+    btnAddUser.setAttribute("disabled","")
     let email,password,name,avatar,age,gender,phone,address,fileAvatar
     let countPet = "0"
     //get info value
@@ -79,127 +111,165 @@ if(btnAddUser)
         gender = document.getElementsByName('gender').item(i).value;
       }
     }
-
-    // create an account with email and password
-    createUserWithEmailAndPassword(auth, email, password)
-    .then((userCredential) => {
-      const user = userCredential.user;
-      // upload file to storage firebase
-      const date = new Date().getTime();
-      let nameFile = 'users/'+ user.uid + '_' + date
-      const storageRef = Sref(storage, nameFile);
-      uploadBytesResumable(storageRef, fileAvatar).then(async () => {
-        await getDownloadURL(storageRef).then((downloadURL) => {
-          try {
-            avatar = downloadURL
-          } catch (err) {
-            console.log(err)
-          }
-        });
-
-        await writeUserData(user.uid,avatar,name,age,gender,phone,address,countPet);
-      })  
-
-      for(let i = 0; i < inputAddUser.length; i++ )
+    if(email != '' && password != '')
+    {
+      if(fileAvatar && fileAvatar != '')
       {
-        inputAddUser[i].value = ''
+        // create an account with email and password
+        createUserWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+          password = Base64.encode(password)
+          const user = userCredential.user;
+          // upload file to storage firebase
+          const date = new Date().getTime();
+          let nameFile = 'users/'+ user.uid + '_' + date
+          const storageRef = Sref(storage, nameFile);
+          uploadBytesResumable(storageRef, fileAvatar).then(async () => {
+            await getDownloadURL(storageRef).then((downloadURL) => {
+              try {
+                avatar = downloadURL
+              } catch (err) {
+                console.log(err)
+              }
+            });
+
+            await writeUserData(email,password,user.uid,avatar,name,age,gender,phone,address,countPet);
+          })  
+
+          for(let i = 0; i < inputAddUser.length; i++ )
+          {
+            inputAddUser[i].value = ''
+          }
+          errorUser.innerHTML = "<p style='color:green'>Add user to public</p>"
+          setTimeout(()=>{
+            errorUser.innerHTML = ""
+          },2000)
+          btnAddUser.removeAttribute("disabled")
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          console.error(errorCode,errorMessage)
+          errorUser.innerHTML = "<p style='color:red'>Looks like something went wrong</p>"
+          setTimeout(()=>{
+            errorUser.innerHTML = ""
+          },2000)
+          btnAddUser.removeAttribute("disabled")
+        });
       }
-      
-      errorUser.style.display = 'none'
-    })
-    .catch((error) => {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      console.error(errorCode,errorMessage)
-      errorUser.style.display = 'block'
-    });
+      else
+      {
+        errorUser.innerHTML = "<p style='color:red'>Please choose a profile picture</p>"
+        setTimeout(()=>{
+          errorUser.innerHTML = ""
+        },2000)
+        btnAddUser.removeAttribute("disabled")
+      }
+    }
+    else
+    {
+      errorUser.innerHTML = "<p style='color:red'>You have not entered your email and password</p>"
+      setTimeout(()=>{
+        errorUser.innerHTML = ""
+      },2000)
+    }
   })
   
 }
 /* END ADD USER */
 
-/* SHOW LIST USER */
+/* SHOW LIST USER, REMOVE USER*/
 const boxUser = document.querySelector('.main-admin .box-user')
 
 if(boxUser)
 {
-  onValue(dataRef, async (snapshot) => {
+  onValue(dataRef,(snapshot) => {
     let html = ''
-    await snapshot.forEach((childSnapshot) => {
+    let checkDatabase = false
+    snapshot.forEach((childSnapshot) => {
       var childKey = childSnapshot.key;
       var childData = childSnapshot.val();
-      let content = `
-        <div class="item">
-          <div class="img">
-            <img src=`+childData.info.avatar+` alt="">
+      if(childData.info)
+      {
+        checkDatabase = true
+        let content = `
+          <div class="item">
+            <div class="img">
+              <img src=`+childData.info.avatar+` alt="">
+            </div>
+            <div class="content">
+              <p>`+childData.info.name+`</p>
+              <p>Age : `+childData.info.age+`</p>
+              <p>Gender : `+childData.info.gender+`</p>
+              <p>Phone : `+childData.info.phone+`</p>
+              <p>Address :  `+childData.info.address+`</p>
+              <p>Quantity pet : `+childData.info.countPet+`</p>
+            </div>
+            <div class="control">
+              <button id="removeUser" iduser="`+childKey+`"><i class="fa-solid fa-trash"></i></button>
+            </div>
           </div>
-          <div class="content">
-            <p>`+childData.info.name+`</p>
-            <p>Age : `+childData.info.age+`</p>
-            <p>Gender : `+childData.info.gender+`</p>
-            <p>Phone : `+childData.info.phone+`</p>
-            <p>Address :  `+childData.info.address+`</p>
-            <p>Quantity pet : `+childData.info.countPet+`</p>
-          </div>
-          <div class="control">
-            <button id="removeUser" iduser="`+childKey+`"><i class="fa-solid fa-trash"></i></button>
-          </div>
-        </div>
-      `
-      html += content
-      boxUser.innerHTML = html
+        `
+        html += content
+        boxUser.innerHTML = html
+      }
     });
+    if(checkDatabase == false)
+    {
+      boxUser.innerHTML = '<p class="defaul">Data is not displayed or data has not been updated</p>'
+    }
 
+    // remove user 
     const btnRemoveUser = document.querySelectorAll("#removeUser")
     if(btnRemoveUser)
     {
       btnRemoveUser.forEach((item) => {
-        item.addEventListener("click",() => {
+        item.addEventListener("click",async (event) => {
+          event.preventDefault()
           let idUser = item.getAttribute('iduser');
-          console.log(idUser)
-          //remove all infomation for user
-          // get(child(dbRef, `account/`+idUser)).then((snapshot) => {
-          //   if (snapshot.exists()) {
-          //     let avatarUser =snapshot.val().avatar
-          //     const desertRef = Sref(storage, avatarUser);
-          //     // Delete the file
-          //     deleteObject(desertRef).then(() => {
-          //       // File deleted successfully
-          //       // remove database for pet in realtime database
-          //       remove(ref(database,`account/`+ idUser)).then(() => {
-          //         //reload page
-          //         location.reload()
-          //       }).catch((error) => {
-          //         const errorCode = error.code;
-          //         const errorMessage = error.message;
-          //         console.error(errorCode,errorMessage)
-          //       });
-          //     }).catch((error) => {
-          //       const errorCode = error.code;
-          //       const errorMessage = error.message;
-          //       console.error(errorCode,errorMessage)
-          //     });
-    
-          //   } else {
-          //     console.log("No data available");
-          //   }
-          // })
-
-          //remove account for user
-          const user = auth.currentUser;
-          auth().deleteUser(idUser).then(() => {
-            console.log('Successfully deleted user');
-          })
-          .catch((error) => {
-            console.log('Error deleting user:', error);
-          });
-
+          await get(child(dbRef, `account/`+idUser +`/info`)).then(async (snapshot) => {
+              if (snapshot.exists()) {
+                let avatarUser =snapshot.val().avatar
+                const desertAvatar = Sref(storage, avatarUser);
+                let email = snapshot.val().email
+                let password = snapshot.val().password
+                password = Base64.decode(password)
+                let floderPet = 'pets/' + idUser
+                const desertListPet= Sref(storage, floderPet);
+                // delete all user data in realtime database
+                await remove(ref(database,`account/`+ idUser))
+                // delete image avatar of user
+                await deleteObject(desertAvatar)
+                //list and delete all pet pictures
+                listAll(desertListPet).then((res) => {
+                  res.items.forEach((itemRef) => {
+                    // All the items under listRef.
+                    deleteObject(itemRef)
+                  });
+                })
+                
+                //log in and delete account of user
+                await signInWithEmailAndPassword(auth,email, password).then(async(userCredential) => {
+                  // User signed in, so we can delete the account
+                  await userCredential.user.delete().then(() => {
+                    // User account deleted successfully
+                    console.log("User account deleted successfully");
+                  })
+                })
+                
+              } else {
+                console.log("No data available");
+              }
+            }).catch((error) => {
+              console.error( error);
+            });
+          // remove account,info of user
         })
       })
     }
   });
 }
-/* ADD SHOW LIST USER */
+/* ADD SHOW LIST USER,REMOVE USER */
 
 /* SHOW INFO USER */
 const userID = sessionStorage.getItem("idUser")
@@ -279,7 +349,9 @@ function writePetData(petId,name,image,breed,age,gender,neutered) {
 if(btnUploadPet)
 {
   const notification = document.querySelector('footer .notification')
-  btnUploadPet.addEventListener("click",() => {
+  btnUploadPet.addEventListener("click",(event) => {
+    event.preventDefault();
+    btnUploadPet.setAttribute("disabled", "");
     let idPet,name,image,breed,age,gender,neutered,fileImage
     const date = new Date().getTime();
     idPet = "Pet_"+date
@@ -306,7 +378,8 @@ if(btnUploadPet)
         neutered = document.getElementsByName('spayed-neutered').item(i).value;
       }
     }
-    let nameFile = 'pets/'+ idPet + '_' + date
+
+    let nameFile = 'pets/' +userID+ '/'+ idPet + '_' + date
     const storageRef = Sref(storage, nameFile);
     if(fileImage != '')
     {
@@ -342,6 +415,7 @@ if(btnUploadPet)
           setTimeout(() => {
             notification.innerHTML = ""
           }, 2000)
+          btnUploadPet.removeAttribute("disabled")
         }
         else
         {
@@ -359,6 +433,7 @@ if(btnUploadPet)
         setTimeout(() => {
           notification.innerHTML = ""
         }, 2000)
+        btnUploadPet.removeAttribute("disabled")
       });
     }
     else
@@ -367,20 +442,23 @@ if(btnUploadPet)
       setTimeout(() => {
         notification.innerHTML = ""
       }, 2000)
+      btnUploadPet.removeAttribute("disabled")
     }
   })
 }
 
 /* END ADD PET */
 
-/* SHOW LIST PET FOR USER */
+/* SHOW LIST PET OF USER */
 const managerListPet = document.querySelector('.box-manager-list-pet')
 const ListPet = document.querySelector('.box-list-pet')
 const infoPetRef = query(ref(database, 'account/'+userID+'/listPet'), limitToLast(100));
 onValue(infoPetRef,async (snapshot) => {
   let listPetManagerHTML =''
   let listPetHTML =''
+  let checkDatabase = false
   await snapshot.forEach((childSnapshot) => {
+    checkDatabase = true
     var childData = childSnapshot.val();
     var childKey = childSnapshot.key;
     /* MANAGER LIST PET */
@@ -446,6 +524,15 @@ onValue(infoPetRef,async (snapshot) => {
     }
     /* END LIST PET */
   });
+  if(managerListPet && checkDatabase == false)
+  {
+    managerListPet.innerHTML = '<p class="defaul">Data is not displayed or data has not been updated</p>'
+  }
+
+  if(ListPet && checkDatabase == false)
+  {
+    ListPet.innerHTML = '<p class="defaul">Data is not displayed or data has not been updated</p>'
+  }
 
    /* SHOW,EDIT,REMOVE PET */
    const btnShowPets = document.querySelectorAll("#showInfo")
@@ -463,7 +550,7 @@ onValue(infoPetRef,async (snapshot) => {
    if(btnRemovePets)
    {
     btnRemovePets.forEach((item) => {
-      item.addEventListener("click",() => {
+      item.addEventListener("click",async () => {
         let idPet = item.getAttribute('idpet')
         get(child(dbRef, `account/`+userID+`/listPet/`+idPet)).then((snapshot) => {
           if (snapshot.exists()) {
@@ -472,34 +559,23 @@ onValue(infoPetRef,async (snapshot) => {
             // Delete the file
             deleteObject(desertRef).then(() => {
               // File deleted successfully
-              // remove database for pet in realtime database
+              // remove database of pet in realtime database
               remove(ref(database,`account/`+ userID +`/listPet/`+ idPet)).then(() => {
-                // update countpet for user
+                // update countpet of user
                 get(child(dbRef, `account/`+userID+`/info/countPet`)).then((snapshot) => {
                   if (snapshot.exists()) {
                     let countPet = Number(snapshot.val()) - 1
                     update(ref(database,'/account/' + userID + '/info'),{
                       countPet : countPet,
                     })
-                  } else {
-                    console.log("No data available");
                   }
                 })
-  
-                //reload page
-                location.reload()
-              }).catch((error) => {
-                // Uh-oh, an error occurred!
-              });
-            }).catch((error) => {
-              // Uh-oh, an error occurred!
-            });
-  
+              })
+            })
           } else {
-            console.log("No data available");
+            console.log("err");
           }
         })
-  
       })
     })
    }
@@ -516,7 +592,7 @@ onValue(infoPetRef,async (snapshot) => {
     })
   }
 });
-/* END SHOW LIST PET FOR USER */
+/* END SHOW LIST PET OF USER */
 
 /* SHOW DETAIL INFO PET */
 const queryString = window.location.search

@@ -284,7 +284,7 @@
   }
   .Manager .box-form .right-container header {
     width: 100%;
-    padding: 20px;
+    padding: 10px;
   }
   .Manager .box-form .right-container header h1 {
     font-size: 20px;
@@ -296,9 +296,6 @@
   .Manager .box-form .right-container input,
   .Manager .box-form .right-container .radio-container {
     width: 90%;
-  }
-  .Manager .box-form .right-container .radio-container label {
-    width: 70px;
   }
 
   #info-detail-pet .content-left,
