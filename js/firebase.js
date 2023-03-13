@@ -649,7 +649,6 @@ onValue(infoPetRef,async (snapshot) => {
                                 <span>Suggestion: Reduce the amount of food </span>
                             </div>
                         </div>
-                        
                         <div class="content-right-item">
                             <div class="title">
                                 <span></span>
