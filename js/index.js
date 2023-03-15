@@ -1,4 +1,3 @@
-
 /* NAV */
 const nav = document.querySelector('.nav'),
     navList = document.querySelectorAll('.nav .list'),
@@ -102,7 +101,7 @@ if(logout)
 {
     logout.addEventListener("click", () => {
         sessionStorage.removeItem("idUser")
-        window.location.href = "http://127.0.0.1:5500/html/login.html"
+        window.location.href = hosting + "/html/login.html"
     })
 }
 /* END LOGOUT*/

@@ -84,7 +84,7 @@ function writeUserData(email,password,userId,avatar,name,age,gender,phone,addres
     phone : phone,
     address : address,
     countPet:countPet
-  });
+  })
 }
 
 if(btnAddUser)
@@ -134,6 +134,7 @@ if(btnAddUser)
             });
 
             await writeUserData(email,password,user.uid,avatar,name,age,gender,phone,address,countPet);
+            
           })  
 
           for(let i = 0; i < inputAddUser.length; i++ )
@@ -541,7 +542,7 @@ onValue(infoPetRef,async (snapshot) => {
    {
     btnShowPets.forEach((item) => {
       item.addEventListener("click",() => {
-        let url = 'http://127.0.0.1:5500/html/details_pet.html?idPet=' + item.getAttribute('idpet')
+        let url = hosting + '/html/details_pet.html?idPet=' + item.getAttribute('idpet')
         
         window.location.href = url
       })
@@ -669,3 +670,41 @@ onValue(infoPetRef,async (snapshot) => {
 });
 
 /* END SHOW DETAIL INFO PET */
+
+/* SHOW INFOMATION SYSTEM */
+const infoSystem = query(ref(database, 'account/'+userID+'/system'), limitToLast(100));
+const boxSystem = document.querySelector('.system-content')
+/* END SHOW INFOMATION SYSTEM */
+//console.log(infoSystem)
+onValue(infoSystem,async (snapshot) => {
+  let systemHTML =''
+  let checkDatabase = false
+  await snapshot.forEach((childSnapshot) => {
+    checkDatabase = true
+    var childData = childSnapshot.val();
+    var childKey = childSnapshot.key;
+    //console.log(childKey, childData)
+    /* SYSTEM WATER*/
+    let systemWater = ``;
+    let systemFood = ``;
+    if(systemWater)
+    {
+      systemHTML += systemWater
+    } 
+    if(systemFood)
+    {
+      systemHTML += systemFood
+    }
+    /* END SYSTEM WATER */
+
+  });
+
+  if(boxSystem && checkDatabase == false)
+  {
+    boxSystem.innerHTML = '<p class="defaul">Data is not displayed or data has not been updated</p>'
+  }
+  else
+  {
+    boxSystem.innerHTML = systemHTML
+  }
+});

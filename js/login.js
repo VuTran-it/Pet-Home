@@ -36,13 +36,13 @@ if(btn_singin)
       errorLogin.style.display = "none"
       const user = userCredential.user;
       sessionStorage.setItem("idUser", user.uid)
-      if(user.uid != 'uVfRX0jsV3dl3HgZ9dAciEoCssT2')
+      if(user.uid != adminID)
       {
-        window.location.href="http://127.0.0.1:5500/html/index.html"
+        window.location.href= hosting + "/html/index.html"
       }
       else
       {
-        window.location.href="http://127.0.0.1:5500/html/admin.html"
+        window.location.href= hosting + "/html/admin.html"
       }
     })
     .catch((error) => {

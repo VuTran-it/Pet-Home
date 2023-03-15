@@ -28,14 +28,14 @@
 
   <!-- Swiper -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css" />
-
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.11.1/dist/cdn.min.js"></script>
+  <script src="../js/config.js"></script>
   <script>
-    if (!sessionStorage.getItem("idUser") || sessionStorage.getItem("idUser") != 'uVfRX0jsV3dl3HgZ9dAciEoCssT2') {
+    if (!sessionStorage.getItem("idUser") || sessionStorage.getItem("idUser") != adminID) {
       sessionStorage.removeItem("idUser")
-      window.location.href = 'http://127.0.0.1:5500/html/login.html'
+      window.location.href = hosting + '/html/login.html'
     }
   </script>
-  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.11.1/dist/cdn.min.js"></script>
 </head>
 
 <body>
@@ -187,6 +187,7 @@
   <script src="../js/style-switcher.js"></script>
   <script src="../js/login.js" type="module"></script>
   <script src="../js/firebase.js" type="module"></script>
+  
 
 </body>
 

@@ -63,14 +63,14 @@
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css"
     />
-
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script src="../js/config.js"></script>
     <script>
       if(!sessionStorage.getItem("idUser"))
       {
-        window.location.href='http://127.0.0.1:5500/html/login.html'
+        window.location.href= hosting +  '/html/login.html'
       }
     </script>
-    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
   </head>
 
   <body>
@@ -162,7 +162,7 @@
                 </div>
             </div>
 
-          <div class="row mb-120">
+          <div class="row mb-120 system-content">
             <!-- System item start -->
             <div class="System-item padd-15">
               <div class="System-item-inner">

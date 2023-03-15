@@ -29,20 +29,23 @@
 
     <!-- Swiper -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css" />
+    
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script src="../js/config.js"></script>
     <script>
         if(sessionStorage.getItem("idUser"))
         {
-            if(sessionStorage.getItem("idUser") === 'JfPgQnku8zemR0jQcNUxfYfdtsa2')
+            if(sessionStorage.getItem("idUser") === adminID)
             {
-                window.location.href='http://127.0.0.1:5500/html/admin.html'
+                window.location.href= hosting + '/html/admin.html'
             }
             else
             {
-                window.location.href='http://127.0.0.1:5500/html/index.html'
+                window.location.href= hosting + '/html/index.html'
             }
         }
     </script>
-    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
 </head>
 
 <body>
