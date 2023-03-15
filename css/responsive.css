@@ -39,6 +39,18 @@
     flex: 0 0 45%;
     max-width: 45%;
   }
+  .System .System-item .System-item-inner
+  {
+    flex-direction: column;
+  }
+  .System .System-item .System-item-inner .img
+  {
+    justify-content: center;
+  }
+  .System .System-item .info .detail
+  {
+    transform: translateX(-20px);
+  }
 }
 
 /* May Tinh Bang nhỏ */

@@ -609,7 +609,6 @@ onValue(infoPetRef,async (snapshot) => {
     var childKey = childSnapshot.key;
     if(childKey == IDPET)
     {
-      console.log(boxDetailInfoPet)
       let content = `<div class="content-left">
                         <div class="avatar_box">
                             <div class="avatar">
@@ -677,7 +676,7 @@ const boxSystem = document.querySelector('.system-content')
 /* END SHOW INFOMATION SYSTEM */
 //console.log(infoSystem)
 onValue(infoSystem,async (snapshot) => {
-  let systemHTML =''
+  let systemHTML ='',systemWater='',systemFood='',statusLedWater,statusMachinesWater,statusLedFood,statusMachinesFood
   let checkDatabase = false
   await snapshot.forEach((childSnapshot) => {
     checkDatabase = true
@@ -685,26 +684,132 @@ onValue(infoSystem,async (snapshot) => {
     var childKey = childSnapshot.key;
     //console.log(childKey, childData)
     /* SYSTEM WATER*/
-    let systemWater = ``;
-    let systemFood = ``;
-    if(systemWater)
+    if(childKey == 'water')
     {
+      statusLedWater = childData.btnLed;
+      statusMachinesWater = childData.machies;
+      console.log(childData)
+      systemWater = `<!-- System item start -->
+                        <div class="System-item padd-15">
+                          <div class="System-item-inner">
+                            <div class="img">
+                              <img src="../img/machine1.png" alt="" />
+                            </div>
+                            <div class="info">
+                              <h3 class="name">Drinking</h3>
+                              <div class="detail">
+                                <div>
+                                  <p>Led Green :</p><span>`+(Number(childData.ledGreen) == 1 && statusLedWater == 1 ? 'On' : 'Off')+`</span>
+                                </div>
+                                <div>
+                                  <p>Led Red :</p><span>`+(Number(childData.ledRed) == 1 && statusLedWater == 1 ? 'On' : 'Off')+`</span>
+                                </div>
+                                <div>
+                                  <p>Status Pump :</p><span>`+(Number(childData.machies) == 1 ? 'On' : 'Off')+`</span>
+                                </div>
+                                <div>
+                                  <p>Percent :</p><span>`+childData.percent+`%</span>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="box-icon">
+                              <div class="`+(childData.btnLed == 1?'active' : '')+`" id="light-switch-water"> 
+                                `+(childData.btnLed == 1?'<i class="fa-solid fa-lightbulb"></i>' : '<i class="fa-regular fa-lightbulb"></i>')+`
+                              </div>
+                              <div class="`+(childData.machies == 1?'active' : '')+`" id="machines-switch-water"> 
+                                `+(childData.machies == 1?'<i class="fa-solid fa-droplet"></i>' : '<i class="fa-solid fa-droplet-slash"></i>')+`
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <!-- System item End -->`;
       systemHTML += systemWater
-    } 
-    if(systemFood)
+    }
+    if(childKey == 'food')
     {
+      statusLedFood = childData.btnLed
+      statusMachinesFood = childData.machies;
+      systemFood = ` <!-- System item start -->
+                        <div class="System-item padd-15">
+                          <div class="System-item-inner">
+                            <div class="img">
+                              <img src="../img/machine1.png" alt="" />
+                            </div>
+                            <div class="info">
+                              <h3 class="name">Feeding</h3>
+                              <div class="detail">
+                                <div>
+                                  <p>Led Green :</p><span>`+(Number(childData.ledGreen) == 1 && statusLedFood == 1 ? 'On' : 'Off')+`</span>
+                                </div>
+                                <div>
+                                  <p>Led Red :</p><span>`+(Number(childData.ledRed == 1)&& statusLedFood == 1 ? 'On' : 'Off')+`</span>
+                                </div>
+                                <div>
+                                  <p>Status Pump :</p><span>`+(Number(childData.machies) == 1 ? 'On' : 'Off')+`</span>
+                                </div>
+                                <div>
+                                  <p>Percent :</p><span>`+childData.percent+`%</span>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="box-icon">
+                              <div class="`+(childData.btnLed == 1?'active' : '')+`" id="light-switch-food"> 
+                                `+(childData.btnLed == 1?'<i class="fa-solid fa-lightbulb"></i>' : '<i class="fa-regular fa-lightbulb"></i>')+`
+                              </div>
+                              <div class="`+(childData.machies == 1?'active' : '')+`" id="machines-switch-food"> 
+                                `+(childData.machies == 1?'<i class="fa-solid fa-bowl-food"></i>' : '<i class="fa-solid fa-bowl-rice"></i>')+`
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <!-- System item End -->`;
       systemHTML += systemFood
     }
     /* END SYSTEM WATER */
-
+    if(boxSystem)
+    {
+      boxSystem.innerHTML = systemHTML
+    }
+    const ledWater = document.querySelector("#light-switch-water")
+    const machinesWater = document.querySelector("#machines-switch-water")
+    const ledFood = document.querySelector("#light-switch-food")
+    const machinesFood = document.querySelector("#machines-switch-food")
+    if(ledWater)
+    {
+      ledWater.addEventListener("click",()=>{
+        update(ref(database,'/account/' + userID + '/system/water'),{
+          btnLed : (statusLedWater == 1 ? 0 : 1),
+        })
+      })
+    }
+    if(machinesWater)
+    {
+      machinesWater.addEventListener("click",()=>{
+        update(ref(database,'/account/' + userID + '/system/water'),{
+          machies : (statusMachinesWater == 1 ? 0 : 1),
+        })
+      })
+    }
+    if(ledFood)
+    {
+      ledFood.addEventListener("click",()=>{
+        update(ref(database,'/account/' + userID + '/system/food'),{
+          btnLed : (statusLedFood == 1 ? 0 : 1),
+        })
+      })
+    }
+    if(machinesFood)
+    {
+      machinesFood.addEventListener("click",()=>{
+        update(ref(database,'/account/' + userID + '/system/food'),{
+          machies : (statusMachinesFood == 1 ? 0 : 1),
+        })
+      })
+    }
   });
 
   if(boxSystem && checkDatabase == false)
   {
     boxSystem.innerHTML = '<p class="defaul">Data is not displayed or data has not been updated</p>'
-  }
-  else
-  {
-    boxSystem.innerHTML = systemHTML
   }
 });

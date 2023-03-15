@@ -487,13 +487,15 @@ h3.hello .text {
   max-width: 45%;
 }
 
-.System .mb-120 {
+.System .system-content {
   justify-content: space-around;
+  display: flex;
+  gap:30px;
 }
 
 .System .System-item .System-item-inner {
   background: var(--bg-black-100);
-  border: 1px solid var(--bg-black-50);
+  border: 5px solid var(--bg-black-50);
   border-radius: 10px;
   padding: 30px 15px;
   text-align: center;
@@ -504,7 +506,7 @@ h3.hello .text {
 
 .System .System-item .System-item-inner:hover {
   /* box-shadow: 0 0 20px rgba(48, 46, 77, 0.15); */
-  border: 6px solid var(--skin-color);
+  border: 5px solid var(--skin-color);
   transition-delay: 0.1s;
 }
 
@@ -552,16 +554,80 @@ h3.hello .text {
   width: 170px;
   padding: 10px;
 }
+.System .System-item .info
+{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
 
 .System .System-item .info .detail {
   display: flex;
   flex-direction: column;
+  align-items: flex-start;
+}
+.System .System-item .info .detail div
+{
+  display: flex;
+  gap: 20px;
+}
+.System .System-item .info .detail p
+{
+  font-weight: bold;
+  color: var(--text-black-900);
+}
+.System .System-item .info .detail span
+{
+  font-weight: 600;
+  color: var(--skin-color);
 }
 
 .System .System-item .System-item-inner h3 {
   color: var(--skin-color);
 }
 
+.System .System-item .System-item-inner
+{
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  position: relative;
+}
+.System .System-item .System-item-inner .img
+{
+  display: flex;
+  align-items: center;
+}
+.System .System-item-inner .box-icon
+{
+  display:flex;
+  position: absolute;
+  bottom: -25px;
+  gap:20px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.System .System-item-inner .box-icon div
+{
+  cursor: pointer;
+  height: 50px;
+  width: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid var(--skin-color);
+  background-color: var(--bg-black-50);
+  border-radius: 50%;
+  font-size: 18px;
+  color: var(--skin-color);
+}
+.System .System-item-inner .box-icon div.active
+{
+  border: 2px solid var(--text-black-900);
+  background-color: var(--skin-color);
+  color: var(--text-black-900);
+}
 /* Manager */
 .Manager .swiper {
   min-height: 400px;
