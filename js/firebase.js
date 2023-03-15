@@ -595,81 +595,6 @@ onValue(infoPetRef,async (snapshot) => {
 });
 /* END SHOW LIST PET OF USER */
 
-/* SHOW DETAIL INFO PET */
-const queryString = window.location.search
-const urlParams = new URLSearchParams(queryString);
-
-const IDPET = urlParams.get('idPet')
-
-onValue(infoPetRef,async (snapshot) => {
-  let detailPetHTML =''
-  const boxDetailInfoPet = document.querySelector('#info-detail-pet .content')
-  await snapshot.forEach((childSnapshot) => {
-    var childData = childSnapshot.val();
-    var childKey = childSnapshot.key;
-    if(childKey == IDPET)
-    {
-      let content = `<div class="content-left">
-                        <div class="avatar_box">
-                            <div class="avatar">
-                                <img src=`+childData.image+` alt="">
-                            </div>
-                            <div class="name">
-                                <h2>`+childData.name+`</h2>
-                            </div>
-                        </div>
-
-                        <div class="info">
-                            <div class="title">
-                                <span></span>
-                                <h2 class="text">Information</h2>
-                            </div>
-
-                            <div class="detail">
-                                <span>Age : `+childData.age+`</span>
-                                <span>Gender : `+childData.gender+`</span>
-                                <span>Breed : `+childData.breed+`</span>
-                                <span>Neutered : `+childData.neutered+`</span>
-                                <span>Weight : 10KG</span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="content-right">
-                        <div class="content-right-item">
-                            <div class="title">
-                                <span></span>
-                                <h2 class="text">Synthetic</h2>
-                            </div>
-                            <div class="detail">
-                                <span>Weight of food for the week : 30KG</span>
-                                <span>The weight of the cat at the beginning of the week : 13.5</span>
-                                <span>The weight of the cat at the weekend : 16KG</span>
-                                <span>Health status : Gaining weight too fast</span>
-                                <span>Suggestion: Reduce the amount of food </span>
-                            </div>
-                        </div>
-                        <div class="content-right-item">
-                            <div class="title">
-                                <span></span>
-                                <h2 class="text">Chart</h2>
-                            </div>
-                            <div class="Chart">
-                                
-                            </div>
-                        </div>
-                    </div>`;
-      detailPetHTML = content
-      if(boxDetailInfoPet)
-      {
-        boxDetailInfoPet.innerHTML = detailPetHTML
-      }
-    }
-  });
-});
-
-/* END SHOW DETAIL INFO PET */
-
 /* SHOW INFOMATION SYSTEM */
 const infoSystem = query(ref(database, 'account/'+userID+'/system'), limitToLast(100));
 const boxSystem = document.querySelector('.system-content')
@@ -688,7 +613,6 @@ onValue(infoSystem,async (snapshot) => {
     {
       statusLedWater = childData.btnLed;
       statusMachinesWater = childData.machies;
-      console.log(childData)
       systemWater = `<!-- System item start -->
                         <div class="System-item padd-15">
                           <div class="System-item-inner">
