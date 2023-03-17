@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pet Home</title>
+
+    <link rel="icon" href="../img/logo.png" type="image/x-icon">
+
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/effect.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+    <link rel="stylesheet" href="../css/loader.css">
+
+    <!-- Style-Switcher -->
+    <link rel="stylesheet" href="../css/style-switcher.css">
+    <link rel="stylesheet" href="../css/Color/color-1.css" class="alternate-style" title="color-1">
+    <link rel="stylesheet" href="../css/Color/color-2.css" class="alternate-style" title="color-2" disabled>
+    <link rel="stylesheet" href="../css/Color/color-3.css" class="alternate-style" title="color-3" disabled>
+    <link rel="stylesheet" href="../css/Color/color-4.css" class="alternate-style" title="color-4" disabled>
+    <link rel="stylesheet" href="../css/Color/color-5.css" class="alternate-style" title="color-5" disabled>
+
+    <!-- font-awesomez -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+        integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- char -->
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css" />
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
+    <!-- alpinejs -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script src="../js/config.js"></script>
+    <script>
+        if(!sessionStorage.getItem("idUser"))
+        {
+            window.location.href= hosting + '/html/login.html'
+        }
+    </script>
+</head>
+
+<body>
+    <!-- Main Container Start -->
+    <div class="main-container">
+        <div class="exit-detail-pet">
+            <a href="./index.html"><i class="fa-solid fa-right-from-bracket"></i></a>
+        </div>
+        <!-- Main Content Start -->
+        <div class="main-content">
+            <!-- Details pet Start -->
+            <section class="section">
+                <div class="container">
+                    <div id="info-detail-pet">
+                        <div class="row">
+                            <div class="section-title padd-15">
+                                <h2>Details <span>Pet</span></h2>
+                                <h3>Love Pet</h3>
+                            </div>
+                        </div>
+                        <div class="content row mb-30" >
+                            <div class="content-left">
+
+                            </div>
+                            <div class="content-right">
+                               
+                               
+                            </div>
+                        </div>
+                       
+                    </div>
+                </div>
+            </section>
+            <!-- Details pet End -->
+        </div>
+        <!-- Main Content End -->
+        <!-- Style Switcher Start -->
+        <div class="style-switcher">
+            <div class="style-switcher-toggler s-icon main-icon">
+                <i class="fa-solid fa-gear"></i>
+            </div>
+            <h4>Theme Colors</h4>
+            <div class="colors">
+                <span class="color-1" onclick="setActiveStyle('color-1')"></span>
+                <span class="color-2" onclick="setActiveStyle('color-2')"></span>
+                <span class="color-3" onclick="setActiveStyle('color-3')"></span>
+                <span class="color-4" onclick="setActiveStyle('color-4')"></span>
+                <span class="color-5" onclick="setActiveStyle('color-5')"></span>
+            </div>
+            <h4>Remote Control</h4>
+            <div class="remote-control">
+                <div class="s-icon remote-control-item dark-light">
+                    <i class="fa-solid"></i>
+                </div>
+
+                <div class="s-icon remote-control-item" id="btn_fullscreen">
+                    <i class="fa-solid fa-expand"></i>
+                </div>
+            </div>
+
+        </div>
+        <!-- Style Switcher End -->
+    </div>
+    <!-- Main Container End -->
+
+     <!-- Script -->
+    <script src="../js/index.js"></script>
+    <script src="../js/details_pet.js" type="module"></script>
+    <script src="../js/login.js" type="module"></script>
+    <script src="../js/firebase.js" type="module"></script>
+    <script src="../js/style-switcher.js"></script>
+    <!-- Swiper -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
+
+</body>
+
+</html>
