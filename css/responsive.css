@@ -9,7 +9,6 @@
 
 /* May Tinh Bang Lon */
 @media (max-width: 1199px) {
-  
   .nav {
     height: 100%;
     right: 25px;
@@ -34,21 +33,17 @@
   .Manager .swiper-wrapper {
     max-width: 800px;
   }
-  .box-user .item
-  {
+  .box-user .item {
     flex: 0 0 45%;
     max-width: 45%;
   }
-  .System .System-item .System-item-inner
-  {
+  .System .System-item .System-item-inner {
     flex-direction: column;
   }
-  .System .System-item .System-item-inner .img
-  {
+  .System .System-item .System-item-inner .img {
     justify-content: center;
   }
-  .System .System-item .info .detail
-  {
+  .System .System-item .info .detail {
     transform: translateX(-20px);
   }
 }
@@ -122,24 +117,48 @@
   .System .System-item h2 {
     text-align: center;
   }
-  #info-detail-pet .content
-  {
+  #info-detail-pet .content {
     gap: 20px;
   }
   #info-detail-pet .content .content-left,
-  #info-detail-pet .content .content-right
-  {
+  #info-detail-pet .content .content-right {
     flex: 0 0 100%;
     max-width: 100%;
   }
-  #info-detail-pet .content .content-left 
-  {
+  #info-detail-pet .content .content-left {
     display: flex;
     flex-direction: column;
   }
-  #info-detail-pet .content .content-left .avatar_box
-  {
+  #info-detail-pet .content .content-left .avatar_box {
     align-items: center;
+  }
+  signup-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .right-container h1:nth-of-type(1) {
+    font-size: 28px;
+    font-weight: 600;
+  }
+  .login-box .right-container {
+    min-height: 500px;
+    display: flex;
+    width: 100%;
+    align-items: center;
+  }
+  .right-container header {
+    padding: 0px;
+    text-align: center;
+  }
+  .item_login {
+    display: -webkit-box;
+  }
+  .left-container .puppy {
+    display: auto;
+  }
+  .left-container {
+    padding: 20px 0px 20px 0px;
   }
 }
 
@@ -360,47 +379,70 @@
     max-width: 80%;
   }
 
-  .box-user
-  {
+  .box-user {
     margin: auto;
   }
-  
-  .box-user .item
-  {
+
+  .box-user .item {
     flex: 0 0 100%;
     max-width: 100%;
   }
 
-  .box-add-user form .item label
-  {
+  .box-add-user form .item label {
     width: 40%;
     font-size: 16px;
   }
 
-  .navAdmin
-  {
+  .navAdmin {
     flex-direction: row;
     gap: 20px;
-    bottom:2%;
+    bottom: 2%;
     left: 50%;
     top: auto;
     right: auto;
     transform: translateX(-50%);
   }
 
-  .navAdmin li
-  {
+  .navAdmin li {
     margin-bottom: 0;
   }
 
-  .navAdmin li span
-  {
+  .navAdmin li span {
     display: none !important;
   }
 
-  .main-admin .Manager .title
-  {
+  .main-admin .Manager .title {
     margin-bottom: 0px;
+  }
+
+  .signup-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    max-width: 300px;
+  }
+  .right-container h1:nth-of-type(1) {
+    font-size: 20px;
+    font-weight: 600;
+  }
+  .login-box .right-container {
+    min-height: 500px;
+    display: flex;
+    width: 100%;
+    align-items: center;
+  }
+  .right-container header {
+    padding: 0px;
+    text-align: center;
+  }
+  .item_login {
+    display: -webkit-box;
+  }
+  .left-container .puppy {
+    display: none;
+  }
+  .left-container {
+    padding: 20px 0px 20px 0px;
   }
 }
 
@@ -410,9 +452,8 @@
     flex: 0 0 100%;
     max-width: 100%;
   }
-  
-  .box-add-user form
-  {
+
+  .box-add-user form {
     transform: translateX(-50%) translateY(-57%);
   }
 }
