@@ -601,7 +601,7 @@ const boxSystem = document.querySelector('.system-content')
 /* END SHOW INFOMATION SYSTEM */
 //console.log(infoSystem)
 onValue(infoSystem,async (snapshot) => {
-  let systemHTML ='',systemWater='',systemFood='',statusLedWater,statusMachinesWater,statusAutoWater,statusLedFood,statusMachinesFood
+  let systemHTML ='',systemWater='',systemFood='',statusLedWater,statusMachinesWater,statusAutoWater,statusLedFood,statusMachinesFood,statusAutoFood
   let checkDatabase = false
   await snapshot.forEach((childSnapshot) => {
     checkDatabase = true
@@ -657,6 +657,7 @@ onValue(infoSystem,async (snapshot) => {
     {
       statusLedFood = childData.btnLed
       statusMachinesFood = childData.machies;
+      statusAutoFood = childData.auto;
       systemFood = ` <!-- System item start -->
                         <div class="System-item padd-15">
                           <div class="System-item-inner">
@@ -687,6 +688,9 @@ onValue(infoSystem,async (snapshot) => {
                               <div class="`+(childData.machies == 1?'active' : '')+`" id="machines-switch-food"> 
                                 `+(childData.machies == 1?'<i class="fa-solid fa-bowl-food"></i>' : '<i class="fa-solid fa-bowl-rice"></i>')+`
                               </div>
+                              <div class="`+(childData.auto == 1?'active' : '')+`" id="auto-switch-food"> 
+                                <i class="fa-brands fa-autoprefixer"></i>
+                              </div>
                             </div>
                           </div>
                         </div>
@@ -703,6 +707,8 @@ onValue(infoSystem,async (snapshot) => {
     const autoWater = document.querySelector("#auto-switch-water")
     const ledFood = document.querySelector("#light-switch-food")
     const machinesFood = document.querySelector("#machines-switch-food")
+    const autoFood = document.querySelector("#auto-switch-food")
+
     if(ledWater)
     {
       ledWater.addEventListener("click",()=>{
@@ -721,17 +727,27 @@ onValue(infoSystem,async (snapshot) => {
     }
     if(autoWater)
     {
+      let statusAuto
       autoWater.addEventListener("click",()=>{
         update(ref(database,'/account/' + userID + '/system/water'),{
           auto : (statusAutoWater == 1 ? 0 : 1),
         })
-        if(statusAutoWater == 1)
-        {
-          console.log(132123);
-          machinesWater.style.opacticy = 0.5;
-          machinesWater.style.pointerEvents = "none";
-          machinesWater.style.cursor = 'no-drop';
-        }
+        get(child(dbRef, `account/`+userID+`/system/water`)).then(async (snapshot) => {
+          if (snapshot.exists()) {
+            statusAuto =snapshot.val().auto
+            
+            if(statusAuto == 1)
+            {
+              document.querySelector("#machines-switch-water").style.display = 'none';
+            }
+            else
+            {
+              document.querySelector("#machines-switch-water").style.display = 'flex';
+            }
+          } else {
+            console.log("err");
+          }
+        })
       })
     }
     if(ledFood)
@@ -747,6 +763,31 @@ onValue(infoSystem,async (snapshot) => {
       machinesFood.addEventListener("click",()=>{
         update(ref(database,'/account/' + userID + '/system/food'),{
           machies : (statusMachinesFood == 1 ? 0 : 1),
+        })
+      })
+    }
+    if(autoFood)
+    {
+      let statusAuto
+      autoFood.addEventListener("click",()=>{
+        update(ref(database,'/account/' + userID + '/system/food'),{
+          auto : (statusAutoFood == 1 ? 0 : 1),
+        })
+        get(child(dbRef, `account/`+userID+`/system/food`)).then(async (snapshot) => {
+          if (snapshot.exists()) {
+            statusAuto =snapshot.val().auto
+            
+            if(statusAuto == 1)
+            {
+              document.querySelector("#machines-switch-food").style.display = 'none';
+            }
+            else
+            {
+              document.querySelector("#machines-switch-food").style.display = 'flex';
+            }
+          } else {
+            console.log("err");
+          }
         })
       })
     }
