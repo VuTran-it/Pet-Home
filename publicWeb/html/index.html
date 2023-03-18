@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pet Home</title>
+
+    <link rel="icon" href="../img/logo.png" type="image/x-icon" />
+
+    <link rel="stylesheet" href="../css/style.css" />
+    <link rel="stylesheet" href="../css/effect.css" />
+    <link rel="stylesheet" href="../css/responsive.css" />
+    <link rel="stylesheet" href="../css/loader.css" />
+
+    <!-- Style-Switcher -->
+    <link rel="stylesheet" href="../css/style-switcher.css" />
+    <link
+      rel="stylesheet"
+      href="../css/Color/color-1.css"
+      class="alternate-style"
+      title="color-1"
+    />
+    <link
+      rel="stylesheet"
+      href="../css/Color/color-2.css"
+      class="alternate-style"
+      title="color-2"
+      disabled
+    />
+    <link
+      rel="stylesheet"
+      href="../css/Color/color-3.css"
+      class="alternate-style"
+      title="color-3"
+      disabled
+    />
+    <link
+      rel="stylesheet"
+      href="../css/Color/color-4.css"
+      class="alternate-style"
+      title="color-4"
+      disabled
+    />
+    <link
+      rel="stylesheet"
+      href="../css/Color/color-5.css"
+      class="alternate-style"
+      title="color-5"
+      disabled
+    />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+      integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+
+    <!-- Swiper -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css"
+    />
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script src="../js/config.js"></script>
+    <script>
+      if(!sessionStorage.getItem("idUser"))
+      {
+        window.location.href= hosting +  '/html/login.html'
+      }
+    </script>
+  </head>
+
+  <body>
+    <!-- Main Container Start -->
+    <div class="main-container main-home">
+      <!-- Nav Start -->
+      <div class="box-nav">
+        <ul class="nav">
+          <div class="toggle">
+            <i class="fa-solid fa-plus"></i>
+          </div>
+          <li style="--i: 0" class="list active">
+            <a href="#home"><i class="fa-solid fa-house-chimney"></i></a
+            ><span>Home</span>
+          </li>
+          <li style="--i: 1" class="list">
+            <a href="#Pet"><i class="fa-solid fa-paw"></i></a><span>Pet</span>
+          </li>
+          <li style="--i: 2" class="list">
+            <a href="#System"><i class="fa-solid fa-gears"></i></a
+            ><span> System</span>
+          </li>
+          <li style="--i: 3" class="list">
+            <a href="#Manager"><i class="fa-solid fa-list-check"></i></a
+            ><span> Manager</span>
+          </li>
+          <li style="--i: 4" class="list">
+            <a href="#Account"><i class="fa-solid fa-user"></i></a
+            ><span> Account</span>
+          </li>
+          <li style="--i: 5" class="logout" id="logout">
+            <button >
+              <i class="fa-solid fa-person-walking-arrow-right"></i></button
+            ><span> Log Out</span>
+          </li>
+        </ul>
+      </div>
+      <!-- Nav End -->
+
+      <!-- Main Content Start -->
+      <div class="main-content">
+        <!-- Home Section Start -->
+        <section class="home section active" id="home">
+          <div class="container">
+            <div class="row">
+              <div class="home-img padd-15">
+                <img src="../img/home.png" alt="" />
+              </div>
+
+              <div class="home-info padd-15">
+                <h3 class="hello">
+                  Welcome to <span class="text">Pet Home</span>
+                </h3>
+                <p>
+                  A cat has absolute emotional honesty: human beings, for one reason or another, may hide their feelings, but a cat does not. 
+                  <br> </br>
+                  <i>"Ernest Hemingway"</i>
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+        <!-- Home Section End -->
+
+        <!-- Pet Section Start -->
+        <section class="Pet section" id="Pet">
+          <div class="container">
+            <div class="row mb-90">
+              <div class="section-title padd-15">
+                <h2>List <span>Pet</span></h2>
+                <h3>Love Pet</h3>
+              </div>
+            </div>
+
+            <div class="box-list-pet row">
+            </div>
+          </div>
+        </section>
+        <!-- Pet Section End -->
+
+        <!-- Systems Section Start -->
+        <section class="System section" id="System">
+          <div class="container">
+            <div class="row mb-30">
+                <div class="section-title padd-15">
+                <h2>System <span>Management</span></h2>
+                <h3>Love Pet</h3>
+                </div>
+            </div>
+
+          <div class="row mb-30 system-content">
+            
+          </div>
+          
+        </section>
+        <!-- Systems Section End -->
+
+        <!-- Manager Section Start -->
+        <section class="Manager section" id="Manager">
+          <div class="container">
+            <div class="row mb-30">
+              <div class="section-title padd-15">
+                <h2>Management <span>Pet</span></h2>
+                <h3>Love Pet</h3>
+              </div>
+            </div>
+
+            <div class="swiper mySwiper">
+              <div class="swiper-wrapper box-manager-list-pet">
+                
+              </div>
+            </div>
+
+            <div class="box--pen">
+              <button class="button button--pen">
+                <div class="button__wrapper">
+                  <i class="fa-solid fa-plus"></i>
+                  <span class="button__text">ADD PET</span>
+                </div>
+                <div class="characterBox">
+                  <div class="character wakeup">
+                    <div class="character__face"></div>
+                    <div class="charactor__face2"></div>
+                  </div>
+                  <div class="character wakeup">
+                    <div class="character__face"></div>
+                    <div class="charactor__face2"></div>
+                  </div>
+                  <div class="character">
+                    <div class="character__face"></div>
+                    <div class="charactor__face2"></div>
+                  </div>
+                </div>
+              </button>
+            </div>
+          </div>
+          <!-- Add pet start  -->
+          <div class="box-form box-info-pet scale-up-tl" x-data="{check:false}">
+            <div class="signup-container">
+              <div class="left-container">
+                <h1>
+                  <i class="fas fa-paw"></i>
+                  PUPASSURE
+                </h1>
+                <div class="puppy">
+                  <img src="../img/box-manager.png" />
+                </div>
+              </div>
+              <div class="right-container">
+                <div class="close-box">
+                  <i class="fa-solid fa-right-from-bracket"></i>
+                </div>
+                <header>
+                  <h1>Yay, pussy cat! Ensure your pup gets the best care</h1>
+                  <div class="set">
+                    <div class="pets-name">
+                      <label for="pets-name">Name</label>
+                      <input
+                        id="pets-name"
+                        class="input"
+                        type="text"
+                        placeholder="Pet's name"
+                      />
+                    </div>
+                    <div class="pets-photo">
+                      <label for="pets-upload" class="pets-upload-text">Image</label>
+                      <input class="input" type="file" id="pets-upload" />
+                    </div>
+                  </div>
+                  <div class="set">
+                    <div class="pets-breed">
+                      <label for="pets-breed">Breed</label>
+                      <input
+                        id="pets-breed"
+                        class="input"
+                        type="text"
+                        placeholder="Pet's breed"
+                      />
+                    </div>
+                    <div class="pets-birthday">
+                      <label for="pets-birthday">Age</label>
+                      <input
+                        id="pets-age"
+                        class="input"
+                        type="text"
+                        placeholder="Pet's age"
+                      />
+                    </div>
+                  </div>
+                  <div class="set">
+                    <div class="pets-gender">
+                      <label for="pet-gender-female">Gender</label>
+                      <div class="radio-container">
+                        <input
+                          id="pet-gender-female"
+                          name="pet-gender"
+                          type="radio"
+                          value="female"
+                          checked=""
+                        />
+                        <label for="pet-gender-female">Female</label>
+                        <input
+                          id="pet-gender-male"
+                          name="pet-gender"
+                          type="radio"
+                          value="male"
+                        />
+                        <label for="pet-gender-male">Male</label>
+                      </div>
+                    </div>
+                    <div class="pets-spayed-neutered">
+                      <label for="pet-spayed">Spayed or Neutered</label>
+                      <div class="radio-container">
+                        <input
+                          id="pet-spayed"
+                          name="spayed-neutered"
+                          type="radio"
+                          value="spayed"
+                          checked
+                        />
+                        <label for="pet-spayed">Spayed</label>
+                        <input
+                          id="pet-neutered"
+                          name="spayed-neutered"
+                          type="radio"
+                          value="neutered"
+                        />
+                        <label for="pet-neutered">Neutered</label>
+                      </div>
+                    </div>
+                  </div>
+                </header>
+
+                <footer>
+                  <button class="upload-pet">
+                    <i class="fa-solid fa-cloud-arrow-up"></i>
+                    <span>Upload</span>
+                  </button>
+
+                  <div class="notification"></div>
+                </footer>
+              </div>
+            </div>
+
+          </div>
+          <!-- Add pet end  -->
+        </section>
+        <!-- Manager Section End -->
+
+        <!-- Account Section Start -->
+        <section class="Account section" id="Account">
+          <div class="container">
+            <div class="row">
+              <div class="section-title padd-15">
+                <h2>My <span>Account</span></h2>
+                <h3>Love Pet</h3>
+              </div>
+            </div>
+
+            <div class="content info-user row">
+              
+          </div>
+        </section>
+        <!-- Account Section Start -->
+      </div>
+      <!-- Main Content End -->
+      <!-- Style Switcher Start -->
+      <div class="style-switcher">
+        <div class="style-switcher-toggler s-icon main-icon">
+          <i class="fa-solid fa-gear"></i>
+        </div>
+        <h4>Theme Colors</h4>
+        <div class="colors">
+          <span class="color-1" onclick="setActiveStyle('color-1')"></span>
+          <span class="color-2" onclick="setActiveStyle('color-2')"></span>
+          <span class="color-3" onclick="setActiveStyle('color-3')"></span>
+          <span class="color-4" onclick="setActiveStyle('color-4')"></span>
+          <span class="color-5" onclick="setActiveStyle('color-5')"></span>
+        </div>
+        <h4>Remote Control</h4>
+        <div class="remote-control">
+          <div class="s-icon remote-control-item dark-light">
+            <i class="fa-solid"></i>
+          </div>
+
+          <div class="s-icon remote-control-item" id="btn_fullscreen">
+            <i class="fa-solid fa-expand"></i>
+          </div>
+        </div>
+      </div>
+      <!-- Style Switcher End -->
+    </div>
+    <!-- Main Container End -->
+
+    <!-- Script -->
+    <script src="../js/index.js"></script>
+    <script src="../js/firebase.js" type="module"></script>
+    <script src="../js/navMobile.js"></script>
+    <script src="../js/login.js" type="module"></script>
+    <script src="../js/style-switcher.js"></script>
+    <!-- Swiper -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
+
+    <!-- Initialize Swiper -->
+    <script>
+      var swiper = new Swiper(".mySwiper", {
+        effect: "coverflow",
+        grabCursor: true,
+        centeredSlides: true,
+        slidesPerView: "auto",
+        coverflowEffect: {
+          rotate: 50,
+          stretch: 0,
+          depth: 100,
+          modifier: 1,
+          slideShadows: true,
+        },
+        pagination: {
+          el: ".swiper-pagination",
+        },
+      });
+    </script>
+  </body>
+</html>
