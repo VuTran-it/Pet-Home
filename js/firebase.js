@@ -4,7 +4,6 @@
  import { getStorage,ref as Sref,getDownloadURL,uploadBytesResumable,deleteObject,listAll } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-storage.js";
  import { getAuth,createUserWithEmailAndPassword,signInWithEmailAndPassword} from 'https://www.gstatic.com/firebasejs/9.17.1/firebase-auth.js'
  import { getDatabase, ref, onValue, query,get, limitToLast,set,update,remove,child} from "https://www.gstatic.com/firebasejs/9.17.1/firebase-database.js"
-
  const firebaseConfig = {
     apiKey: "AIzaSyCZ92xMiEl2xzANh1hJzWioCEZv_POjbAQ",
     authDomain: "raspberry-test-0207.firebaseapp.com",
@@ -25,6 +24,8 @@ const database = getDatabase();
 const dbRef = ref(getDatabase());
 const storage = getStorage();
 const dataRef = query(ref(database, 'account'), limitToLast(100));
+
+const userID = sessionStorage.getItem("idUser")
 
 // onValue(dataRef, (snapshot) => {
 //   snapshot.forEach((childSnapshot) => {
@@ -273,7 +274,6 @@ if(boxUser)
 /* ADD SHOW LIST USER,REMOVE USER */
 
 /* SHOW INFO USER */
-const userID = sessionStorage.getItem("idUser")
 const boxInfoUser = document.querySelector('.content.info-user')
 if(userID && userID != '')
 {
@@ -542,7 +542,7 @@ onValue(infoPetRef,async (snapshot) => {
    {
     btnShowPets.forEach((item) => {
       item.addEventListener("click",() => {
-        let url = hosting + '/html/details_pet.html?idPet=' + item.getAttribute('idpet')
+        let url = hosting + 'details_pet.html?idPet=' + item.getAttribute('idpet')
         
         window.location.href = url
       })

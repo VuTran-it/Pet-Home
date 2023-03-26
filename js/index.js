@@ -101,7 +101,7 @@ if(logout)
 {
     logout.addEventListener("click", () => {
         sessionStorage.removeItem("idUser")
-        window.location.href = hosting + "/html/login.html"
+        window.location.href = hosting + "login.html"
     })
 }
 /* END LOGOUT*/

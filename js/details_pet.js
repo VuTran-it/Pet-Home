@@ -1,23 +1,16 @@
+// Import the functions you need from the SDKs you need
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-app.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-analytics.js";
-import {
-  getDatabase,
-  ref,
-  onValue,
-  query,
-  get,
-  limitToLast,
-  set,
-  update,
-  remove,
-  child,
-} from "https://www.gstatic.com/firebasejs/9.17.1/firebase-database.js";
+import { getStorage,ref as Sref,getDownloadURL,uploadBytesResumable,deleteObject,listAll } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-storage.js";
+import { getAuth,createUserWithEmailAndPassword,signInWithEmailAndPassword} from 'https://www.gstatic.com/firebasejs/9.17.1/firebase-auth.js'
+import { getDatabase, ref, onValue, query,get, limitToLast,set,update,remove,child} from "https://www.gstatic.com/firebasejs/9.17.1/firebase-database.js"
+
+const userID = sessionStorage.getItem("idUser")
 
 const firebaseConfig = {
   apiKey: "AIzaSyCZ92xMiEl2xzANh1hJzWioCEZv_POjbAQ",
   authDomain: "raspberry-test-0207.firebaseapp.com",
-  databaseURL:
-    "https://raspberry-test-0207-default-rtdb.asia-southeast1.firebasedatabase.app",
+  databaseURL: "https://raspberry-test-0207-default-rtdb.asia-southeast1.firebasedatabase.app",
   projectId: "raspberry-test-0207",
   storageBucket: "raspberry-test-0207.appspot.com",
   messagingSenderId: "333665348767",
@@ -28,15 +21,19 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics();
-const database = getDatabase(app);
-const url = new URL(window.location.href);
-const params = new URLSearchParams(url.search);
-const userID = sessionStorage.getItem("idUser");
-const idPet = params.get("idPet");
+const auth = getAuth(app);
+const database = getDatabase();
+const dbRef = ref(getDatabase());
+const storage = getStorage();
+const dataRef = query(ref(database, 'account'), limitToLast(100));
 const listPet = query(
   ref(database, "account/" + userID + "/listPet"),
   limitToLast(100)
 );
+
+const url = new URL(window.location.href);
+const params = new URLSearchParams(url.search);
+const idPet = params.get("idPet");
 
 /* loading */
 var mainContainer = document.querySelector(".main-container");
@@ -51,6 +48,7 @@ const info_detail_pet = document.getElementById("info-detail-pet");
 if (idPet) {
   info_detail_pet.classList.add("active");
 }
+
 /* SHOW DETAIL INFO PET */
 onValue(listPet, async (snapshot) => {
   let detailPetHTML = "";
@@ -82,7 +80,7 @@ onValue(listPet, async (snapshot) => {
                                 <span>Gender : ` +childData.gender +`</span>
                                 <span>Breed : ` +childData.breed +`</span>
                                 <span>Neutered : ` +childData.neutered +`</span>
-                                <span>Weight : 10KG</span>
+                                <span>Weight : `+childData.health.weight+`KG</span>
                             </div>
                         </div> `;
       detailPetHTML = content;
@@ -186,6 +184,43 @@ onValue(infoPetRef, async (snapshot) => {
       dataWeightPet.length
     );
   }
+  // UPDATE WEIGHT PET
+  get(child(dbRef, `account/`+userID+`/listPet/`+idPet+`/health/`)).then(async (snapshot) => {
+    if (snapshot.exists()) {
+      if(snapshot.val().weightPet != dataWeightPet[dataWeightPet.length - 1].weight )
+      {
+        update(ref(database,`account/`+userID+`/listPet/`+idPet+`/health/`),{
+          weight : dataWeightPet[dataWeightPet.length - 1].weight
+        })
+      }
+    } else {
+      console.log("err");
+    }
+  })
+  let caloriesNecessary = 30*(sumWeight(dataWeightPet)/dataWeightPet.length).toFixed(2) + 70;
+
+  let caloriesFood = 1.2 // 1.2 calo / 1g
+  let caloriesDay = ((caloriesFood * sumWeight(dataWeightFood)) / dataWeightFood.length).toFixed(2);
+
+  let weightStatus;
+  if(caloriesDay > caloriesNecessary)
+  {
+    weightStatus = 'Fat';
+  }
+  else
+  {
+    weightStatus = 'Weak';
+  }
+
+  let advice 
+  if(weightStatus == 'Fat')
+  {
+    advice = 'Reduce food, Reduce calories, Increase exercise';
+  }
+  else
+  {
+    advice = 'Increase project volume, Increase calories, Improve food quality';
+  }
 
   let synthetic = `<div class="content-right-item">
                         <div class="title">
@@ -194,7 +229,11 @@ onValue(infoPetRef, async (snapshot) => {
                         </div>
                         <div class="detail">
                               <span>Weight of food for the week : `+sumWeight(dataWeightFood)+` Gram</span>
-                              <span>Average pet weight for the week : `+(sumWeight(dataWeightPet)/dataWeightPet.length).toFixed(2)+` KG</span>
+                              <span>Average pet weight for the week : `+(sumWeight(dataWeightPet)/dataWeightPet.length).toFixed(2)+` KG</span>  
+                              <span>Calories needed for cats in 1 day : `+caloriesNecessary+` Calo</span>
+                              <span>Actual calories consumed in 1 day : `+caloriesDay+` Calo</span>
+                              <span>Weight status : `+weightStatus+`</span>
+                              <span>Pet care keyword : `+advice+`</span>
                         </div>
                     </div>`;
   // <div class="detail">
