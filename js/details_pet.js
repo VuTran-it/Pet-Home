@@ -96,6 +96,22 @@ onValue(listPet, async (snapshot) => {
 /* END SHOW DETAIL INFO PET */
 
 /* CHAR  */
+function sumWeight(data)
+{
+  let sum = 0;
+  for (let i = 0; i < data.length; i++) {
+    sum += data[i].weight;
+  }
+  return sum;
+}
+function sumArray(array) {
+  let sum = 0;
+  for (let i = 0; i < array.length; i++) {
+    sum += array[i];
+  }
+  return sum;
+}
+
 function formaterDate(s) {
   var parts = s.split(":");
   return (
@@ -105,14 +121,6 @@ function formaterDate(s) {
 function getDate(s) {
   var parts = s.split(":");
   return parts[0] + "-" + parts[1] + "-" + parts[2];
-}
-
-function sumArray(array) {
-  let sum = 0;
-  for (let i = 0; i < array.length; i++) {
-    sum += array[i];
-  }
-  return sum;
 }
 
 function lastArray(array) {
@@ -147,7 +155,7 @@ onValue(infoPetRef, async (snapshot) => {
         }
       }
       for (let item in newObj) {
-        dataWeightFood.push({ y: item, weightFood: sumArray(newObj[item]) });
+        dataWeightFood.push({ y: item, weight: sumArray(newObj[item]) });
       }
     }
     if (childKey == "weightManagement") {
@@ -162,10 +170,7 @@ onValue(infoPetRef, async (snapshot) => {
         }
       }
       for (let item in newObj) {
-        dataWeightPet.push({
-          y: item,
-          weightPet: newObj[item][newObj[item].length - 1],
-        });
+        dataWeightPet.push({ y: item,weight: newObj[item][newObj[item].length - 1]});
       }
     }
   });
@@ -181,10 +186,15 @@ onValue(infoPetRef, async (snapshot) => {
       dataWeightPet.length
     );
   }
+
   let synthetic = `<div class="content-right-item">
                         <div class="title">
                             <span></span>
                             <h2 class="text">Synthetic</h2>
+                        </div>
+                        <div class="detail">
+                              <span>Weight of food for the week : `+sumWeight(dataWeightFood)+` Gram</span>
+                              <span>Average pet weight for the week : `+(sumWeight(dataWeightPet)/dataWeightPet.length).toFixed(2)+` KG</span>
                         </div>
                     </div>`;
   // <div class="detail">
@@ -236,8 +246,8 @@ onValue(infoPetRef, async (snapshot) => {
     resize: true,
     data: dataWeightFood,
     xkey: "y",
-    ykeys: ["weightFood"],
-    labels: ["weightFood "],
+    ykeys: ["weight"],
+    labels: ["weight"],
     lineColors: ["#3c8dbc"],
     hideHover: "auto",
   });
@@ -247,8 +257,8 @@ onValue(infoPetRef, async (snapshot) => {
     resize: true,
     data: dataWeightPet,
     xkey: "y",
-    ykeys: ["weightPet"],
-    labels: ["weightPet"],
+    ykeys: ["weight"],
+    labels: ["weight"],
     lineColors: ["#3c8dbc"],
     hideHover: "auto",
   });
