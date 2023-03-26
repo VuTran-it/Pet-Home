@@ -319,14 +319,15 @@
   }
   .Manager .box-form .right-container header h1 {
     font-size: 20px;
-    margin-top: 30px;
+    margin-top: 10px;
   }
   .Manager .box-form .right-container {
     width: 95%;
+    margin: 0 auto;
   }
   .Manager .box-form .right-container input,
   .Manager .box-form .right-container .radio-container {
-    width: 90%;
+    width: 100%;
   }
 
   #info-detail-pet .content-left,
@@ -419,7 +420,7 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    max-width: 300px;
+    max-width: 400px;
   }
   .right-container h1:nth-of-type(1) {
     font-size: 20px;
@@ -443,6 +444,24 @@
   }
   .left-container {
     padding: 20px 0px 20px 0px;
+  }
+
+  .right-container .set
+  {
+    flex-direction: column;
+    gap:10px;
+  }
+  .right-container .set label
+  {
+    width: max-content;
+  }
+  .right-container .set .pets-photo
+  {
+    width: 100%;
+  }
+  .right-container .set .pets-photo label
+  {
+    display: block;
   }
 }
 

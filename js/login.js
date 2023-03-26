@@ -38,11 +38,11 @@ if(btn_singin)
       sessionStorage.setItem("idUser", user.uid)
       if(user.uid != adminID)
       {
-        window.location.href= hosting + "/html/index.html"
+        window.location.href= hosting + "index.html"
       }
       else
       {
-        window.location.href= hosting + "/html/admin.html"
+        window.location.href= hosting + "admin.html"
       }
     })
     .catch((error) => {
