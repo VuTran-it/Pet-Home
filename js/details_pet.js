@@ -228,10 +228,10 @@ onValue(infoPetRef, async (snapshot) => {
                             <h2 class="text">Synthetic</h2>
                         </div>
                         <div class="detail">
-                              <span>Weight of food for the week : `+sumWeight(dataWeightFood)+` Gram</span>
-                              <span>Average pet weight for the week : `+(sumWeight(dataWeightPet)/dataWeightPet.length).toFixed(2)+` KG</span>  
-                              <span>Calories needed for cats in 1 day : `+caloriesNecessary+` Calo</span>
-                              <span>Actual calories consumed in 1 day : `+caloriesDay+` Calo</span>
+                              <span>Weight of food per week : `+sumWeight(dataWeightFood)+` Gram</span>
+                              <span>Average weight of pet per week : `+(sumWeight(dataWeightPet)/dataWeightPet.length).toFixed(2)+` KG</span>  
+                              <span>Needed calories for cats per day : `+caloriesNecessary+` Calo</span>
+                              <span>Actual calories consumed per day : `+caloriesDay+` Calo</span>
                               <span>Weight status : `+weightStatus+`</span>
                               <span>Pet care keyword : `+advice+`</span>
                         </div>
