@@ -337,6 +337,11 @@ const inputInfoPet = document.querySelectorAll('.box-form.box-info-pet .input')
 const btnUploadPet = document.querySelector('.box-form.box-info-pet .upload-pet')
 
 function writePetData(petId,name,image,breed,age,gender,neutered) {
+  const date = new Date(); 
+  const day = date.getDate().toString().padStart(2, '0'); 
+  const month = (date.getMonth() + 1).toString().padStart(2, '0'); 
+  const year = date.getFullYear().toString(); 
+  const formattedDate = `${year}:${month}:${day}`; 
   set(ref(database, 'account/' + userID + '/listPet/' + petId), {
     name: name,
     image : image,
@@ -344,6 +349,7 @@ function writePetData(petId,name,image,breed,age,gender,neutered) {
     age : age,
     gender : gender,
     neutered : neutered,
+    DateCreate : formattedDate,
   });
 }
 

@@ -76,7 +76,7 @@ onValue(listPet, async (snapshot) => {
                             </div>
 
                             <div class="detail">
-                                <span>Age : ` +childData.age +`</span>
+                                <span>Age : ` +childData.age +` week </span>
                                 <span>Gender : ` +childData.gender +`</span>
                                 <span>Breed : ` +childData.breed +`</span>
                                 <span>Neutered : ` +childData.neutered +`</span>
@@ -228,12 +228,21 @@ onValue(infoPetRef, async (snapshot) => {
                             <h2 class="text">Synthetic</h2>
                         </div>
                         <div class="detail">
+<<<<<<< HEAD
+                              <span>Weight of food for the week : `+sumWeight(dataWeightFood)+` Gram</span>
+                              <span>Average pet weight for the week : `+(sumWeight(dataWeightPet)/dataWeightPet.length).toFixed(2)+` KG</span>  
+                              <span>Calories needed for cats in 1 day : `+caloriesNecessary+` Calo</span>
+                              <span>Actual calories consumed in 1 day : `+caloriesDay+` Calo</span>
+=======
                               <span>Weight of food per week : `+sumWeight(dataWeightFood)+` Gram</span>
                               <span>Average weight of pet per week : `+(sumWeight(dataWeightPet)/dataWeightPet.length).toFixed(2)+` KG</span>  
                               <span>Needed calories for cats per day : `+caloriesNecessary+` Calo</span>
                               <span>Actual calories consumed per day : `+caloriesDay+` Calo</span>
                               <span>Weight status : `+weightStatus+`</span>
+>>>>>>> e579448e903add90bd466b576ff3647a15c3c3ea
                               <span>Pet care keyword : `+advice+`</span>
+                              <span style="color:#e68d03">Weight status : `+weightStatus+`</span>
+                              <span class="statusWeightAge" style="color:#e68d03"></span>
                         </div>
                     </div>`;
   // <div class="detail">
