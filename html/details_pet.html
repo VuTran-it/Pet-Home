@@ -50,6 +50,26 @@
         <div class="exit-detail-pet">
             <a href="./index.html"><i class="fa-solid fa-right-from-bracket"></i></a>
         </div>
+        <div class="container-error-time">
+            <div class="box-content">
+                <p>ERORR</p>
+                <p>Your selection is not correct</p>
+                <div class="note">
+                    <p>NOTE :</p>
+                    <p>12:00 SA = 00:00</p>
+                    <p>12:00 CH = 12:00</p>
+
+                </div>
+                <button class="close-error">Close</button>
+            </div>
+        </div>
+        <div class="container-success-time">
+            <div class="box-content">
+                <p>SUCCESS</p>
+                <p>Your selection has been saved successfully</p>
+                <button class="close-success">Close</button>
+            </div>
+        </div>
         <!-- Main Content Start -->
         <div class="main-content">
             <!-- Details pet Start -->
@@ -64,7 +84,34 @@
                         </div>
                         <div class="content row mb-30" >
                             <div class="content-left">
-
+                                <div class="header"></div>
+                                <div class="settime">
+                                    <div class="info">
+                                        <div class="title">
+                                            <span></span>
+                                            <h2 class="text">Set Time Eat</h2>
+                                        </div>
+            
+                                        <div class="detail box-time-eat">
+                                            <div class="item">
+                                                <span>Breakfast time : </span>
+                                                <input type="time" name="appt"  required id="monday">
+                                            </div>
+                                            <div class="item">
+                                                <span>Lunch time : </span>
+                                                <input type="time" name="appt" required id="midday">
+                                            </div>
+                                            <div class="item">
+                                                <span>Dinner time : </span>
+                                                <input type="time" name="appt" required id="night">
+                                            </div>
+                                            <div class="item">
+                                                <button id="save-time">Save settings</button>
+                                                <button id="delete-time">Delete settings</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             <div class="content-right">
                                

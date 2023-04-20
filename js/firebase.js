@@ -350,6 +350,14 @@ function writePetData(petId,name,image,breed,age,gender,neutered) {
     gender : gender,
     neutered : neutered,
     DateCreate : formattedDate,
+    timeEat : {
+      monday: '',
+      midday:'',
+      night:'',
+    },
+    health : {
+      weight:''
+    }
   });
 }
 

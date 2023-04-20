@@ -52,9 +52,7 @@ if (idPet) {
 /* SHOW DETAIL INFO PET */
 onValue(listPet, async (snapshot) => {
   let detailPetHTML = "";
-  const contentLeft = document.querySelector(
-    "#info-detail-pet .content .content-left"
-  );
+  const headerContentLeft = document.querySelector("#info-detail-pet .content .content-left .header");
   await snapshot.forEach((childSnapshot) => {
     var childData = childSnapshot.val();
     var childKey = childSnapshot.key;
@@ -84,8 +82,8 @@ onValue(listPet, async (snapshot) => {
                             </div>
                         </div> `;
       detailPetHTML = content;
-      if (contentLeft) {
-        contentLeft.innerHTML = detailPetHTML;
+      if (headerContentLeft) {
+        headerContentLeft.innerHTML = detailPetHTML;
       }
     }
   });
@@ -203,24 +201,44 @@ onValue(infoPetRef, async (snapshot) => {
   let caloriesDay = ((caloriesFood * sumWeight(dataWeightFood)) / dataWeightFood.length).toFixed(2);
 
   let weightStatus;
-  if(caloriesDay > caloriesNecessary)
+  
+  if(caloriesDay)
   {
-    weightStatus = 'Fat';
+    weightStatus = ' ';
   }
   else
   {
-    weightStatus = 'Weak';
+    if(caloriesDay > caloriesNecessary)
+    {
+      weightStatus = 'Fat';
+    }
+    else
+    {
+      weightStatus = 'Weak';
+    }
   }
 
   let advice 
-  if(weightStatus == 'Fat')
+  if(weightStatus == '')
   {
-    advice = 'Reduce food, Reduce calories, Increase exercise';
+    if(weightStatus == 'Fat')
+    {
+      advice = 'Reduce food, Reduce calories, Increase exercise';
+    }
+    else
+    {
+      advice = 'Increase project volume, Increase calories, Improve food quality';
+    }
   }
   else
   {
-    advice = 'Increase project volume, Increase calories, Improve food quality';
+    advice = ''
   }
+  
+  let sumWeightSub = sumWeight(dataWeightFood) ? sumWeight(dataWeightFood) : 0
+  let Average = sumWeightSub ? (sumWeight(dataWeightPet)/dataWeightPet.length).toFixed(2) : 0
+  let caloriesNecessarySub = caloriesNecessary ? caloriesNecessary : 0
+  let caloriesDaySub = caloriesNecessarySub ? caloriesDay : 0
 
   let synthetic = `<div class="content-right-item">
                         <div class="title">
@@ -228,18 +246,10 @@ onValue(infoPetRef, async (snapshot) => {
                             <h2 class="text">Synthetic</h2>
                         </div>
                         <div class="detail">
-<<<<<<< HEAD
-                              <span>Weight of food for the week : `+sumWeight(dataWeightFood)+` Gram</span>
-                              <span>Average pet weight for the week : `+(sumWeight(dataWeightPet)/dataWeightPet.length).toFixed(2)+` KG</span>  
-                              <span>Calories needed for cats in 1 day : `+caloriesNecessary+` Calo</span>
-                              <span>Actual calories consumed in 1 day : `+caloriesDay+` Calo</span>
-=======
-                              <span>Weight of food per week : `+sumWeight(dataWeightFood)+` Gram</span>
-                              <span>Average weight of pet per week : `+(sumWeight(dataWeightPet)/dataWeightPet.length).toFixed(2)+` KG</span>  
-                              <span>Needed calories for cats per day : `+caloriesNecessary+` Calo</span>
-                              <span>Actual calories consumed per day : `+caloriesDay+` Calo</span>
-                              <span>Weight status : `+weightStatus+`</span>
->>>>>>> e579448e903add90bd466b576ff3647a15c3c3ea
+                              <span>Weight of food per week : `+sumWeightSub+` Gram</span>
+                              <span>Average weight of pet per week : `+Average+` KG</span>  
+                              <span>Needed calories for cats per day : `+caloriesNecessarySub+` Calo</span>
+                              <span>Actual calories consumed per day : `+caloriesDaySub+` Calo</span>
                               <span>Pet care keyword : `+advice+`</span>
                               <span style="color:#e68d03">Weight status : `+weightStatus+`</span>
                               <span class="statusWeightAge" style="color:#e68d03"></span>
@@ -312,3 +322,124 @@ onValue(infoPetRef, async (snapshot) => {
   });
 });
 /*END  CHAR */
+
+
+/* SAVE TIME EAT */
+function getTime()
+{
+  onValue(listPet,(snapshot) => {
+    snapshot.forEach((childSnapshot) => {
+      var childKey = childSnapshot.key;
+      var childData = childSnapshot.val();
+      if(childKey == idPet)
+      {
+        document.getElementById('monday').value = childData.timeEat.monday;
+        document.getElementById('midday').value = childData.timeEat.midday;
+        document.getElementById('night').value = childData.timeEat.night;
+      }
+    })
+  });
+}
+getTime();
+
+const save_time = document.getElementById('save-time')
+const delete_time = document.getElementById('delete-time')
+var error = false;
+
+save_time.addEventListener('click',()=>{
+  let monday = document.getElementById('monday').value
+  let midday = document.getElementById('midday').value
+  let night = document.getElementById('night').value
+
+  if(monday.split(':')[0]  < 11)
+  {
+    get(child(dbRef, `account/`+userID+`/listPet/`+idPet+`/timeEat/monday`)).then(async (snapshot) => {
+      if (snapshot.exists()) {
+        if(snapshot.val().monday != monday)
+        {
+          update(ref(database,`account/`+userID+`/listPet/`+idPet+`/timeEat`),{
+            monday : monday,
+          })
+        }
+      } else {
+        console.log("err");
+      }
+    })
+  }
+  else
+  {
+    error = true
+  }
+
+  if(midday.split(':')[0]  >= 11 && midday.split(':')[0] <= 12 )
+  {
+    get(child(dbRef, `account/`+userID+`/listPet/`+idPet+`/timeEat/midday`)).then(async (snapshot) => {
+      if (snapshot.exists()) {
+        if(snapshot.val().midday != midday)
+        {
+          update(ref(database,`account/`+userID+`/listPet/`+idPet+`/timeEat`),{
+            midday : midday,
+          })
+        }
+      } else {
+        console.log("err");
+      }
+    })
+  }
+  else
+  {
+    error = true
+  }
+  if(night.split(':')[0]  >= 13  && night.split(':')[0]  < 24 )
+  {
+    get(child(dbRef, `account/`+userID+`/listPet/`+idPet+`/timeEat/night`)).then(async (snapshot) => {
+      if (snapshot.exists()) {
+        if(snapshot.val().night != night)
+        {
+          update(ref(database,`account/`+userID+`/listPet/`+idPet+`/timeEat`),{
+            night : night,
+          })
+        }
+      } else {
+        console.log("err");
+      }
+    })
+  }
+  else
+  {
+    error = true
+  }
+
+  if(error)
+  {
+    document.querySelector('.container-error-time').style.display = 'flex';
+    error = false
+  }
+  else
+  {
+    document.querySelector('.container-success-time').style.display = 'flex';
+  }
+
+  
+})
+
+delete_time.addEventListener('click',()=>{
+  update(ref(database,`account/`+userID+`/listPet/`+idPet+`/timeEat`),{
+    monday:'',
+    midday:'',
+    night :''
+  })
+})
+
+const close_error = document.querySelector('.close-error')
+const close_success = document.querySelector('.close-success')
+
+close_error.addEventListener('click',()=>{
+  document.querySelector('.container-error-time').style.display = 'none';
+  getTime();
+})
+close_success.addEventListener('click',()=>{
+  document.querySelector('.container-success-time').style.display = 'none';
+  getTime();
+})
+/* END SAVE TIME EAT */

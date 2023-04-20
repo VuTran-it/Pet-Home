@@ -160,6 +160,10 @@
   .left-container {
     padding: 20px 0px 20px 0px;
   }
+  .box-time-eat .item
+  {
+    grid-template-columns: 1fr 1fr;
+  }
 }
 
 /* Dien Thoai */
@@ -312,7 +316,7 @@
   }
   .Manager .box-form .right-container header {
     width: 100%;
-    padding: 10px;
+    padding: 20px 50px;
   }
   .Manager .box-form .right-container header h1 {
     font-size: 20px;
@@ -441,7 +445,8 @@
   }
   .left-container {
     padding: 20px 0px;
-    width: 100%;
+    width: 95%;
+    margin: 0 auto;
   }
 
   .right-container .set
@@ -449,17 +454,34 @@
     flex-direction: column;
     gap:10px;
   }
+  .right-container .set div
+  {
+  }
+
   .right-container .set label
   {
-    width: max-content;
+    width: max-content !important;
+    padding-left: 10px;
   }
-  .right-container .set .pets-photo
+  .right-container .set input
   {
-    width: 100%;
+    width: 100% !important;
   }
-  .right-container .set .pets-photo label
+  .radio-container input[type="radio"] + label
   {
-    display: block;
+    width: 50% !important;
+  }
+  .right-container .close-box
+  {
+    top: -60px;
+  }
+  .right-container .close-box i 
+  {
+    background-color: var(--skin-color);
+  }
+  .right-container .close-box i:hover
+  {
+    opacity: 1;
   }
 }
 
