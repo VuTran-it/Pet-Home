@@ -198,13 +198,13 @@ onValue(infoPetRef, async (snapshot) => {
   let caloriesNecessary = 30*(sumWeight(dataWeightPet)/dataWeightPet.length).toFixed(2) + 70;
 
   let caloriesFood = 1.2 // 1.2 calo / 1g
-  let caloriesDay = ((caloriesFood * sumWeight(dataWeightFood)) / dataWeightFood.length).toFixed(2);
+  let caloriesDay = sumWeight(dataWeightFood) ? ((caloriesFood * sumWeight(dataWeightFood)) / dataWeightFood.length).toFixed(2) : '';
 
   let weightStatus;
   
-  if(caloriesDay)
+  if(caloriesDay == '')
   {
-    weightStatus = ' ';
+    weightStatus = '';
   }
   else
   {
@@ -219,7 +219,7 @@ onValue(infoPetRef, async (snapshot) => {
   }
 
   let advice 
-  if(weightStatus == '')
+  if(weightStatus !== '')
   {
     if(weightStatus == 'Fat')
     {
