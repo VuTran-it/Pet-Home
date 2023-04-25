@@ -356,7 +356,7 @@ function writePetData(petId,name,image,breed,age,gender,neutered) {
       night:'',
     },
     health : {
-      weight:''
+      weight: 0
     }
   });
 }

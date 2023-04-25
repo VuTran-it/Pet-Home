@@ -144,9 +144,9 @@ onValue(infoPetRef, async (snapshot) => {
       for (let key in childData) {
         if (childData.hasOwnProperty(key)) {
           if (newObj[getDate(key)]) {
-            newObj[getDate(key)].push(childData[key]);
+            newObj[getDate(key)].push(parseFloat(childData[key] , 10));
           } else {
-            newObj[getDate(key)] = [childData[key]];
+            newObj[getDate(key)] = [parseFloat(childData[key] , 10)];
           }
         }
       }
@@ -159,9 +159,9 @@ onValue(infoPetRef, async (snapshot) => {
       for (let key in childData) {
         if (childData.hasOwnProperty(key)) {
           if (newObj[getDate(key)]) {
-            newObj[getDate(key)].push(childData[key]);
+            newObj[getDate(key)].push(parseFloat(childData[key], 10));
           } else {
-            newObj[getDate(key)] = [childData[key]];
+            newObj[getDate(key)] = [parseFloat(childData[key], 10)];
           }
         }
       }
