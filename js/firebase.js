@@ -693,8 +693,32 @@ onValue(infoSystem,async (snapshot) => {
                                 <div>
                                   <p>Percent :</p><span>`+childData.percent+`%</span>
                                 </div>
-                              </div>
+                                <div class="calo" style='display:flex;flex-direction:column;gap:5px;margin:15px 0'>
+                                  <span style='color:var(--text-black-900);font-weight:bold; text-align:left;'>Calories (Calo/100g)</span>
+                                  <div>
+                                    <input type="text" name="appt" value="`+childData.calories+`" required id="calories" placeholder="Enter calories" style="padding:5px 10px;border-radius:10px; border: 2px solid var(--skin-color);background:transparent;color:var(--text-black-900);font-weight:bold">
+                                    <div 
+                                      class="" id="save-calories" 
+                                      style='
+                                        cursor: pointer;
+                                        height: 40px;
+                                        width: 40px;
+                                        display: flex;
+                                        justify-content: center;
+                                        align-items: center;
+                                        border: 2px solid var(--text-black-900);
+                                        background-color: var(--skin-color);
+                                        border-radius: 50%;
+                                        font-size: 16px;
+                                        color: var(--text-black-900);
+                                      '> 
+                                      <i class="fa-solid fa-cloud-arrow-up"></i>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>   
                             </div>
+                            
                             <div class="box-icon">
                               <div class="`+(childData.btnLed == 1?'active' : '')+`" id="light-switch-food"> 
                                 `+(childData.btnLed == 1?'<i class="fa-solid fa-lightbulb"></i>' : '<i class="fa-regular fa-lightbulb"></i>')+`
@@ -805,6 +829,27 @@ onValue(infoSystem,async (snapshot) => {
         })
       })
     }
+    /* SAVE CALO */
+    const save_calories = document.getElementById('save-calories')
+    if (save_calories)
+    {
+      save_calories.addEventListener('click',()=>{
+        let calories = document.getElementById('calories').value
+        console.log(calories)
+        get(child(dbRef, `account/`+userID+`/system/food/calories`)).then(async (snapshot) => {
+          if (snapshot.exists()) {
+            if(snapshot.val() != calories)
+            {
+              set(ref(database, 'account/'+userID+'/system/food/calories'),calories);
+            }
+          } else {
+            console.log("err");
+          }
+        })
+      })
+    }
+    /* END SAVE CALO */
+
   });
 
   if(boxSystem && checkDatabase == false)

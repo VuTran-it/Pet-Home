@@ -79,6 +79,8 @@ onValue(listPet, async (snapshot) => {
                                 <span>Breed : ` +childData.breed +`</span>
                                 <span>Neutered : ` +childData.neutered +`</span>
                                 <span>Weight : `+childData.health.weight+`KG</span>
+                                <span>Calories Needed : `+childData.health.calories+`Calo</span>
+                                <span>Amount of food : `+childData.health.weightFood+`Gram</span>
                             </div>
                         </div> `;
       detailPetHTML = content;
@@ -136,7 +138,7 @@ onValue(infoPetRef, async (snapshot) => {
   const contentRight = document.querySelector(
     "#info-detail-pet .content .content-right"
   );
-  await snapshot.forEach((childSnapshot) => {
+  await snapshot.forEach( (childSnapshot) => {
     var childData = childSnapshot.val();
     var childKey = childSnapshot.key;
     if (childKey == "foodManagement") {
@@ -183,18 +185,20 @@ onValue(infoPetRef, async (snapshot) => {
     );
   }
   // UPDATE WEIGHT PET
-  get(child(dbRef, `account/`+userID+`/listPet/`+idPet+`/health/`)).then(async (snapshot) => {
-    if (snapshot.exists()) {
-      if(snapshot.val().weightPet != dataWeightPet[dataWeightPet.length - 1].weight )
-      {
-        update(ref(database,`account/`+userID+`/listPet/`+idPet+`/health/`),{
-          weight : dataWeightPet[dataWeightPet.length - 1].weight
-        })
+  if(dataWeightPet.length > 0 )
+  {
+    get(child(dbRef, `account/`+userID+`/listPet/`+idPet+`/health/weightPet`)).then(async (snapshot) => {
+      if (snapshot.exists()) {
+        if(snapshot.val() != dataWeightPet[dataWeightPet.length - 1].weight)
+        {
+          set(ref(database,`account/`+userID+`/listPet/`+idPet+`/health/weight`),dataWeightPet[dataWeightPet.length - 1].weight)
+        }
+      } else {
+        console.log("err");
       }
-    } else {
-      console.log("err");
-    }
-  })
+    })
+  }
+  
   let caloriesNecessary = 30*(sumWeight(dataWeightPet)/dataWeightPet.length).toFixed(2) + 70;
 
   let caloriesFood = 1.2 // 1.2 calo / 1g
@@ -239,8 +243,35 @@ onValue(infoPetRef, async (snapshot) => {
   let Average = sumWeightSub ? (sumWeight(dataWeightPet)/dataWeightPet.length).toFixed(2) : 0
   let caloriesNecessarySub = caloriesNecessary ? caloriesNecessary : 0
   let caloriesDaySub = caloriesNecessarySub ? caloriesDay : 0
+  get(child(dbRef, `account/`+userID+`/system/food/calories`)).then(async (snapshot) => {
+    if (snapshot.exists()) {
+      let caloToFood = +snapshot.val()
+      get(child(dbRef, `account/`+userID+`/listPet/`+idPet+`/health/calories`)).then(async (snapshot) => {
+        if (snapshot.exists()) {
+          let weightFoodToDay = (+snapshot.val()*100/caloToFood).toFixed(2)
+          // UPDATE WEIGHT FOOD TO DAY OF PET
+          set(ref(database,`account/`+userID+`/listPet/`+idPet+`/health/weightFood`),weightFoodToDay)
 
-  let synthetic = `<div class="content-right-item">
+        } else {
+          console.log("err");
+        }
+      })
+    } else {
+      console.log("err");
+    }
+  })
+  if(idPet)
+  {
+    // UPDATE CALO PET
+    set(ref(database,`account/`+userID+`/listPet/`+idPet+`/health/calories`),caloriesNecessarySub)
+    
+  }
+  let weightFoodToDay,synthetic;
+  get(child(dbRef, `account/`+userID+`/listPet/`+idPet+`/health/weightFood`)).then(async (snapshot) => {
+    if (snapshot.exists()) {
+      let weightFoodToDay = +snapshot.val() ? +snapshot.val() : 0
+
+      let synthetic = `<div class="content-right-item">
                         <div class="title">
                             <span></span>
                             <h2 class="text">Synthetic</h2>
@@ -249,77 +280,78 @@ onValue(infoPetRef, async (snapshot) => {
                               <span>Weight of food per week : `+sumWeightSub+` Gram</span>
                               <span>Average weight of pet per week : `+Average+` KG</span>  
                               <span>Needed calories for cats per day : `+caloriesNecessarySub+` Calo</span>
+                              <span>Amount of food in a day : `+weightFoodToDay+` Gram</span>
                               <span>Actual calories consumed per day : `+caloriesDaySub+` Calo</span>
                               <span>Pet care keyword : `+advice+`</span>
                               <span style="color:#e68d03">Weight status : `+weightStatus+`</span>
                               <span class="statusWeightAge" style="color:#e68d03"></span>
                         </div>
                     </div>`;
-  // <div class="detail">
-  //     <span>Weight of food for the week : 30KG</span>
-  //     <span>The weight of the cat at the beginning of the week : 13.5</span>
-  //     <span>The weight of the cat at the weekend : 16KG</span>
-  //     <span>Health status : Gaining weight too fast</span>
-  //     <span>Suggestion: Reduce the amount of food </span>
-  // </div>
-  let charWeightFood = `  <div class="content-right-item">
-                                <div class="title">
-                                    <span></span>
-                                    <h2 class="text">Food Weight</h2>
-                                </div>
-                                <div class="Chart">
-                                    <div class="box box-primary" >
-                                        </div>
-                                        <div class="box-body chart-responsive">
-                                        <div class="chart" id="revenue-chart" style="height: 300px;width: 100%"></div>
-                                        </div>
+                    let charWeightFood = `  <div class="content-right-item">
+                    <div class="title">
+                        <span></span>
+                        <h2 class="text">Food Weight</h2>
+                    </div>
+                    <div class="Chart">
+                        <div class="box box-primary" >
+                            </div>
+                            <div class="box-body chart-responsive">
+                            <div class="chart" id="revenue-chart" style="height: 300px;width: 100%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>`;
+        let charWeightPet = `  <div class="content-right-item">
+                            <div class="title">
+                                <span></span>
+                                <h2 class="text">Pet Weight</h2>
+                            </div>
+                            <div class="Chart">
+                                <div class="box box-primary" >
+                                    </div>
+                                    <div class="box-body chart-responsive">
+                                    <div class="chart" id="line-chart" style="height: 300px;width: 100%"></div>
                                     </div>
                                 </div>
-                            </div>`;
-  let charWeightPet = `  <div class="content-right-item">
-                                <div class="title">
-                                    <span></span>
-                                    <h2 class="text">Pet Weight</h2>
-                                </div>
-                                <div class="Chart">
-                                    <div class="box box-primary" >
-                                        </div>
-                                        <div class="box-body chart-responsive">
-                                        <div class="chart" id="line-chart" style="height: 300px;width: 100%"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>`;
+                            </div>
+                        </div>`;
 
-  rightHTML += synthetic;
-  rightHTML += charWeightFood;
-  rightHTML += charWeightPet;
+        rightHTML += synthetic;
+        rightHTML += charWeightFood;
+        rightHTML += charWeightPet;
+        
 
-  if (rightHTML && rightHTML != "") {
-    contentRight.innerHTML = rightHTML;
-  }
+        if (rightHTML && rightHTML != "" && contentRight) {
+          contentRight.innerHTML = rightHTML;
+        }
+        var area = new Morris.Line({
+          element: "revenue-chart",
+          resize: true,
+          data: dataWeightFood,
+          xkey: "y",
+          ykeys: ["weight"],
+          labels: ["weight"],
+          lineColors: ["#3c8dbc"],
+          hideHover: "auto",
+        });
+      
+        var line = new Morris.Line({
+          element: "line-chart",
+          resize: true,
+          data: dataWeightPet,
+          xkey: "y",
+          ykeys: ["weight"],
+          labels: ["weight"],
+          lineColors: ["#3c8dbc"],
+          hideHover: "auto",
+        });
 
-  var area = new Morris.Line({
-    element: "revenue-chart",
-    resize: true,
-    data: dataWeightFood,
-    xkey: "y",
-    ykeys: ["weight"],
-    labels: ["weight"],
-    lineColors: ["#3c8dbc"],
-    hideHover: "auto",
-  });
+    }
+  })
 
-  var line = new Morris.Line({
-    element: "line-chart",
-    resize: true,
-    data: dataWeightPet,
-    xkey: "y",
-    ykeys: ["weight"],
-    labels: ["weight"],
-    lineColors: ["#3c8dbc"],
-    hideHover: "auto",
-  });
+
+  
+  
 });
 /*END  CHAR */
 
@@ -345,101 +377,108 @@ getTime();
 const save_time = document.getElementById('save-time')
 const delete_time = document.getElementById('delete-time')
 var error = false;
+if(save_time)
+{
+  save_time.addEventListener('click',()=>{
+    let monday = document.getElementById('monday').value
+    let midday = document.getElementById('midday').value
+    let night = document.getElementById('night').value
 
-save_time.addEventListener('click',()=>{
-  let monday = document.getElementById('monday').value
-  let midday = document.getElementById('midday').value
-  let night = document.getElementById('night').value
-
-  if(monday.split(':')[0]  < 11)
-  {
-    get(child(dbRef, `account/`+userID+`/listPet/`+idPet+`/timeEat/monday`)).then(async (snapshot) => {
-      if (snapshot.exists()) {
-        if(snapshot.val().monday != monday)
-        {
-          update(ref(database,`account/`+userID+`/listPet/`+idPet+`/timeEat`),{
-            monday : monday,
-          })
+    if(monday.split(':')[0]  < 11)
+    {
+      get(child(dbRef, `account/`+userID+`/listPet/`+idPet+`/timeEat/monday`)).then(async (snapshot) => {
+        if (snapshot.exists()) {
+          if(snapshot.val().monday != monday)
+          {
+            set(ref(database,`account/`+userID+`/listPet/`+idPet+`/timeEat/monday`),monday)
+          }
+        } else {
+          console.log("err");
         }
-      } else {
-        console.log("err");
-      }
-    })
-  }
-  else
-  {
-    error = true
-  }
+      })
+    }
+    else
+    {
+      error = true
+    }
 
-  if(midday.split(':')[0]  >= 11 && midday.split(':')[0] <= 12 )
-  {
-    get(child(dbRef, `account/`+userID+`/listPet/`+idPet+`/timeEat/midday`)).then(async (snapshot) => {
-      if (snapshot.exists()) {
-        if(snapshot.val().midday != midday)
-        {
-          update(ref(database,`account/`+userID+`/listPet/`+idPet+`/timeEat`),{
-            midday : midday,
-          })
+    if(midday.split(':')[0]  >= 11 && midday.split(':')[0] <= 12 )
+    {
+      get(child(dbRef, `account/`+userID+`/listPet/`+idPet+`/timeEat/midday`)).then(async (snapshot) => {
+        if (snapshot.exists()) {
+          if(snapshot.val().midday != midday)
+          {
+            set(ref(database,`account/`+userID+`/listPet/`+idPet+`/timeEat/midday`),midday)
+          }
+        } else {
+          console.log("err");
         }
-      } else {
-        console.log("err");
-      }
-    })
-  }
-  else
-  {
-    error = true
-  }
-  if(night.split(':')[0]  >= 13  && night.split(':')[0]  < 24 )
-  {
-    get(child(dbRef, `account/`+userID+`/listPet/`+idPet+`/timeEat/night`)).then(async (snapshot) => {
-      if (snapshot.exists()) {
-        if(snapshot.val().night != night)
-        {
-          update(ref(database,`account/`+userID+`/listPet/`+idPet+`/timeEat`),{
-            night : night,
-          })
+      })
+    }
+    else
+    {
+      error = true
+    }
+    if(night.split(':')[0]  >= 13  && night.split(':')[0]  < 24 )
+    {
+      get(child(dbRef, `account/`+userID+`/listPet/`+idPet+`/timeEat/night`)).then(async (snapshot) => {
+        if (snapshot.exists()) {
+          if(snapshot.val().night != night)
+          {
+            set(ref(database,`account/`+userID+`/listPet/`+idPet+`/timeEat/night`),night)
+          }
+        } else {
+          console.log("err");
         }
-      } else {
-        console.log("err");
-      }
-    })
-  }
-  else
-  {
-    error = true
-  }
+      })
+    }
+    else
+    {
+      error = true
+    }
 
-  if(error)
-  {
-    document.querySelector('.container-error-time').style.display = 'flex';
-    error = false
-  }
-  else
-  {
-    document.querySelector('.container-success-time').style.display = 'flex';
-  }
+    if(error)
+    {
+      document.querySelector('.container-error-time').style.display = 'flex';
+      error = false
+    }
+    else
+    {
+      document.querySelector('.container-success-time').style.display = 'flex';
+    }
 
-  
-})
-
-delete_time.addEventListener('click',()=>{
-  update(ref(database,`account/`+userID+`/listPet/`+idPet+`/timeEat`),{
-    monday:'',
-    midday:'',
-    night :''
+    
   })
-})
+}
+
+if(delete_time)
+{
+  delete_time.addEventListener('click',()=>{
+    update(ref(database,`account/`+userID+`/listPet/`+idPet+`/timeEat`),{
+      monday:'',
+      midday:'',
+      night :''
+    })
+  })
+}
 
 const close_error = document.querySelector('.close-error')
 const close_success = document.querySelector('.close-success')
 
-close_error.addEventListener('click',()=>{
-  document.querySelector('.container-error-time').style.display = 'none';
-  getTime();
-})
-close_success.addEventListener('click',()=>{
-  document.querySelector('.container-success-time').style.display = 'none';
-  getTime();
-})
+if(close_error)
+{
+  close_error.addEventListener('click',()=>{
+    document.querySelector('.container-error-time').style.display = 'none';
+    getTime();
+  })
+}
+if(close_success)
+{
+  close_success.addEventListener('click',()=>{
+    document.querySelector('.container-success-time').style.display = 'none';
+    getTime();
+  })
+}
 /* END SAVE TIME EAT */
+
+

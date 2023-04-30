@@ -502,6 +502,7 @@ h3.hello .text {
   color: #fff;
   transition: all 0.3s ease;
   min-height: 400px;
+  height: 100%;
 }
 
 .System .System-item .System-item-inner:hover {
@@ -585,7 +586,6 @@ h3.hello .text {
 
 .System .System-item .System-item-inner {
   display: flex;
-  justify-content: center;
   gap: 20px;
   position: relative;
 }
@@ -1453,7 +1453,6 @@ h3.hello .text {
   display: block;
   color: var(--skin-color);
   margin-top: 10px;
-  
 }
 .container-error-time .box-content .note p
 {
