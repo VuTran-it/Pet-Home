@@ -266,7 +266,6 @@ onValue(infoPetRef, async (snapshot) => {
     set(ref(database,`account/`+userID+`/listPet/`+idPet+`/health/calories`),caloriesNecessarySub)
     
   }
-  let weightFoodToDay,synthetic;
   get(child(dbRef, `account/`+userID+`/listPet/`+idPet+`/health/weightFood`)).then(async (snapshot) => {
     if (snapshot.exists()) {
       let weightFoodToDay = +snapshot.val() ? +snapshot.val() : 0
