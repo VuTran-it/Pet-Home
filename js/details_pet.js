@@ -77,7 +77,7 @@ onValue(listPet, async (snapshot) => {
                             </div>
 
                             <div class="detail">
-                                <span>Age : ` +childData.age +` week </span>
+                                <span>Age : ` +childData.ageNow +` week </span>
                                 <span>Gender : ` +childData.gender +`</span>
                                 <span>Breed : ` +childData.breed +`</span>
                                 <span>Neutered : ` +childData.neutered +`</span>

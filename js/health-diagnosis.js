@@ -127,7 +127,7 @@ get(child(dbRef, `account/`+userID+`/listPet/`+idPet+`/DateCreate/`)).then(async
         age = now.diff(birthday, 'weeks');
         agePet[0] = age + agePet[0]
         update(ref(database,`account/`+userID+`/listPet/`+idPet+`/`),{
-            age : agePet[0]
+            ageNow : agePet[0]
         })
         catWeightByAge.forEach((cat,index) => {
             if(agePet[0] < 12)
