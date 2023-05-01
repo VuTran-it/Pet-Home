@@ -100,10 +100,18 @@ function compareWeight(age,weight,arrayWeight)
         }
     }
 }
+let agePet = [];
+get(child(dbRef, `account/`+userID+`/listPet/`+idPet+`/age`)).then(async (snapshot) => {
+    if (snapshot.exists()) {
+        agePet.push(+snapshot.val())
+    } else {
+        console.log("err");
+    }
+})
 
 get(child(dbRef, `account/`+userID+`/listPet/`+idPet+`/health`)).then(async (snapshot) => {
     if (snapshot.exists()) {
-        arrayWeight.push(snapshot.val().weight * 1000)
+        arrayWeight.push(snapshot.val().weight)
     } else {
         console.log("err");
     }
@@ -117,22 +125,23 @@ get(child(dbRef, `account/`+userID+`/listPet/`+idPet+`/DateCreate/`)).then(async
     if (snapshot.exists()) {
         birthday = snapshot.val().replace(/:/g, "-");
         age = now.diff(birthday, 'weeks');
+        agePet[0] = age + agePet[0]
         update(ref(database,`account/`+userID+`/listPet/`+idPet+`/`),{
-            age : age
+            age : agePet[0]
         })
         catWeightByAge.forEach((cat,index) => {
-            if(age < 12)
+            if(agePet[0] < 12)
             {
-                if(age == cat.age)
+                if(agePet[0] == cat.age)
                 {
-                    compareWeight(age,cat.weight,arrayWeight[0])
+                    compareWeight(agePet[0],cat.weight,arrayWeight[0])
                 }
             }
             else
             {
-                const filteredWeights = catWeightByAge.filter((item) => item.age < age);
+                const filteredWeights = catWeightByAge.filter((item) => item.age < agePet[0]);
                 const maxWeight = filteredWeights.reduce((max, item) => (item.age > max.age ? item : max), filteredWeights[0]).weight;
-                compareWeight(age,maxWeight,arrayWeight[0])
+                compareWeight(agePet[0],maxWeight,arrayWeight[0])
             }
         })
         if(statusWeightAge != '')

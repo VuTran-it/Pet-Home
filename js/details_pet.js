@@ -30,11 +30,14 @@ const listPet = query(
   ref(database, "account/" + userID + "/listPet"),
   limitToLast(100)
 );
-
 const url = new URL(window.location.href);
 const params = new URLSearchParams(url.search);
 const idPet = params.get("idPet");
 
+const infoPetRef = query(
+  ref(database, "account/" + userID + "/listPet/" + idPet),
+  limitToLast(100)
+);
 /* loading */
 var mainContainer = document.querySelector(".main-container");
 function load() {
@@ -93,7 +96,7 @@ onValue(listPet, async (snapshot) => {
 
 /* END SHOW DETAIL INFO PET */
 
-/* CHAR  */
+/* FUNCTION  */
 function sumWeight(data)
 {
   let sum = 0;
@@ -109,253 +112,83 @@ function sumArray(array) {
   }
   return sum;
 }
-
-function formaterDate(s) {
-  var parts = s.split(":");
-  return (
-    parts[3] + ":" + parts[4] + " " + parts[2] + "/" + parts[1] + "/" + parts[0]
-  );
-}
 function getDate(s) {
   var parts = s.split(":");
   return parts[0] + "-" + parts[1] + "-" + parts[2];
 }
-
-function lastArray(array) {
-  let last = array[array.length - 1];
-  return last;
-}
-
-const infoPetRef = query(
-  ref(database, "account/" + userID + "/listPet/" + idPet),
-  limitToLast(100)
-);
-
-onValue(infoPetRef, async (snapshot) => {
-  let dataWeightFood = [],
-    dataWeightPet = [],
-    rightHTML = "";
-  const contentRight = document.querySelector(
-    "#info-detail-pet .content .content-right"
-  );
-  await snapshot.forEach( (childSnapshot) => {
-    var childData = childSnapshot.val();
-    var childKey = childSnapshot.key;
-    if (childKey == "foodManagement") {
-      const newObj = {};
-      for (let key in childData) {
-        if (childData.hasOwnProperty(key)) {
-          if (newObj[getDate(key)]) {
-            newObj[getDate(key)].push(parseFloat(childData[key] , 10));
-          } else {
-            newObj[getDate(key)] = [parseFloat(childData[key] , 10)];
+function showChar()
+{
+  onValue(infoPetRef, async (snapshot) => {
+    let dataWeightFood = [], dataWeightPet = [];
+    await snapshot.forEach( (childSnapshot) => {
+      var childData = childSnapshot.val();
+      var childKey = childSnapshot.key;
+      if (childKey == "foodManagement") {
+        const newObj = {};
+        for (let key in childData) {
+          if (childData.hasOwnProperty(key)) {
+            if (newObj[getDate(key)]) {
+              newObj[getDate(key)].push(parseFloat(childData[key] , 10));
+            } else {
+              newObj[getDate(key)] = [parseFloat(childData[key] , 10)];
+            }
           }
         }
-      }
-      for (let item in newObj) {
-        dataWeightFood.push({ y: item, weight: sumArray(newObj[item]) });
-      }
-    }
-    if (childKey == "weightManagement") {
-      const newObj = {};
-      for (let key in childData) {
-        if (childData.hasOwnProperty(key)) {
-          if (newObj[getDate(key)]) {
-            newObj[getDate(key)].push(parseFloat(childData[key], 10));
-          } else {
-            newObj[getDate(key)] = [parseFloat(childData[key], 10)];
-          }
+        for (let item in newObj) {
+          dataWeightFood.push({ y: item, weight: sumArray(newObj[item]) });
         }
       }
-      for (let item in newObj) {
-        dataWeightPet.push({ y: item,weight: newObj[item][newObj[item].length - 1]});
+      if (childKey == "weightManagement") {
+        const newObj = {};
+        for (let key in childData) {
+          if (childData.hasOwnProperty(key)) {
+            if (newObj[getDate(key)]) {
+              newObj[getDate(key)].push(parseFloat(childData[key], 10));
+            } else {
+              newObj[getDate(key)] = [parseFloat(childData[key], 10)];
+            }
+          }
+        }
+        for (let item in newObj) {
+          dataWeightPet.push({ y: item,weight: newObj[item][newObj[item].length - 1]});
+        }
       }
+    });
+    if (dataWeightFood.length > 7) {
+      dataWeightFood = dataWeightFood.slice(
+        dataWeightFood.length - 7,
+        dataWeightFood.length
+      );
     }
+    if (dataWeightPet.length > 7) {
+      dataWeightPet = dataWeightPet.slice(
+        dataWeightPet.length - 7,
+        dataWeightPet.length
+      );
+    }
+    var area = new Morris.Line({
+      element: "revenue-chart",
+      resize: true,
+      data: dataWeightFood,
+      xkey: "y",
+      ykeys: ["weight"],
+      labels: ["weight"],
+      lineColors: ["#3c8dbc"],
+      hideHover: "auto",
+    });
+
+    var line = new Morris.Line({
+      element: "line-chart",
+      resize: true,
+      data: dataWeightPet,
+      xkey: "y",
+      ykeys: ["weight"],
+      labels: ["weight"],
+      lineColors: ["#3c8dbc"],
+      hideHover: "auto",
+    });
   });
-  if (dataWeightFood.length > 7) {
-    dataWeightFood = dataWeightFood.slice(
-      dataWeightFood.length - 7,
-      dataWeightFood.length
-    );
-  }
-  if (dataWeightPet.length > 7) {
-    dataWeightPet = dataWeightPet.slice(
-      dataWeightPet.length - 7,
-      dataWeightPet.length
-    );
-  }
-  // UPDATE WEIGHT PET
-  if(dataWeightPet.length > 0 )
-  {
-    get(child(dbRef, `account/`+userID+`/listPet/`+idPet+`/health/weightPet`)).then(async (snapshot) => {
-      if (snapshot.exists()) {
-        if(snapshot.val() != dataWeightPet[dataWeightPet.length - 1].weight)
-        {
-          set(ref(database,`account/`+userID+`/listPet/`+idPet+`/health/weight`),dataWeightPet[dataWeightPet.length - 1].weight)
-        }
-      } else {
-        console.log("err");
-      }
-    })
-  }
-  
-  let caloriesNecessary = 30*(sumWeight(dataWeightPet)/dataWeightPet.length).toFixed(2) + 70;
-
-  let caloriesFood = 1.2 // 1.2 calo / 1g
-  let caloriesDay = sumWeight(dataWeightFood) ? ((caloriesFood * sumWeight(dataWeightFood)) / dataWeightFood.length).toFixed(2) : '';
-
-  let weightStatus;
-  
-  if(caloriesDay == '')
-  {
-    weightStatus = '';
-  }
-  else
-  {
-    if(caloriesDay > caloriesNecessary)
-    {
-      weightStatus = 'Fat';
-    }
-    else
-    {
-      weightStatus = 'Weak';
-    }
-  }
-
-  let advice 
-  if(weightStatus !== '')
-  {
-    if(weightStatus == 'Fat')
-    {
-      advice = 'Reduce food, Reduce calories, Increase exercise';
-    }
-    else
-    {
-      advice = 'Increase project volume, Increase calories, Improve food quality';
-    }
-  }
-  else
-  {
-    advice = ''
-  }
-  
-  let sumWeightSub = sumWeight(dataWeightFood) ? sumWeight(dataWeightFood) : 0
-  let Average = sumWeightSub ? (sumWeight(dataWeightPet)/dataWeightPet.length).toFixed(2) : 0
-  let caloriesNecessarySub = caloriesNecessary ? caloriesNecessary : 0
-  let caloriesDaySub = caloriesNecessarySub ? caloriesDay : 0
-  get(child(dbRef, `account/`+userID+`/system/food/calories`)).then(async (snapshot) => {
-    if (snapshot.exists()) {
-      let caloToFood = +snapshot.val()
-      get(child(dbRef, `account/`+userID+`/listPet/`+idPet+`/health/calories`)).then(async (snapshot) => {
-        if (snapshot.exists()) {
-          let weightFoodToDay = (+snapshot.val()*100/caloToFood).toFixed(2)
-          // UPDATE WEIGHT FOOD TO DAY OF PET
-          set(ref(database,`account/`+userID+`/listPet/`+idPet+`/health/weightFood`),weightFoodToDay)
-
-        } else {
-          console.log("err");
-        }
-      })
-    } else {
-      console.log("err");
-    }
-  })
-  if(idPet)
-  {
-    // UPDATE CALO PET
-    set(ref(database,`account/`+userID+`/listPet/`+idPet+`/health/calories`),caloriesNecessarySub)
-    
-  }
-  get(child(dbRef, `account/`+userID+`/listPet/`+idPet+`/health/weightFood`)).then(async (snapshot) => {
-    if (snapshot.exists()) {
-      let weightFoodToDay = +snapshot.val() ? +snapshot.val() : 0
-
-      let synthetic = `<div class="content-right-item">
-                        <div class="title">
-                            <span></span>
-                            <h2 class="text">Synthetic</h2>
-                        </div>
-                        <div class="detail">
-                              <span>Weight of food per week : `+sumWeightSub+` Gram</span>
-                              <span>Average weight of pet per week : `+Average+` KG</span>  
-                              <span>Needed calories for cats per day : `+caloriesNecessarySub+` Calo</span>
-                              <span>Amount of food in a day : `+weightFoodToDay+` Gram</span>
-                              <span>Actual calories consumed per day : `+caloriesDaySub+` Calo</span>
-                              <span>Pet care keyword : `+advice+`</span>
-                              <span style="color:#e68d03">Weight status : `+weightStatus+`</span>
-                              <span class="statusWeightAge" style="color:#e68d03"></span>
-                        </div>
-                    </div>`;
-                    let charWeightFood = `  <div class="content-right-item">
-                    <div class="title">
-                        <span></span>
-                        <h2 class="text">Food Weight</h2>
-                    </div>
-                    <div class="Chart">
-                        <div class="box box-primary" >
-                            </div>
-                            <div class="box-body chart-responsive">
-                            <div class="chart" id="revenue-chart" style="height: 300px;width: 100%"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>`;
-        let charWeightPet = `  <div class="content-right-item">
-                            <div class="title">
-                                <span></span>
-                                <h2 class="text">Pet Weight</h2>
-                            </div>
-                            <div class="Chart">
-                                <div class="box box-primary" >
-                                    </div>
-                                    <div class="box-body chart-responsive">
-                                    <div class="chart" id="line-chart" style="height: 300px;width: 100%"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>`;
-
-        rightHTML += synthetic;
-        rightHTML += charWeightFood;
-        rightHTML += charWeightPet;
-        
-
-        if (rightHTML && rightHTML != "" && contentRight) {
-          contentRight.innerHTML = rightHTML;
-        }
-        var area = new Morris.Line({
-          element: "revenue-chart",
-          resize: true,
-          data: dataWeightFood,
-          xkey: "y",
-          ykeys: ["weight"],
-          labels: ["weight"],
-          lineColors: ["#3c8dbc"],
-          hideHover: "auto",
-        });
-      
-        var line = new Morris.Line({
-          element: "line-chart",
-          resize: true,
-          data: dataWeightPet,
-          xkey: "y",
-          ykeys: ["weight"],
-          labels: ["weight"],
-          lineColors: ["#3c8dbc"],
-          hideHover: "auto",
-        });
-
-    }
-  })
-
-
-  
-  
-});
-/*END  CHAR */
-
-
-/* SAVE TIME EAT */
+}
 function getTime()
 {
   onValue(listPet,(snapshot) => {
@@ -371,6 +204,164 @@ function getTime()
     })
   });
 }
+/*END FUNCTION */
+
+
+/* SHOW STATUS */
+get(child(dbRef, `account/`+userID+`/system/food/calories`)).then(async (snapshot) => {
+  if (snapshot.exists()) {
+    let caloToFood = +snapshot.val()
+    let rightHTML = "";
+    const contentRight = document.querySelector(
+      "#info-detail-pet .content .content-right"
+    );
+    get(child(dbRef, `account/`+userID+`/listPet/`+idPet+`/health/`)).then(async (snapshot) => {
+      if (snapshot.exists()) {
+        let dataWeightFood = [], dataWeightPet = [];
+        onValue(infoPetRef, async (snapshot) => {
+          await snapshot.forEach( (childSnapshot) => {
+            var childData = childSnapshot.val();
+            var childKey = childSnapshot.key;
+            if (childKey == "foodManagement") {
+              const newObj = {};
+              for (let key in childData) {
+                if (childData.hasOwnProperty(key)) {
+                  if (newObj[getDate(key)]) {
+                    newObj[getDate(key)].push(parseFloat(childData[key] , 10));
+                  } else {
+                    newObj[getDate(key)] = [parseFloat(childData[key] , 10)];
+                  }
+                }
+              }
+              for (let item in newObj) {
+                dataWeightFood.push({ y: item, weight: sumArray(newObj[item]) });
+              }
+            }
+            if (childKey == "weightManagement") {
+              const newObj = {};
+              for (let key in childData) {
+                if (childData.hasOwnProperty(key)) {
+                  if (newObj[getDate(key)]) {
+                    newObj[getDate(key)].push(parseFloat(childData[key], 10));
+                  } else {
+                    newObj[getDate(key)] = [parseFloat(childData[key], 10)];
+                  }
+                }
+              }
+              for (let item in newObj) {
+                dataWeightPet.push({ y: item,weight: newObj[item][newObj[item].length - 1]});
+              }
+            }
+          });
+        })
+        let sumWeightSub = sumWeight(dataWeightFood) ? sumWeight(dataWeightFood) : 0
+        let Average = sumWeightSub ? (sumWeight(dataWeightPet)/dataWeightPet.length).toFixed(2) : 0
+        let weightFood = +snapshot.val().weightFood ? +snapshot.val().weightFood : 0
+        let weightFoodToDay = +snapshot.val().weightFoodToDay ? +snapshot.val().weightFoodToDay : 0
+        let caloriesDay = +snapshot.val().weightFoodToDay*caloToFood/100
+        let caloriesNecessary = +snapshot.val().calories? +snapshot.val().calories : 0;
+        let weightStatus;
+        
+        if(caloriesDay == '')
+        {
+          weightStatus = '';
+        }
+        else
+        {
+          if(caloriesDay > caloriesNecessary)
+          {
+            weightStatus = 'Fat';
+          }
+          else
+          {
+            weightStatus = 'Weak';
+          }
+        }
+
+        let advice 
+        if(weightStatus !== '')
+        {
+          if(weightStatus == 'Fat')
+          {
+            advice = 'Reduce food, Reduce calories, Increase exercise';
+          }
+          else
+          {
+            advice = 'Increase project volume, Increase calories, Improve food quality';
+          }
+        }
+        else
+        {
+          advice = ''
+        }
+  
+        let synthetic = `<div class="content-right-item">
+                          <div class="title">
+                              <span></span>
+                              <h2 class="text">Synthetic</h2>
+                          </div>
+                          <div class="detail">
+                                <span>Weight of food per week : `+sumWeightSub+` Gram</span>
+                                <span>Average weight of pet per week : `+Average+` KG</span>  
+                                <span>Needed calories for cats per day : `+caloriesNecessary+` Calo</span>
+                                <span>Amount of food in a day : `+weightFood+` Gram</span>
+                                <span>The current amount of pet food that has been loaded : `+weightFoodToDay+` Gram</span>
+                                <span>The current amount of calories the pet has loaded : `+caloriesDay+` Calo</span>
+                                <span>Pet care keyword : `+advice+`</span>
+                                <span style="color:#e68d03">Weight status : `+weightStatus+`</span>
+                                <span class="statusWeightAge" style="color:#e68d03"></span>
+                          </div>
+                      </div>`;
+        let charWeightFood = `  <div class="content-right-item">
+                                  <div class="title">  
+                                      <span></span>
+                                      <h2 class="text">Food Weight</h2>
+                                  </div>
+                                  <div class="Chart">
+                                      <div class="box box-primary" >
+                                          </div>
+                                          <div class="box-body chart-responsive">
+                                          <div class="chart" id="revenue-chart" style="height: 300px;width: 100%"></div>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>`;
+        let charWeightPet = `  <div class="content-right-item">
+                            <div class="title">
+                                <span></span>
+                                <h2 class="text">Pet Weight</h2>
+                            </div>
+                            <div class="Chart">
+                                <div class="box box-primary" >
+                                    </div>
+                                    <div class="box-body chart-responsive">
+                                    <div class="chart" id="line-chart" style="height: 300px;width: 100%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>`;
+  
+        rightHTML += synthetic;
+        rightHTML += charWeightFood;
+        rightHTML += charWeightPet;
+        
+
+        if (rightHTML && rightHTML != "" && contentRight) {
+          contentRight.innerHTML = rightHTML;
+        }
+      }
+    })
+    showChar()
+
+  } else {
+    console.log("err");
+  }
+})
+/* END SHOW STATUS */
+
+
+/* SAVE TIME EAT */
+
 getTime();
 
 const save_time = document.getElementById('save-time')
@@ -401,7 +392,7 @@ if(save_time)
       error = true
     }
 
-    if(midday.split(':')[0]  >= 11 && midday.split(':')[0] <= 12 )
+    if(midday.split(':')[0]  >= 11 && midday.split(':')[0] < 15 )
     {
       get(child(dbRef, `account/`+userID+`/listPet/`+idPet+`/timeEat/midday`)).then(async (snapshot) => {
         if (snapshot.exists()) {
@@ -418,7 +409,7 @@ if(save_time)
     {
       error = true
     }
-    if(night.split(':')[0]  >= 13  && night.split(':')[0]  < 24 )
+    if(night.split(':')[0]  >= 15  && night.split(':')[0]  < 24 )
     {
       get(child(dbRef, `account/`+userID+`/listPet/`+idPet+`/timeEat/night`)).then(async (snapshot) => {
         if (snapshot.exists()) {

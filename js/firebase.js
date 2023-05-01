@@ -650,7 +650,7 @@ onValue(infoSystem,async (snapshot) => {
                                   <p>Status Pump :</p><span>`+(Number(childData.machies) == 1 ? 'On' : 'Off')+`</span>
                                 </div>
                                 <div>
-                                  <p>Percent :</p><span>`+childData.percent+`%</span>
+                                  <p>Percent :</p><span>`+(childData.percent ? childData.percent : 0)+`%</span>
                                 </div>
                               </div>
                             </div>
@@ -694,12 +694,12 @@ onValue(infoSystem,async (snapshot) => {
                                   <p>Status Pump :</p><span>`+(Number(childData.machies) == 1 ? 'On' : 'Off')+`</span>
                                 </div>
                                 <div>
-                                  <p>Percent :</p><span>`+childData.percent+`%</span>
+                                  <p>Percent :</p><span>`+(childData.percent?childData.percent:0)+`%</span>
                                 </div>
-                                <div class="calo" style='display:flex;flex-direction:column;gap:5px;margin:15px 0'>
+                                <div class="calo" style='display:flex;flex-direction:column;gap:5px;margin:15px 0;'>
                                   <span style='color:var(--text-black-900);font-weight:bold; text-align:left;'>Calories (Calo/100g)</span>
-                                  <div>
-                                    <input type="text" name="appt" value="`+childData.calories+`" required id="calories" placeholder="Enter calories" style="padding:5px 10px;border-radius:10px; border: 2px solid var(--skin-color);background:transparent;color:var(--text-black-900);font-weight:bold">
+                                  <div style='width:100%;'>
+                                    <input type="text" name="appt" value="`+childData.calories+`" required id="calories" placeholder="Enter calories" style="padding:5px 10px;border-radius:10px; border: 2px solid var(--skin-color);background:transparent;color:var(--text-black-900);font-weight:bold;flex: 1 1 0%;width:100%">
                                     <div 
                                       class="" id="save-calories" 
                                       style='
@@ -765,6 +765,20 @@ onValue(infoSystem,async (snapshot) => {
           machies : (statusMachinesWater == 1 ? 0 : 1),
         })
       })
+      get(child(dbRef, `account/`+userID+`/system/water/auto`)).then(async (snapshot) => {
+        if (snapshot.exists()) {
+          if(snapshot.val() == 1)
+          {
+            document.querySelector("#machines-switch-water").style.display = 'none';
+          }
+          else
+          {
+            document.querySelector("#machines-switch-water").style.display = 'flex';
+          }
+        } else {
+          console.log("err");
+        }
+      })
     }
     if(autoWater)
     {
@@ -773,24 +787,9 @@ onValue(infoSystem,async (snapshot) => {
         update(ref(database,'/account/' + userID + '/system/water'),{
           auto : (statusAutoWater == 1 ? 0 : 1),
         })
-        get(child(dbRef, `account/`+userID+`/system/water`)).then(async (snapshot) => {
-          if (snapshot.exists()) {
-            statusAuto =snapshot.val().auto
-            
-            if(statusAuto == 1)
-            {
-              document.querySelector("#machines-switch-water").style.display = 'none';
-            }
-            else
-            {
-              document.querySelector("#machines-switch-water").style.display = 'flex';
-            }
-          } else {
-            console.log("err");
-          }
-        })
       })
     }
+    /* FOOD */
     if(ledFood)
     {
       ledFood.addEventListener("click",()=>{
@@ -806,6 +805,20 @@ onValue(infoSystem,async (snapshot) => {
           machies : (statusMachinesFood == 1 ? 0 : 1),
         })
       })
+      get(child(dbRef, `account/`+userID+`/system/food/auto`)).then(async (snapshot) => {
+        if (snapshot.exists()) {
+          if(snapshot.val() == 1)
+          {
+            document.querySelector("#machines-switch-food").style.display = 'none';
+          }
+          else
+          {
+            document.querySelector("#machines-switch-food").style.display = 'flex';
+          }
+        } else {
+          console.log("err");
+        }
+      })
     }
     if(autoFood)
     {
@@ -813,22 +826,6 @@ onValue(infoSystem,async (snapshot) => {
       autoFood.addEventListener("click",()=>{
         update(ref(database,'/account/' + userID + '/system/food'),{
           auto : (statusAutoFood == 1 ? 0 : 1),
-        })
-        get(child(dbRef, `account/`+userID+`/system/food`)).then(async (snapshot) => {
-          if (snapshot.exists()) {
-            statusAuto =snapshot.val().auto
-            
-            if(statusAuto == 1)
-            {
-              document.querySelector("#machines-switch-food").style.display = 'none';
-            }
-            else
-            {
-              document.querySelector("#machines-switch-food").style.display = 'flex';
-            }
-          } else {
-            console.log("err");
-          }
         })
       })
     }
