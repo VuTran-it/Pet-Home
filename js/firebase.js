@@ -356,7 +356,10 @@ function writePetData(petId,name,image,breed,age,gender,neutered) {
       night:'',
     },
     health : {
-      weight: 0
+      weight: 0,
+      calories: 0,
+      weightFood: 0,
+      feedingStatus:1,
     }
   });
 }
@@ -647,7 +650,7 @@ onValue(infoSystem,async (snapshot) => {
                                   <p>Status Pump :</p><span>`+(Number(childData.machies) == 1 ? 'On' : 'Off')+`</span>
                                 </div>
                                 <div>
-                                  <p>Percent :</p><span>`+childData.percent+`%</span>
+                                  <p>Percent :</p><span>`+(childData.percent ? childData.percent : 0)+`%</span>
                                 </div>
                               </div>
                             </div>
@@ -691,10 +694,34 @@ onValue(infoSystem,async (snapshot) => {
                                   <p>Status Pump :</p><span>`+(Number(childData.machies) == 1 ? 'On' : 'Off')+`</span>
                                 </div>
                                 <div>
-                                  <p>Percent :</p><span>`+childData.percent+`%</span>
+                                  <p>Percent :</p><span>`+(childData.percent?childData.percent:0)+`%</span>
                                 </div>
-                              </div>
+                                <div class="calo" style='display:flex;flex-direction:column;gap:5px;margin:15px 0;'>
+                                  <span style='color:var(--text-black-900);font-weight:bold; text-align:left;'>Calories (Calo/100g)</span>
+                                  <div style='width:100%;'>
+                                    <input type="text" name="appt" value="`+childData.calories+`" required id="calories" placeholder="Enter calories" style="padding:5px 10px;border-radius:10px; border: 2px solid var(--skin-color);background:transparent;color:var(--text-black-900);font-weight:bold;flex: 1 1 0%;width:100%">
+                                    <div 
+                                      class="" id="save-calories" 
+                                      style='
+                                        cursor: pointer;
+                                        height: 40px;
+                                        width: 40px;
+                                        display: flex;
+                                        justify-content: center;
+                                        align-items: center;
+                                        border: 2px solid var(--text-black-900);
+                                        background-color: var(--skin-color);
+                                        border-radius: 50%;
+                                        font-size: 16px;
+                                        color: var(--text-black-900);
+                                      '> 
+                                      <i class="fa-solid fa-cloud-arrow-up"></i>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>   
                             </div>
+                            
                             <div class="box-icon">
                               <div class="`+(childData.btnLed == 1?'active' : '')+`" id="light-switch-food"> 
                                 `+(childData.btnLed == 1?'<i class="fa-solid fa-lightbulb"></i>' : '<i class="fa-regular fa-lightbulb"></i>')+`
@@ -738,6 +765,20 @@ onValue(infoSystem,async (snapshot) => {
           machies : (statusMachinesWater == 1 ? 0 : 1),
         })
       })
+      get(child(dbRef, `account/`+userID+`/system/water/auto`)).then(async (snapshot) => {
+        if (snapshot.exists()) {
+          if(snapshot.val() == 1)
+          {
+            document.querySelector("#machines-switch-water").style.display = 'none';
+          }
+          else
+          {
+            document.querySelector("#machines-switch-water").style.display = 'flex';
+          }
+        } else {
+          console.log("err");
+        }
+      })
     }
     if(autoWater)
     {
@@ -746,24 +787,9 @@ onValue(infoSystem,async (snapshot) => {
         update(ref(database,'/account/' + userID + '/system/water'),{
           auto : (statusAutoWater == 1 ? 0 : 1),
         })
-        get(child(dbRef, `account/`+userID+`/system/water`)).then(async (snapshot) => {
-          if (snapshot.exists()) {
-            statusAuto =snapshot.val().auto
-            
-            if(statusAuto == 1)
-            {
-              document.querySelector("#machines-switch-water").style.display = 'none';
-            }
-            else
-            {
-              document.querySelector("#machines-switch-water").style.display = 'flex';
-            }
-          } else {
-            console.log("err");
-          }
-        })
       })
     }
+    /* FOOD */
     if(ledFood)
     {
       ledFood.addEventListener("click",()=>{
@@ -779,6 +805,20 @@ onValue(infoSystem,async (snapshot) => {
           machies : (statusMachinesFood == 1 ? 0 : 1),
         })
       })
+      get(child(dbRef, `account/`+userID+`/system/food/auto`)).then(async (snapshot) => {
+        if (snapshot.exists()) {
+          if(snapshot.val() == 1)
+          {
+            document.querySelector("#machines-switch-food").style.display = 'none';
+          }
+          else
+          {
+            document.querySelector("#machines-switch-food").style.display = 'flex';
+          }
+        } else {
+          console.log("err");
+        }
+      })
     }
     if(autoFood)
     {
@@ -787,17 +827,20 @@ onValue(infoSystem,async (snapshot) => {
         update(ref(database,'/account/' + userID + '/system/food'),{
           auto : (statusAutoFood == 1 ? 0 : 1),
         })
-        get(child(dbRef, `account/`+userID+`/system/food`)).then(async (snapshot) => {
+      })
+    }
+    /* SAVE CALO */
+    const save_calories = document.getElementById('save-calories')
+    if (save_calories)
+    {
+      save_calories.addEventListener('click',()=>{
+        let calories = document.getElementById('calories').value
+        console.log(calories)
+        get(child(dbRef, `account/`+userID+`/system/food/calories`)).then(async (snapshot) => {
           if (snapshot.exists()) {
-            statusAuto =snapshot.val().auto
-            
-            if(statusAuto == 1)
+            if(snapshot.val() != calories)
             {
-              document.querySelector("#machines-switch-food").style.display = 'none';
-            }
-            else
-            {
-              document.querySelector("#machines-switch-food").style.display = 'flex';
+              set(ref(database, 'account/'+userID+'/system/food/calories'),calories);
             }
           } else {
             console.log("err");
@@ -805,6 +848,8 @@ onValue(infoSystem,async (snapshot) => {
         })
       })
     }
+    /* END SAVE CALO */
+
   });
 
   if(boxSystem && checkDatabase == false)
