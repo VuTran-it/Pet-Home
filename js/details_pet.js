@@ -116,79 +116,6 @@ function getDate(s) {
   var parts = s.split(":");
   return parts[0] + "-" + parts[1] + "-" + parts[2];
 }
-function showChar()
-{
-  onValue(infoPetRef, async (snapshot) => {
-    let dataWeightFood = [], dataWeightPet = [];
-    await snapshot.forEach( (childSnapshot) => {
-      var childData = childSnapshot.val();
-      var childKey = childSnapshot.key;
-      if (childKey == "foodManagement") {
-        const newObj = {};
-        for (let key in childData) {
-          if (childData.hasOwnProperty(key)) {
-            if (newObj[getDate(key)]) {
-              newObj[getDate(key)].push(parseFloat(childData[key] , 10));
-            } else {
-              newObj[getDate(key)] = [parseFloat(childData[key] , 10)];
-            }
-          }
-        }
-        for (let item in newObj) {
-          dataWeightFood.push({ y: item, weight: sumArray(newObj[item]) });
-        }
-      }
-      if (childKey == "weightManagement") {
-        const newObj = {};
-        for (let key in childData) {
-          if (childData.hasOwnProperty(key)) {
-            if (newObj[getDate(key)]) {
-              newObj[getDate(key)].push(parseFloat(childData[key], 10));
-            } else {
-              newObj[getDate(key)] = [parseFloat(childData[key], 10)];
-            }
-          }
-        }
-        for (let item in newObj) {
-          dataWeightPet.push({ y: item,weight: newObj[item][newObj[item].length - 1]});
-        }
-      }
-    });
-    if (dataWeightFood.length > 7) {
-      dataWeightFood = dataWeightFood.slice(
-        dataWeightFood.length - 7,
-        dataWeightFood.length
-      );
-    }
-    if (dataWeightPet.length > 7) {
-      dataWeightPet = dataWeightPet.slice(
-        dataWeightPet.length - 7,
-        dataWeightPet.length
-      );
-    }
-    var area = new Morris.Line({
-      element: "revenue-chart",
-      resize: true,
-      data: dataWeightFood,
-      xkey: "y",
-      ykeys: ["weight"],
-      labels: ["weight"],
-      lineColors: ["#3c8dbc"],
-      hideHover: "auto",
-    });
-
-    var line = new Morris.Line({
-      element: "line-chart",
-      resize: true,
-      data: dataWeightPet,
-      xkey: "y",
-      ykeys: ["weight"],
-      labels: ["weight"],
-      lineColors: ["#3c8dbc"],
-      hideHover: "auto",
-    });
-  });
-}
 function getTime()
 {
   onValue(listPet,(snapshot) => {
@@ -349,9 +276,45 @@ get(child(dbRef, `account/`+userID+`/system/food/calories`)).then(async (snapsho
         if (rightHTML && rightHTML != "" && contentRight) {
           contentRight.innerHTML = rightHTML;
         }
+
+        if (dataWeightFood.length > 7) {
+          dataWeightFood = dataWeightFood.slice(
+            dataWeightFood.length - 7,
+            dataWeightFood.length
+          );
+        }
+        if (dataWeightPet.length > 7) {
+          dataWeightPet = dataWeightPet.slice(
+            dataWeightPet.length - 7,
+            dataWeightPet.length
+          );
+        }
+        console.log(dataWeightFood)
+        console.log(dataWeightPet)
+    
+        var area = new Morris.Line({
+          element: "revenue-chart",
+          resize: true,
+          data: dataWeightFood,
+          xkey: "y",
+          ykeys: ["weight"],
+          labels: ["weight"],
+          lineColors: ["#3c8dbc"],
+          hideHover: "auto",
+        });
+    
+        var line = new Morris.Line({
+          element: "line-chart",
+          resize: true,
+          data: dataWeightPet,
+          xkey: "y",
+          ykeys: ["weight"],
+          labels: ["weight"],
+          lineColors: ["#3c8dbc"],
+          hideHover: "auto",
+        });
       }
     })
-    showChar()
 
   } else {
     console.log("err");
