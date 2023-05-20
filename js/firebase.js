@@ -835,12 +835,11 @@ onValue(infoSystem,async (snapshot) => {
     {
       save_calories.addEventListener('click',()=>{
         let calories = document.getElementById('calories').value
-        console.log(calories)
         get(child(dbRef, `account/`+userID+`/system/food/calories`)).then(async (snapshot) => {
           if (snapshot.exists()) {
             if(snapshot.val() != calories)
             {
-              set(ref(database, 'account/'+userID+'/system/food/calories'),calories);
+              set(ref(database, 'account/'+userID+'/system/food/calories'),Number(calories));
             }
           } else {
             console.log("err");
