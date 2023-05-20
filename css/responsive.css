@@ -43,9 +43,9 @@
   .System .System-item .System-item-inner .img {
     justify-content: center;
   }
-  .System .System-item .info .detail {
+  /* .System .System-item .info .detail {
     transform: translateX(-20px);
-  }
+  } */
 }
 
 /* May Tinh Bang nhỏ */
@@ -390,8 +390,8 @@
 
   .System .System-item {
     margin-bottom: 30px;
-    flex: 0 0 80%;
-    max-width: 80%;
+    flex: 0 0 100%;
+    max-width: 100%;
   }
 
   .box-user {
