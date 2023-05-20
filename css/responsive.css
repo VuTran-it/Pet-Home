@@ -458,7 +458,7 @@
   }
   .left-container {
     padding: 20px 0px;
-    width: 95%;
+    width: 100%;
     margin: 0 auto;
   }
 
@@ -467,10 +467,6 @@
     flex-direction: column;
     gap:10px;
   }
-  .right-container .set div
-  {
-  }
-
   .right-container .set label
   {
     width: max-content !important;
