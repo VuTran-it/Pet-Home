@@ -161,7 +161,7 @@ get(child(dbRef, `account/`+userID+`/system/food/calories`)).then(async (snapsho
                 }
               }
               for (let item in newObj) {
-                dataWeightFood.push({ y: item, weight: sumArray(newObj[item]) });
+                dataWeightFood.push({ y: item, weight: sumArray(newObj[item]).toFixed(2) });
               }
             }
             if (childKey == "weightManagement") {
